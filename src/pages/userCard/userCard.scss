@@ -1,0 +1,48 @@
+@import "../../layout/variables.scss";
+@import "../../layout/back.scss";
+@import "../../layout/avatar-user.scss";
+@import "../../partials/appButton.scss";
+
+.user-card {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & .user-card__list:not(:last-child) {
+    margin-bottom: 40px;
+  }
+}
+
+.user-card__avatar {
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.user-card__name {
+  margin-bottom: 60px;
+}
+
+.user-card__list {
+  width: 100%;
+}
+
+.user-card__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 5px;
+  border-bottom: 1px solid $border-light;
+  margin-bottom: 15px;
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+}

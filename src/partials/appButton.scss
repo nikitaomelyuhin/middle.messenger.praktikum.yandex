@@ -1,0 +1,53 @@
+.app-button {
+  display: flex;
+  padding: 15px 10px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  background-color: $primary;
+  width: 100%;
+  justify-content: center;
+  transition: .3s;
+  &:hover {
+    background-color: $primary-hover;
+    & .app-button__link {
+      color: #fff;
+    }
+  }
+}
+
+.app-button__link {
+  color: #fff;
+}
+
+.app-button__text {
+  color: #fff;
+}
+
+.simple {
+  padding: 0;
+  border-radius: none;
+  border: none;
+  background: none;
+  font-weight: bold;
+  width: fit-content;
+  & .app-button__text {
+    color: $primary;
+  }
+  &:hover {
+    background: none;
+    & .app-button__text {
+      color: $primary-hover;
+    }
+  }
+}
+
+.danger {
+  & .app-button__link {
+    color: $danger;
+  }
+  &:hover {
+    & .app-button__link {
+      color: $danger-hover;
+    }
+  }
+}

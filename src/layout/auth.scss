@@ -1,0 +1,37 @@
+@import "../../layout/variables.scss";
+
+.auth {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth__container {
+  display: flex;
+  justify-content: center;
+}
+
+.auth__content {
+  width: 50%;
+  border-radius: $border-radius-big;
+  overflow: hidden;
+  box-shadow: $shadow;
+  padding: 40px;
+}
+
+.auth__title {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth__body {
+  background-color: #fff;
+}
+
+.auth__link {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,19 @@
+---
+error: {
+    number: 500,
+    link: "./index.hbs"
+}
+---
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>500</title>
+        <link rel="stylesheet" href="../src/layout/base.scss">
+        <link rel="stylesheet" href="../src/partials/appError.scss">
+    </head>
+    <body>
+        {{> appError number=error.number link=error.link}}
+    </body>
+</html> 

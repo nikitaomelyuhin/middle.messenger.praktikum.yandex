@@ -1,0 +1,32 @@
+$containerWidth: 940px;
+$baseFontSize: 18px;
+$border-radius-big: 10px;
+$border-radius-normal: 7px;
+$border-radius-small: 5px;
+
+//breakpoints
+
+$tablets: 768px;
+$phones: 480px;
+
+//colors
+
+$primary: #035e03;
+$primary-hover: rgba(3, 94, 3, .8);
+$primary-light: #a7d1a7;
+$secondary: #00719e;
+$secondary-hover: rgba(0, 113, 158, .8);
+$border-light: #eaeaea;
+$text-dark: #1e1e1e;
+$text: #999;
+$danger: #b81616;
+$danger-hover: rgba(184, 22, 22, .8);
+$bg-light: #fbfbfb;
+$bg-dark: #052a38;
+$message-light: #f8f8f8;
+$bg-input: #efefef;
+//shadows
+
+$shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+
+//borders

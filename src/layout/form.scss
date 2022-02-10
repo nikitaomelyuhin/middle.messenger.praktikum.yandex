@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+.form__list {
+  margin-bottom: 100px;
+  width: 100%;
+}
+
+.form__item {
+  margin-bottom: 10px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form__button {
+  width: 100%;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,39 @@
+---
+button: {
+  text: "Войти",
+  type: "primary",
+  link: "../../../static/index.hbs"
+}
+inputs: [
+  {
+    type: "text",
+    placeholder: "Логин"
+  },
+  {
+    type: "password",
+    placeholder: "Пароль"
+  }
+]
+---
+<div class="auth">
+  <div class="container auth__container">
+    <div class="auth__content">
+      <h1 class="auth__title">Вход</h1>
+      <div class="auth__body">
+        <form class="form">
+        <ul class="form__list">
+          {{#each inputs}}
+            <li class="form__item">
+              {{> appInput placeholder=this.placeholder type=this.type}}
+            </li>
+          {{/each}}
+        </ul>
+        <div class="form__button">
+          {{>appButton type=button.type text=button.text link=button.link}}
+        </div>
+      </form>
+      <a href="../../../static/register.hbs" class="auth__link">Нет аккаунта?</a>
+      </div>
+    </div>
+  </div>
+</div>
