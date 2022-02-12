@@ -190,10 +190,10 @@ messages: [
 <main class="main-page">
   <aside class="sidebar">
     <div class="sidebar__header">
-      <a href="../../../static/user-card.hbs" class="sidebar__link">
+      <p class="sidebar__text">
         Профиль
         <i class="sidebar__icon fa-solid fa-angle-down"></i>
-      </a>
+      </p>
       <div class="sidebar__search">
         <input type="text" required class="sidebar__input">
         <div class="sidebar__search-placeholder">
@@ -214,10 +214,18 @@ messages: [
   </aside>
   <div class="chat">
     <div class="chat__header">
-      <div class="chat__avatar avatar">
-        <img class="avatar__image">
+      <div class="chat__side">
+        <div class="chat__avatar avatar">
+          <img class="avatar__image">
+        </div>
+        <div class="chat__name">Олеся</div>
       </div>
-      <div class="chat__name">Олеся</div>
+      <div class="chat__side">
+        <a href="../../../static/user-card.hbs" class="chat__link">
+          <i class="chat__link-icon fa-solid fa-user"></i>
+          Мой аккаунт
+        </a>
+      </div>
     </div>
     <div class="chat__body">
       <div class="chat__date">01 Февраля</div>

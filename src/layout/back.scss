@@ -11,21 +11,19 @@
   &:hover {
     background: $secondary;
   }
-}
-
-.back__icon {
-  border-radius: 50%;
-  position: relative;
-  background-color: $primary;
-  width: 30px;
-  height: 30px;
-}
-
-.back__icon span {
-  position: absolute;
-  color: #fff;
-  font-size: 20px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  &__icon {
+    border-radius: 50%;
+    position: relative;
+    background-color: $primary;
+    width: 30px;
+    height: 30px;
+    & span {
+      position: absolute;
+      color: $light;
+      font-size: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }

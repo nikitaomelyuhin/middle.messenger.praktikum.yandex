@@ -10,17 +10,15 @@
   &:hover {
     background-color: $primary-hover;
     & .app-button__link {
-      color: #fff;
+      color: $light;
     }
   }
-}
-
-.app-button__link {
-  color: #fff;
-}
-
-.app-button__text {
-  color: #fff;
+  &__link {
+    color: $light;
+  }
+  &__text {
+    color: $light;
+  }
 }
 
 .simple {

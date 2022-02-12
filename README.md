@@ -3,6 +3,10 @@
 
 Проект без использования фреймворков
 
+## Некоторые особенности проекта
+
+Ссылка внутри тэга `<button>` добавлена, исключительно, для удобства на первое время, чтобы можно было легче передвигаться по приложению
+
 ## Pull Request
 
 [Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/1)
