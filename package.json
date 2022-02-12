@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "parcel ./static/index.hbs",
-    "build": "parcel build ./src/**/*.hbs",
+    "build": "parcel build index.html",
     "start": "node ./server.js"
   },
   "keywords": [],
