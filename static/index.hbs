@@ -198,87 +198,87 @@ messages: [
 </head>
 
 <body>
-    <main class="main-page">
-        <aside class="sidebar">
-            <div class="sidebar__header">
-                <p class="sidebar__text">
-                    Профиль
-                    <i class="sidebar__icon fa-solid fa-angle-down"></i>
-                </p>
-                <div class="sidebar__search">
-                    <input type="text" required class="sidebar__input">
-                    <div class="sidebar__search-placeholder">
-                        <i class="sidebar__search-icon fa-solid fa-magnifying-glass"></i>
-                        <p>Поиск</p>
-                    </div>
-                </div>
-            </div>
-            <div class="sidebar__body">
-                <ul class="sidebar__chats">
-                    {{#each chats}}
-                    <li class="sidebar__item">
-                        {{> sidebarItem activeClass=this.activeClass image=this.image chatName=this.chatName
-                        sender=this.sender message=this.message time=this.time
-                        notificationCount=this.notificationCount}}
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-        </aside>
-        <div class="chat">
-            <div class="chat__header">
-                <div class="chat__side">
-                    <div class="chat__avatar avatar">
-                        <img class="avatar__image">
-                    </div>
-                    <div class="chat__name">Олеся</div>
-                </div>
-                <div class="chat__side">
-                    <a href="./user-card.hbs" class="chat__link">
-                        <i class="chat__link-icon fa-solid fa-user"></i>
-                        Мой аккаунт
-                    </a>
-                </div>
-            </div>
-            <div class="chat__body">
-                <div class="chat__date">01 Февраля</div>
-                <div class="chat__content">
-                    <ul class="chat__list">
-                        {{#each messages}}
-                        <li class="chat__item">
-                            {{#each this.messageBlock}}
-                            <div class="chat__messages">
-                                <div class="chat__message">
-                                    <p>{{this.content}}</p>
-                                    {{#if this.check}}
-                                    <div class="chat__icon-block">
-                                        {{#if this.delivered}}
-                                        <i class="chat__check-icon fa-solid fa-check"></i>
-                                        {{/if}}
-                                        <i class="chat__check-icon fa-solid fa-check"></i>
-                                    </div>
-                                    {{/if}}
-                                    <p>{{this.time}}</p>
-                                </div>
-                            </div>
-                            {{/each}}
-                        </li>
-                        {{/each}}
-                    </ul>
-                </div>
-            </div>
-            <div class="chat__footer">
-                <button class="chat__smiles-button">
-                    <i class="fa-solid fa-paperclip"></i>
-                </button>
-                <input type="text" placeholder="Сообщение" class="chat__message-input">
-                <button class="chat__send-button">
-                    <i class="fa-solid fa-circle-arrow-right"></i>
-                </button>
-            </div>
+  <main class="main-page">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <p class="sidebar__text">
+          Профиль
+          <i class="sidebar__icon fa-solid fa-angle-down"></i>
+        </p>
+        <div class="sidebar__search">
+          <input type="text" required class="sidebar__input">
+          <div class="sidebar__search-placeholder">
+            <i class="sidebar__search-icon fa-solid fa-magnifying-glass"></i>
+            <p>Поиск</p>
+          </div>
         </div>
-    </main>
-    <script type="module" src="../src/pages/chat/index.js"></script>
+      </div>
+      <div class="sidebar__body">
+        <ul class="sidebar__chats">
+          {{#each chats}}
+          <li class="sidebar__item">
+            {{> sidebarItem activeClass=this.activeClass image=this.image chatName=this.chatName
+            sender=this.sender message=this.message time=this.time
+            notificationCount=this.notificationCount}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </aside>
+    <div class="chat">
+      <div class="chat__header">
+        <div class="chat__side">
+          <div class="chat__avatar avatar">
+            <img class="avatar__image">
+          </div>
+          <div class="chat__name">Олеся</div>
+        </div>
+        <div class="chat__side">
+          <a href="./user-card.hbs" class="chat__link">
+            <i class="chat__link-icon fa-solid fa-user"></i>
+            Мой аккаунт
+          </a>
+        </div>
+      </div>
+      <div class="chat__body">
+        <div class="chat__date">01 Февраля</div>
+        <div class="chat__content">
+          <ul class="chat__list">
+            {{#each messages}}
+            <li class="chat__item">
+            {{#each this.messageBlock}}
+            <div class="chat__messages">
+              <div class="chat__message">
+                <p>{{this.content}}</p>
+                {{#if this.check}}
+                <div class="chat__icon-block">
+                  {{#if this.delivered}}
+                  <i class="chat__check-icon fa-solid fa-check"></i>
+                  {{/if}}
+                  <i class="chat__check-icon fa-solid fa-check"></i>
+                </div>
+                {{/if}}
+                <p>{{this.time}}</p>
+              </div>
+            </div>
+            {{/each}}
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="chat__footer">
+        <button class="chat__smiles-button">
+          <i class="fa-solid fa-paperclip"></i>
+        </button>
+        <input type="text" placeholder="Сообщение" class="chat__message-input">
+        <button class="chat__send-button">
+          <i class="fa-solid fa-circle-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="../src/pages/chat/index.js"></script>
 </body>
 
 </html>

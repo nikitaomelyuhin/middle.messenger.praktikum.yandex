@@ -13,7 +13,7 @@
 
 ## Netlify
 
-[Netlify](cocky-colden-516022.netlify.app)
+[Netlify](https://6208cd47c1c1630be623e266--heuristic-kalam-85f874.netlify.app/)
 
 ## Ui
 

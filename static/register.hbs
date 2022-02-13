@@ -1,67 +1,66 @@
 ---
 button: {
-    text: "Зарегистрироваться",
-    type: "primary"
+  text: "Зарегистрироваться",
+  type: "primary"
 }
 inputs: [
-    {
-        type: "text",
-        placeholder: "Почта"
-    },
-    {
-        type: "text",
-        placeholder: "Логин"
-    },
-    {
-        type: "text",
-        placeholder: "Имя"
-    },
-    {
-        type: "text",
-        placeholder: "Фамилия"
-    },
-    {
-        type: "number",
-        placeholder: "Телефон"
-    },
-    {
-        type: "password",
-        placeholder: "Пароль"
-    }
+  {
+    type: "text",
+    placeholder: "Почта"
+  },
+  {
+    type: "text",
+    placeholder: "Логин"
+  },
+  {
+    type: "text",
+    placeholder: "Имя"
+  },
+  {
+    type: "text",
+    placeholder: "Фамилия"
+  },
+  {
+    type: "number",
+    placeholder: "Телефон"
+  },
+  {
+    type: "password",
+    placeholder: "Пароль"
+  }
 ]
 ---
 
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register</title>
-        <link rel="stylesheet" href="../src/layout/base.scss">
-        <link rel="stylesheet" href="../src/pages/registerComponent/registerComponent.scss">
-    </head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../src/layout/base.scss">
+    <link rel="stylesheet" href="../src/pages/registerComponent/registerComponent.scss">
+  </head>
     <body>
-        <div class="auth">
-            <div class="container auth__container">
-                <div class="auth__content">
-                <h1 class="auth__title">Регистрация</h1>
-                <div class="auth__body">
-                    <form class="form">
-                    <ul class="form__list">
-                    {{#each inputs}}
-                        <li class="form__item">
-                        {{> appInput placeholder=this.placeholder type=this.type}}
-                        </li>
-                    {{/each}}
-                    </ul>
-                    <div class="form__button">
-                    {{> appButton type=button.type text=button.text}}
-                    </div>
-                </form>
-                <a href="./login.hbs" class="auth__link">Войти</a>
+      <div class="auth">
+        <div class="container auth__container">
+          <div class="auth__content">
+            <h1 class="auth__title">Регистрация</h1>
+            <div class="auth__body">
+              <form class="form">
+                <ul class="form__list">
+                  {{#each inputs}}
+                  <li class="form__item">
+                  {{> appInput placeholder=this.placeholder type=this.type}}
+                  </li>
+                  {{/each}}
+                </ul>
+                <div class="form__button">
+                {{> appButton type=button.type text=button.text}}
                 </div>
-                </div>
+              </form>
+              <a href="./login.hbs" class="auth__link">Войти</a>
+            </div>
+          </div>
         </div>
-</div>
-    </script>
+      </div>
     </body>
 </html> 
