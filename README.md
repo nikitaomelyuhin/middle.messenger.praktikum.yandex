@@ -3,13 +3,17 @@
 
 Проект без использования фреймворков
 
+## Некоторые особенности проекта
+
+Ссылка внутри тэга `<button>` добавлена, исключительно, для удобства на первое время, чтобы можно было легче передвигаться по приложению и для того чтобы не делать дополнительные одинаковые стили
+
 ## Pull Request
 
 [Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/1)
 
 ## Netlify
 
-[Netlify](cocky-colden-516022.netlify.app)
+[Netlify](https://6208cd47c1c1630be623e266--heuristic-kalam-85f874.netlify.app/)
 
 ## Ui
 
