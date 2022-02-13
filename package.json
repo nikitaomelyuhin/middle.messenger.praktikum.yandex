@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "parcel ./static/index.hbs",
-    "build": "parcel build src/**/*.hbs",
+    "build": "parcel build static/*.hbs --no-minify",
     "start": "node ./server.js"
   },
   "keywords": [],
