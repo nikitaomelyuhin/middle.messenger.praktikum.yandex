@@ -17,7 +17,6 @@
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "1.0.9",
     "@fortawesome/fontawesome-free": "6.0.0",
-    "@parcel/transformer-sass": "^2.3.1",
     "cssnano": "4.1.11",
     "handlebars": "4.7.7",
     "parcel": "2.2.1",
