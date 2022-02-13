@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "parcel ./static/index.hbs",
-    "build": "parcel build ./static/index.hbs",
+    "build": "parcel build ./static/index.hbs --target default",
     "start": "node ./server.js"
   },
   "keywords": [],
@@ -28,11 +28,8 @@
     "express": "4.17.2"
   },
   "targets": {
-    "main": {
-        "distDir": "dist",
-        "engines": {
-            "node": ">=12.22.10"
-        }
+    "default": {
+      "includeNodeModules": true
     }
   }
 }
