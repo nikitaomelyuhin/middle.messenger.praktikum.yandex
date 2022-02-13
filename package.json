@@ -2,13 +2,12 @@
   "name": "messenger",
   "version": "1.0.0",
   "description": "",
-  "main": "./static/index.hbs",
   "engines": {
     "node": ">=12.22.10"
   },
   "scripts": {
     "dev": "parcel ./static/index.hbs",
-    "build": "parcel build ./static/index.hbs --target default",
+    "build": "parcel build ./static/index.hbs --target default --no-cache",
     "start": "node ./server.js"
   },
   "keywords": [],
