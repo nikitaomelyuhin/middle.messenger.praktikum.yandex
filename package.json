@@ -2,12 +2,14 @@
   "name": "messenger",
   "version": "1.0.0",
   "description": "",
+  "main": "index.js",
   "engines": {
+    "npm": "6.14.16",
     "node": ">=12.22.10"
   },
   "scripts": {
     "dev": "parcel ./static/index.hbs",
-    "build": "parcel build ./static/index.hbs --target default --no-cache",
+    "build": "parcel build src/**/*.hbs",
     "start": "node ./server.js"
   },
   "keywords": [],
@@ -15,21 +17,15 @@
   "license": "ISC",
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "1.0.9",
-    "@fortawesome/fontawesome-free": "6.0.0",
-    "@parcel/transformer-sass": "^2.3.1",
-    "cssnano": "4.1.11",
+    "@parcel/transformer-sass": "2.2.1",
+    "parcel-bundler": "1.12.5",
+    "parcel-plugin-handlebars": "0.4.4",
     "handlebars": "4.7.7",
     "parcel": "2.2.1",
-    "parcel-bundler": "^1.12.5",
-    "parcel-plugin-handlebars": "0.4.4",
     "sass": "1.49.7"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "6.0.0",
     "express": "4.17.2"
-  },
-  "targets": {
-    "default": {
-      "includeNodeModules": true
-    }
   }
 }
