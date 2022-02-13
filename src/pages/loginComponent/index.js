@@ -1,3 +1,3 @@
-import loginComponent from "./login.hbs"
+import loginComponent from "./loginComponent.hbs"
 const login = document.querySelector("#login")
 login.innerHTML = loginComponent
