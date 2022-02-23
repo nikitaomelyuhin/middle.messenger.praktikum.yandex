@@ -1,0 +1,32 @@
+@import "../layout/variables.scss";
+
+.error {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.error__number {
+  color: $danger;
+  font-weight: bold;
+  font-size: 120px;
+  user-select: none;
+  line-height: 1;
+  margin-bottom: 40px;
+}
+
+.error__text {
+  margin-bottom: 40px;
+  font-size: 20px;
+  & p {
+    margin-bottom: 10px;
+  }
+}
+
+.error__icon {
+  font-size: 320px;
+  color: $border-light;
+}

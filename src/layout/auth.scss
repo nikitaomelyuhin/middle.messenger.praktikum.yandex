@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+.auth {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__container {
+    display: flex;
+    justify-content: center;
+  }
+  &__content {
+    width: 50%;
+    border-radius: $border-radius-big;
+    overflow: hidden;
+    box-shadow: $shadow;
+    padding: 40px;
+  }
+  &__title {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  &__body {
+    background-color: $light;
+  }
+  &__link {
+    display: flex;
+    justify-content: center;
+  }
+}

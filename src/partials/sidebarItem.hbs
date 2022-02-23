@@ -1,0 +1,33 @@
+<button class="sidebar-item {{activeClass}}">
+  <div class="sidebar-item__wrapper">
+    <div class="sidebar-item__block">
+      <div class="sidebar-item__avatar">
+        {{#if image}}
+          <img src="{{image}}" class="sidebar-item__image">
+        {{/if}}
+      </div>
+      <div class="sidebar-item__text-block">
+        <h3 class="sidebar-item__chat-name">{{chatName}}</h3>
+        <div class="sidebar-item__user-text">
+          {{#if sender}}
+            <p class="sidebar-item__sender">{{sender}}:</p>
+          {{/if}}
+          <span>
+            {{message}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-item__block">
+      <div class="sidebar-item__remove">
+        <i class="sidebar-item__icon fa-solid fa-xmark"></i>
+      </div>
+      <div class="sidebar-item__time">
+        <p>{{time}}</p>
+      </div>
+      {{#if notificationCount}}
+        <div class="sidebar-item__notification">{{notificationCount}}</div>
+      {{/if}}
+    </div>
+  </div>
+</button>

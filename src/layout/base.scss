@@ -1,0 +1,131 @@
+@import "~node_modules/@fortawesome/fontawesome-free/css/all.css";
+
+@import "./variables.scss";
+
+@import "./mixins.scss";
+
+//normalize
+
+@import "./normalize.css";
+
+
+@import "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap";
+
+html {
+  font-size: $baseFontSize;
+
+  @include tablets {
+    font-size: $baseFontSize - 1px;
+  }
+  @include phones {
+    font-size: $baseFontSize - 4px;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.42;
+  color: $text;
+  position: relative;
+}
+
+.wrapper {
+  overflow: hidden;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.container {
+  width: 95%;
+  max-width: $containerWidth;
+  margin: 0 auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  li {
+    list-style-type: none;
+  }
+}
+
+footer {
+  position: relative;
+  width: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: normal;
+  color: $text-dark;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+p {
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  color: $primary;
+  transition: .3s;
+  &:hover {
+    color: $primary-hover;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
