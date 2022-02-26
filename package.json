@@ -6,7 +6,7 @@
     "node": ">=12.22.10"
   },
   "scripts": {
-    "dev": "parcel ./src/index.html",
+    "dev": "parcel ./src/*.html",
     "build": "parcel build ./static/*.hbs",
     "start": "node ./server.js",
     "lint": "eslint .",
@@ -16,7 +16,7 @@
   "author": "Nikita Omelyukhin",
   "license": "ISC",
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@anikin/parcel-transformer-handlebars-precompile": "^1.0.1",
     "@fortawesome/fontawesome-free": "^6.0.0",
     "@parcel/transformer-sass": "^2.3.1",
     "@parcel/transformer-typescript-tsc": "^2.3.2",

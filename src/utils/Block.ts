@@ -13,9 +13,12 @@ class Block {
 
   private _element: HTMLElement | null = null;
 
-  private _meta: { tagName: string, props: any };
+  private _meta: { props: any };
 
   protected props: any;
+
+  // eslint-disable-next-line no-use-before-define
+  protected children: Record<string, Block>;
 
   private eventBus: () => EventBus;
 
@@ -25,21 +28,41 @@ class Block {
    *
    * @returns {void}
    */
-  constructor(tagName = "div", props: any = {}) {
+  constructor(propsAndChildren: any = {}) {
     const eventBus = new EventBus();
 
+    const { children, props } = this._getChildren(propsAndChildren);
+
+    this.children = children;
+
     this._meta = {
-      tagName,
       props,
     };
 
     this.props = this._makePropsProxy(props);
 
+    this.initChildren();
     this.eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
   }
+
+  _getChildren(propsAndChildren: any) {
+    const children: any = {};
+    const props: any = {};
+
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (value instanceof Block) {
+        children[key] = value;
+      } else {
+        props[key] = value;
+      }
+    });
+    return { children, props };
+  }
+
+  protected initChildren() { }
 
   _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
@@ -48,13 +71,7 @@ class Block {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
-    const { tagName } = this._meta;
-    this._element = this._createDocumentElement(tagName);
-  }
-
   init() {
-    this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
@@ -94,17 +111,25 @@ class Block {
   }
 
   _render() {
-    const block = this.render();
+    const fragment = this.render();
+
+    const newElement = fragment.firstElementChild as HTMLElement;
+
+    if (this._element) {
+      this._removeEvents();
+      this._element.replaceWith(newElement);
+    }
+
+    this._element = newElement;
+
     this._removeEvents();
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this._element!.innerHTML = block;
     this._addEvents();
   }
 
   // eslint-disable-next-line class-methods-use-this
-  protected render(): string {
-    return "";
+  protected render(): DocumentFragment {
+    return new DocumentFragment();
   }
 
   getContent(): HTMLElement | null {
@@ -121,8 +146,9 @@ class Block {
       },
 
       set(target: Record<string, unknown>, prop: string, value: unknown) {
+        const oldProps = { ...target };
         target[prop] = value;
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
         return true;
       },
       deleteProperty() {
@@ -157,6 +183,28 @@ class Block {
   // eslint-disable-next-line class-methods-use-this
   _createDocumentElement(tagName: string): HTMLElement {
     return document.createElement(tagName);
+  }
+
+  compile(template: (context: any) => string, context: any) {
+    const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
+
+    Object.entries(this.children).forEach(([key, child]) => {
+      context[key] = `<div data-id="id-${child.id}"></div>`;
+    });
+
+    const htmlString = template(context);
+
+    fragment.innerHTML = htmlString;
+
+    Object.values(this.children).forEach((child) => {
+      const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
+      if (!stub) {
+        return;
+      }
+      stub.replaceWith(child.getContent()!);
+    });
+
+    return fragment.content;
   }
 }
 

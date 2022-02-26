@@ -1,8 +1,8 @@
 // import { Button } from "./components/button/button";
-import { LoginPage } from "./pages/login/login";
+import { RegisterPage } from "./pages/register/register";
 import { renderDOM } from "./utils/renderDOM";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const loginPage = new LoginPage();
-  renderDOM("#app", loginPage);
+  const registerPage = new RegisterPage();
+  renderDOM("#app", registerPage);
 });
