@@ -1,4 +1,3 @@
-// import { Button } from "./components/button/button";
 import { LoginPage } from "./pages/login/login";
 import { renderDOM } from "./utils/renderDOM";
 

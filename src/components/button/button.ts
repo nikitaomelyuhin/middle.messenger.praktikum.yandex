@@ -2,7 +2,7 @@ import Block from "../../utils/Block";
 import template from "./button.hbs";
 
 interface ButtonProps {
-  type?: string
+  type?: string,
   text: string,
   link?: string,
   additionalType?: string,
