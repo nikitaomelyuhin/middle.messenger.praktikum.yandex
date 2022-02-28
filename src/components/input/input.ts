@@ -3,7 +3,14 @@ import template from "./input.hbs";
 
 interface inputProps {
   type: string
-  placeholder: string
+  placeholder: string,
+  error?: string,
+  stateClass?: string,
+  events?: {
+    keyup?: (e: any) => void,
+    blur?: (e: any) => void,
+    focus?: (e: any) => void;
+  }
 }
 
 export class Input extends Block {

@@ -7,7 +7,7 @@ interface ButtonProps {
   link?: string,
   additionalType?: string,
   events?: {
-    click?: () => void
+    click?: (e: any) => void
   }
 }
 

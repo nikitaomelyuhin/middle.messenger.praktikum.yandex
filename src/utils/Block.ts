@@ -13,6 +13,8 @@ class Block {
 
   private _element: HTMLElement | null = null;
 
+  private _elementForEvents: HTMLElement | null = null;
+
   private _meta: { props: any };
 
   protected props: any;
@@ -23,7 +25,6 @@ class Block {
   private eventBus: () => EventBus;
 
   /** JSDoc
-   * @param {string} tagName
    * @param {Object} props
    *
    * @returns {void}
@@ -55,6 +56,8 @@ class Block {
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
+      } else if (Array.isArray(value) && value.every((v) => (v instanceof Block))) {
+        children[key] = value;
       } else {
         props[key] = value;
       }
@@ -62,6 +65,7 @@ class Block {
     return { children, props };
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected initChildren() { }
 
   _registerEvents(eventBus: EventBus) {
@@ -79,22 +83,21 @@ class Block {
     this.componentDidMount();
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected componentDidMount() { }
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  // Может переопределять пользователь, необязательно трогать
   _componentDidUpdate(oldProps: any, newProps: any) {
     if (this.componentDidUpdate(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  componentDidUpdate(oldProps, newProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  componentDidUpdate(oldProps: any, newProps: any) {
     return true;
   }
 
@@ -122,12 +125,16 @@ class Block {
 
     this._element = newElement;
 
+    const elementForEvent = newElement.querySelector("[data-event]");
+    if (elementForEvent) {
+      this._elementForEvents = elementForEvent as HTMLElement;
+    }
+
     this._removeEvents();
 
     this._addEvents();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected render(): DocumentFragment {
     return new DocumentFragment();
   }
@@ -165,7 +172,11 @@ class Block {
     }
 
     Object.entries(events).forEach(([event, listener]) => {
-      this._element!.removeEventListener(event, listener);
+      if (this._elementForEvents) {
+        this._elementForEvents.removeEventListener(event, listener);
+      } else {
+        this._element!.removeEventListener(event, listener);
+      }
     });
   }
 
@@ -176,7 +187,11 @@ class Block {
       return;
     }
     Object.entries(events).forEach(([event, listener]) => {
-      this._element!.addEventListener(event, listener);
+      if (this._elementForEvents) {
+        this._elementForEvents.addEventListener(event, listener);
+      } else {
+        this._element!.addEventListener(event, listener);
+      }
     });
   }
 
@@ -189,6 +204,10 @@ class Block {
     const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
 
     Object.entries(this.children).forEach(([key, child]) => {
+      if (Array.isArray(child)) {
+        context[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
+        return;
+      }
       context[key] = `<div data-id="id-${child.id}"></div>`;
     });
 
@@ -196,7 +215,19 @@ class Block {
 
     fragment.innerHTML = htmlString;
 
-    Object.values(this.children).forEach((child) => {
+    Object.entries(this.children).forEach(([key, child]) => {
+      if (Array.isArray(child)) {
+        context[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
+
+        child.forEach((ch) => {
+          const stub = fragment.content.querySelector(`[data-id="id-${ch.id}"]`);
+          if (!stub) {
+            return;
+          }
+          stub.replaceWith(ch.getContent());
+        });
+        return;
+      }
       const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
       if (!stub) {
         return;
