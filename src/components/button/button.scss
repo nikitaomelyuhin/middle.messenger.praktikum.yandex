@@ -40,11 +40,11 @@
 }
 
 .danger {
-  & .app-button__link {
+  & .app-button__text {
     color: $danger;
   }
   &:hover {
-    & .app-button__link {
+    & .app-button__text {
       color: $danger-hover;
     }
   }

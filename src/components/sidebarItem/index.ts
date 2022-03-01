@@ -1,1 +1,0 @@
-export { SidebarItem as default } from "./sidebarItem";

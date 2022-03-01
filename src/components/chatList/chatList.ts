@@ -1,7 +1,7 @@
 import Block from "../../utils/Block";
-import template from "./sidebarItem.hbs";
+import template from "./chatList.hbs";
 
-interface SidebarItemProps {
+interface chatItem {
   activeClass?: string,
   image?: string,
   chatName: string,
@@ -11,8 +11,12 @@ interface SidebarItemProps {
   notificationCount?: number
 }
 
-export class SidebarItem extends Block {
-  constructor(props: SidebarItemProps) {
+interface sidebarList {
+  chatList: chatItem[]
+}
+
+export class SidebarList extends Block {
+  constructor(props: sidebarList) {
     super(props);
   }
 

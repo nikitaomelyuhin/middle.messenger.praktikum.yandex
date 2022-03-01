@@ -14,26 +14,7 @@
       </div>
     </div>
     <div class="sidebar__body">
-      <ul class="sidebar__chats">
-        <li class="sidebar__item">
-          {{{ sidebarItemFirst }}}
-        </li>
-        <li class="sidebar__item">
-          {{{ sidebarItemSecond }}}
-        </li>
-        <li class="sidebar__item">
-          {{{ sidebarItemThird }}}
-        </li>
-        <li class="sidebar__item">
-          {{{ sidebarItemFourth }}}
-        </li>
-        <li class="sidebar__item">
-          {{{ sidebarItemFifth }}}
-        </li>
-        <li class="sidebar__item">
-          {{{ sidebarItemSixth }}}
-        </li>
-      </ul>
+      {{{ chatList }}}
     </div>
   </aside>
   <div class="chat">
@@ -45,7 +26,7 @@
         <div class="chat__name">Олеся</div>
       </div>
       <div class="chat__side">
-        <a href="./user-card.hbs" class="chat__link">
+        <a href="../../user-card.html" class="chat__link">
           <i class="chat__link-icon fa-solid fa-user"></i>
           Мой аккаунт
         </a>
@@ -54,20 +35,7 @@
     <div class="chat__body">
       <div class="chat__date">01 Февраля</div>
       <div class="chat__content">
-        <ul class="chat__list">
-          <li class="chat__item">
-            <div class="chat__messages">
-              <div class="chat__message">
-                <p>123</p>
-                <div class="chat__icon-block">
-                  <i class="chat__check-icon fa-solid fa-check"></i>
-                  <i class="chat__check-icon fa-solid fa-check"></i>
-                </div>
-                <p></p>
-              </div>
-            </div>
-          </li>
-        </ul>
+        {{{ messages }}}
       </div>
     </div>
     <div class="chat__footer">
