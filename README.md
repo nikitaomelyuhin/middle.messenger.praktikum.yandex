@@ -19,7 +19,7 @@
 
 ## Netlify
 
-[Netlify](https://6208cd47c1c1630be623e266--heuristic-kalam-85f874.netlify.app/)
+[Netlify](https://621e78bdb64cae00085e3214--heuristic-kalam-85f874.netlify.app/)
 
 ## Ui
 
