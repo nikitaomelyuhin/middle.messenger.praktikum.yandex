@@ -15,7 +15,7 @@
 
 ## Pull Request
 
-[Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/1)
+[Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/2)
 
 ## Netlify
 
