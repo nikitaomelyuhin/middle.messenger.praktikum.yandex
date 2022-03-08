@@ -1,0 +1,38 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint/eslint-plugin"
+  ],
+  "extends": [
+    "airbnb/base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "no-plusplus": "off",
+    "eol-last": "off",
+    "max-len": "off",
+    "quotes": ["error", "double"],
+    "no-alert": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "no-underscore-dangle": "off",
+    "@typescript-eslint/no-this-alias": "off",
+    "no-param-reassign": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/adjacent-overload-signatures": "off",
+    "no-useless-constructor": "off",
+    "no-restricted-exports": "off",
+    "class-methods-use-this": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
+  }
+} 

@@ -1,0 +1,1 @@
+export { SidebarList as default } from "./chatList";

@@ -1,0 +1,22 @@
+<ul class="chat__list">
+  {{#each messages}}
+  <li class="chat__item">
+    {{#each this.messageBlock}}
+    <div class="chat__messages">
+      <div class="chat__message">
+        <p>{{this.content}}</p>
+        {{#if this.check}}
+        <div class="chat__icon-block">
+          {{#if this.delivered}}
+          <i class="chat__check-icon fa-solid fa-check"></i>
+          {{/if}}
+          <i class="chat__check-icon fa-solid fa-check"></i>
+        </div>
+        {{/if}}
+        <p>{{this.time}}</p>
+      </div>
+    </div>
+    {{/each}}
+  </li>
+  {{/each}}
+</ul>
