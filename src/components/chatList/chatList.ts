@@ -1,23 +1,14 @@
 import Block from "../../utils/Block";
+import { SidebarListData } from "../../utils/Store";
 import template from "./chatList.hbs";
 
-interface chatItem {
-  activeClass?: string,
-  image?: string,
-  chatName: string,
-  sender?: string,
-  message: string,
-  time: string,
-  notificationCount?: number
-}
-
-interface sidebarList {
-  chatList: chatItem[]
-}
-
 export class SidebarList extends Block {
-  constructor(props: sidebarList) {
+  constructor(props: SidebarListData) {
     super(props);
+  }
+
+  componentDidUpdate(oldProps: any, newProps: any): boolean {
+    return true;
   }
 
   render() {

@@ -1,5 +1,6 @@
-import { nanoid } from "nanoid";
+import { v4 as uuidv4 } from "uuid";
 import EventBus from "./EventBus";
+import { isEqual } from "./helpers";
 
 class Block {
   static EVENTS = {
@@ -9,7 +10,7 @@ class Block {
     FLOW_RENDER: "flow:render",
   };
 
-  public id = nanoid(6);
+  public id = uuidv4();
 
   private _element: HTMLElement | null = null;
 
@@ -20,7 +21,7 @@ class Block {
   protected props: any;
 
   // eslint-disable-next-line no-use-before-define
-  protected children: Record<string, Block>;
+  protected children: Record<string, any>;
 
   private eventBus: () => EventBus;
 
@@ -98,6 +99,9 @@ class Block {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidUpdate(oldProps: any, newProps: any) {
+    if (isEqual(oldProps, newProps)) {
+      return false;
+    }
     return true;
   }
 
@@ -140,7 +144,7 @@ class Block {
   }
 
   getContent(): HTMLElement | null {
-    return this._element;
+    return this._element || null;
   }
 
   _makePropsProxy(props: any) {
@@ -237,6 +241,12 @@ class Block {
 
     return fragment.content;
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  hide() { }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  show() { }
 }
 
 export default Block;

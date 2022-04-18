@@ -12,6 +12,9 @@
           <p>Поиск</p>
         </div>
       </div>
+      <div class="sidebar__add-btn">
+        {{{ addChat }}}
+      </div>
     </div>
     <div class="sidebar__body">
       {{{ chatList }}}
@@ -25,11 +28,14 @@
         </div>
         <div class="chat__name">Олеся</div>
       </div>
+      <div class="chat__header-add-btn">
+        {{{ addUsersButton }}}
+      </div>
       <div class="chat__side">
-        <a href="../../user-card.html" class="chat__link">
+        <div class="chat__link">
           <i class="chat__link-icon fa-solid fa-user"></i>
-          Мой аккаунт
-        </a>
+          {{{ link }}}
+        </div>
       </div>
     </div>
     <div class="chat__body">
@@ -42,10 +48,12 @@
       <button class="chat__smiles-button">
         <i class="fa-solid fa-paperclip"></i>
       </button>
-      <input type="text" placeholder="Сообщение" class="chat__message-input">
+      {{{ sendMessageInput }}}
       <button class="chat__send-button">
-        <i class="fa-solid fa-circle-arrow-right"></i>
+        {{{ sendMessageButton }}}
       </button>
     </div>
   </div>
+  {{{ addChatModal }}}
+  {{{ addUserModal }}}
 </main>

@@ -33,6 +33,12 @@
     "no-useless-constructor": "off",
     "no-restricted-exports": "off",
     "class-methods-use-this": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "linebreak-style": "off",
+    "no-constructor-return": "off",
+    "no-restricted-syntax": "off",
+    "no-continue": "off",
+    "no-prototype-builtins": "off",
+    "max-classes-per-file": "off"
   }
 } 

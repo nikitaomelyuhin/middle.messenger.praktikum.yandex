@@ -1,23 +1,11 @@
 <div class="user-card">
-  <a href="../../chat.html" class="back">
-    <div class="back__icon">
-      <span><i class="fa-solid fa-arrow-left"></i></span>
-    </div>
-  </a>
+  {{{ backButton }}}
   <div class="container user-card__container">
     <div class="user-card__body">
       <div class="user-card__avatar">
-        <div class="avatar-user">
-          <div class="avatar-user__text">
-            <p>Поменять аватар</p>
-          </div>
-          <div class="avatar-user__icon">
-            <i class="fa-solid fa-image"></i>
-          </div>
-          <div class="avatar-user__image"></div>
-        </div>
+        {{{ avatar }}}
       </div>
-      <h2 class="user-card__name">Никита</h2>
+      <h2 class="user-card__name">{{{ title }}}</h2>
       <ul class="user-card__list">
         <li class="user-card__item">
           {{{ cardRowMail }}}
@@ -51,4 +39,7 @@
       </ul>
     </div>
   </div>
+  {{{ profileModal }}}
+  {{{ passwordModal }}}
+  {{{ avatarModal }}}
 </div>

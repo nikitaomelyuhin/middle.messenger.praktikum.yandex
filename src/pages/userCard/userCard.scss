@@ -1,9 +1,8 @@
-@import "./layout/variables.scss";
-@import "./layout/back.scss";
-@import "./layout/avatar-user.scss";
-@import "./components/button/button.scss";
-@import "./components/input/input.scss";
-@import "./components/cardRow/cardRow.scss";
+@import "../../layout/avatar-user.scss";
+@import "../../components/backButton/backButton.scss";
+@import "../../components/button/button.scss";
+@import "../../components/input/input.scss";
+@import "../../components/cardRow/cardRow.scss";
 
 #app {
   height: 100%;

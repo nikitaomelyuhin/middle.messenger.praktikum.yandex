@@ -2,29 +2,38 @@ import Block from "../../utils/Block";
 import template from "./register.hbs";
 import Button from "../../components/button/index";
 import Input from "../../components/input/index";
+import Link from "../../components/link/index";
 import Validation from "../../utils/validate";
+import AuthController from "../../controllers/AuthController";
+import { SignUpData } from "../../api/AuthApi";
+import Router from "../../utils/Router";
 
-interface FormFields {
-  [key: string]: string
-}
-
-type Field = {
-  error: boolean,
-  errorMessage: string,
-  value: string,
-  type: string
-}
+type ValidationFields = {
+  email: boolean;
+  login: boolean;
+  first_name: boolean;
+  second_name: boolean;
+  phone: boolean;
+  password: boolean;
+};
 export class RegisterPage extends Block {
-  private _formFields: FormFields = {
-    mail: "",
+  private _formFields: SignUpData = {
+    email: "",
     login: "",
-    name: "",
-    lastName: "",
+    first_name: "",
+    second_name: "",
     phone: "",
     password: "",
   };
 
-  private _form = new Validation(this._formFields);
+  private _validationResult: ValidationFields = {
+    email: false,
+    login: false,
+    first_name: false,
+    second_name: false,
+    phone: false,
+    password: false,
+  };
 
   constructor() {
     super();
@@ -37,43 +46,43 @@ export class RegisterPage extends Block {
         click: (e) => this._formHandler(e),
       },
     });
-    this.children.mailInput = new Input({
+    this.children.emailInput = new Input({
       type: "text",
       placeholder: "Почта",
       events: {
-        keyup: (e) => { this._form.updateFields("mail", e.target.value); },
-        blur: () => this._updateProp("mail"),
+        keyup: (e) => { this._updateFields("email", e.target.value); },
+        blur: () => this._updateProp("email"),
       },
     });
     this.children.loginInput = new Input({
       type: "text",
       placeholder: "Логин",
       events: {
-        keyup: (e) => { this._form.updateFields("login", e.target.value); },
+        keyup: (e) => { this._updateFields("login", e.target.value); },
         blur: () => this._updateProp("login"),
       },
     });
-    this.children.nameInput = new Input({
+    this.children.first_nameInput = new Input({
       type: "text",
       placeholder: "Имя",
       events: {
-        keyup: (e) => { this._form.updateFields("name", e.target.value); },
-        blur: () => this._updateProp("name"),
+        keyup: (e) => { this._updateFields("first_name", e.target.value); },
+        blur: () => this._updateProp("first_name"),
       },
     });
-    this.children.lastNameInput = new Input({
+    this.children.second_nameInput = new Input({
       type: "text",
       placeholder: "Фамилия",
       events: {
-        keyup: (e) => { this._form.updateFields("lastName", e.target.value); },
-        blur: () => this._updateProp("lastName"),
+        keyup: (e) => { this._updateFields("second_name", e.target.value); },
+        blur: () => this._updateProp("second_name"),
       },
     });
     this.children.phoneInput = new Input({
       type: "text",
       placeholder: "Телефон",
       events: {
-        keyup: (e) => { this._form.updateFields("phone", e.target.value); },
+        keyup: (e) => { this._updateFields("phone", e.target.value); },
         blur: () => this._updateProp("phone"),
       },
     });
@@ -81,63 +90,76 @@ export class RegisterPage extends Block {
       type: "password",
       placeholder: "Пароль",
       events: {
-        keyup: (e) => { this._form.updateFields("password", e.target.value); },
+        keyup: (e) => { this._updateFields("password", e.target.value); },
         blur: () => this._updateProp("password"),
+      },
+    });
+    this.children.link = new Link({
+      text: "Войти",
+      events: {
+        click: () => {
+          Router.go("/");
+        },
       },
     });
   }
 
-  private _formHandler(e: any) {
+  private _updateFields(type: keyof SignUpData, newValue: string) {
+    this._formFields[type] = newValue;
+  }
+
+  private async _formHandler(e: any) {
     e.preventDefault();
-    this._updateProp("mail");
+    this._updateProp("email");
     this._updateProp("login");
-    this._updateProp("name");
-    this._updateProp("lastName");
+    this._updateProp("first_name");
+    this._updateProp("second_name");
     this._updateProp("phone");
     this._updateProp("password");
 
-    for (let i = 0; i < this._form.getForm.length; i++) {
-      const field = this._form.getForm[i];
-      if (field.error) {
-        Object.keys(this._formFields).forEach((key) => {
-          this._formFields[key] = "";
-        });
-        break;
+    let isValidationSuccess = true;
+
+    Object.values(this._validationResult).forEach((key) => {
+      if (!key) {
+        isValidationSuccess = false;
       }
-      this._formFields[field.type] = field.value;
-    }
-    const promise = new Promise((resolve: any, reject: any) => {
-      Object.values(this._formFields).forEach((value) => {
-        if (!value) {
-          reject(new Error("Validation failed"));
-        }
-      });
-      resolve(this._formFields);
     });
-
-    promise.then((res) => {
-      console.log(res);
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
-
-  private _updateProp(propType: string) {
-    const prop = this._form.form.find((el) => el.type === propType);
-    if (prop) {
-      const stateClass = this._getStateClass(prop);
-      this.children[`${propType}Input`].setProps({
-        error: prop.errorMessage,
-        stateClass,
-      });
-      this.children[`${propType}Input`].element!.querySelector("input")!.value = prop.value;
+    if (isValidationSuccess) {
+      await AuthController.signUp(this._formFields);
     }
   }
 
-  private _getStateClass(field: Field): string {
-    if (field.error && !field.value) {
-      return "app-input__textfield_error app-input__textfield_empty";
-    } if (field.error) {
+  private _updateProp(propType: keyof SignUpData) {
+    const prop = this._formFields[propType];
+    const validateProp = new Validation();
+    if (propType === "login") {
+      validateProp.validateLogin(prop);
+    }
+    if (propType === "password") {
+      validateProp.validatePassword(prop);
+    }
+    if (propType === "first_name" || propType === "second_name") {
+      validateProp.validateName(prop);
+    }
+    if (propType === "phone") {
+      validateProp.validatePhone(prop);
+    }
+    if (propType === "email") {
+      validateProp.validateEmail(prop);
+    }
+
+    const validationResult = validateProp.result;
+    this._validationResult[propType] = validationResult.isValid;
+    const stateClass = this._getStateClass(validationResult.isValid);
+    this.children[`${propType}Input`].setProps({
+      error: validationResult.message,
+      value: prop,
+      stateClass,
+    });
+  }
+
+  private _getStateClass(isValid: boolean): string {
+    if (!isValid) {
       return "app-input__textfield_error";
     }
     return "app-input__textfield_valid";

@@ -2,170 +2,129 @@ import Block from "../../utils/Block";
 import template from "./chat.hbs";
 import SidebarList from "../../components/chatList/index";
 import Messages from "../../components/chatMessages/index";
+import Link from "../../components/link/index";
+import Router from "../../utils/Router";
+import Button from "../../components/button/index";
+import AddChatModal from "../../components/addChatModal/index";
+import ChatController from "../../controllers/ChatController";
+import { isEmptyObject, isEqual } from "../../utils/helpers";
+import { SidebarListData } from "../../utils/Store";
+import AddUserModal from "../../components/addUserModal/index";
+import Input from "../../components/input/index";
+import text from "../../components/text/index";
+import socket from "../../api/Socket";
 
 export class ChatPage extends Block {
-  constructor() {
-    super();
+  private addChatModal: HTMLElement | null = null;
+
+  private addUserModal: HTMLElement | null = null;
+
+  private chat: HTMLElement | null = null;
+
+  private currentChatId: number;
+
+  private message: string;
+
+  constructor(props?: any) {
+    super(props);
+    if (this.element) {
+      this.addChatModal = this.element.querySelector(".add-chat-modal");
+      this.addUserModal = this.element.querySelector(".add-user-modal");
+    }
+    this.addChatModal?.addEventListener("click", (e) => this.closeModal(e));
+    this.addUserModal?.addEventListener("click", (e) => this.closeModal(e));
+  }
+
+  public getChatId() {
+    return this.currentChatId;
   }
 
   protected initChildren() {
-    this.children.chatList = new SidebarList({
-      chatList: [
-        {
-          chatName: "Виталий",
-          message: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta in commodi, totam laudantium, quas eaque aut impedit, doloribus nisi repellendus iusto cumque facere officiis voluptate temporibus illum expedita!",
-          time: "Ср",
-          notificationCount: 3,
-        },
-        {
-          chatName: "Алексей",
-          sender: "Вы",
-          message: "Lorem, ipsum dolor",
-          time: "10:49",
-        },
-        {
-          chatName: "Бани Эстонии",
-          message: "Lorem, ipsum dolor iusto cumque facere officiis",
-          time: "20:45",
-          notificationCount: 129,
-        },
-        {
-          chatName: "Олеся",
-          sender: "Вы",
-          message: "Lorem, ipsum dolor",
-          time: "13:15",
-          activeClass: "sidebar-item_active",
-        },
-        {
-          chatName: "Алексей",
-          sender: "Вы",
-          message: "Lorem, ipsum dolor",
-          time: "10:49",
-        },
-        {
-          chatName: "Алексей",
-          sender: "Вы",
-          message: "Lorem, ipsum dolor",
-          time: "10:49",
-        },
-      ],
+    this.children.addUsersButton = new Button({
+      text: "Добавить нового пользователя",
+      events: {
+        click: () => this.openModal(".add-user-modal"),
+      },
     });
-    this.children.messages = new Messages({
-      messages: [
-        {
-          messageBlock: [
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta in commodi, totam laudantium, quas eaque aut impedit, doloribus nisi repellendus iusto cumque facere officiis voluptate temporibus illum expedita!",
-              time: "12:45",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta",
-              time: "12:46",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta in commodi, totam laudantium, quas eaque aut impedit, doloribus nisi repellendus iusto cumque facere officiis voluptate temporibus illum expedita!",
-              time: "12:47",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum ",
-              time: "12:47",
-            },
-          ],
-        },
-        {
-          messageBlock: [
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor ipsum dolor ipsum dolor",
-              time: "12:48",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor ipsum dolor ipsum dolor. Lorem, ipsum dolor ipsum dolor ipsum dolor",
-              time: "12:48",
-            },
-          ],
-        },
-        {
-          messageBlock: [
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta in commodi, totam laudantium, quas eaque aut impedit, doloribus nisi repellendus iusto cumque facere officiis voluptate temporibus illum expedita!",
-              time: "12:55",
-            },
-            {
-              type: "text",
-              content: "Lorem",
-              time: "13:00",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum",
-              time: "13:00",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta",
-              time: "13:22",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae",
-              time: "13:25",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta",
-              time: "13:34",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor",
-              time: "13:34",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum",
-              time: "13:34",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab recusandae soluta in commodi, totam laudantium, quas eaque aut impedit, doloribus nisi repellendus iusto cumque facere officiis voluptate temporibus illum expedita!",
-              time: "13:35",
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum",
-              time: "14:46",
-            },
-          ],
-        },
-        {
-          messageBlock: [
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor ipsum dolor ipsum dolor",
-              time: "13:15",
-              check: true,
-              delivered: true,
-            },
-            {
-              type: "text",
-              content: "Lorem, ipsum dolor",
-              time: "13:15",
-              check: true,
-            },
-          ],
-        },
-      ],
+    this.children.addChatModal = new AddChatModal();
+    this.children.addUserModal = new AddUserModal();
+    this.children.addChat = new Button({
+      text: "Добавить новый чат",
+      type: "simple",
+      events: {
+        click: () => this.openModal(".add-chat-modal"),
+      },
     });
+    this.children.link = new Link({
+      text: "Нет аккаунта?",
+      events: {
+        click: () => {
+          Router.go("/user-card");
+        },
+      },
+    });
+    this.children.sendMessageInput = new Input({
+      type: "text",
+      placeholder: "Сообщение",
+      events: {
+        keyup: (e) => this.setMessageText(e),
+      },
+    });
+    this.children.sendMessageButton = new Button({
+      isIconed: true,
+      iconClass: "fa-solid fa-arrow-right",
+      type: "round",
+      events: {
+        click: () => this.sendMessage(),
+      },
+    });
+  }
+
+  private setMessageText(e: any) {
+    this.message = e.target.value;
+  }
+
+  private sendMessage() {
+    socket.sendMessage(this.message);
+  }
+
+  private openModal(selector: string) {
+    const modal = document.querySelector(selector);
+    modal?.classList.add("modal_active");
+  }
+
+  closeModal(e: any): void {
+    if (e.target.classList.contains("modal__backdrop")) {
+      e.currentTarget.classList.remove("modal_active");
+    }
+  }
+
+  componentDidUpdate(oldProps: any, newProps: any): boolean {
+    setTimeout(() => {
+      document.querySelector(".chat__body")!.scrollTop = document.querySelector(".chat__body")!.scrollHeight;
+    });
+
+    if (!isEqual(oldProps, newProps)) {
+      if (!isEmptyObject(newProps)) {
+        const updatedProps = (Object.values(newProps.sidebarData) as any);
+        this.currentChatId = updatedProps[0].id;
+        this.children.chatList = new SidebarList({
+          chatList: updatedProps,
+        });
+        this.children.messages = new Messages({
+          messages: newProps.lastMessages,
+        });
+        return true;
+      }
+    }
+    return false;
   }
 
   render() {
     return this.compile(template, []);
   }
 }
+
+// document.addEventListener("DOMContentLoaded", () => {
+
+// });

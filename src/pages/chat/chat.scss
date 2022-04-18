@@ -1,5 +1,4 @@
-@import "./layout/variables.scss";
-@import "./components/chatList/chatList.scss";
+@import "../../components/chatList/chatList.scss";
 
 $sidebar-width: 25%;
 
@@ -34,6 +33,11 @@ $sidebar-width: 25%;
   }
   &__search {
     position: relative;
+    margin-bottom: 20px;
+  }
+  &__add-btn {
+    display: flex;
+    justify-content: center;
   }
   &__input {
     border: none;
@@ -112,8 +116,13 @@ $sidebar-width: 25%;
     display: flex;
     align-items: center;
   }
+  &__link {
+    display: flex;
+    align-items: center;
+  }
   &__link-icon {
-    margin-right: 3px;
+    margin-right: 5px;
+    color: $primary;
   }
   &__avatar {
     width: 40px;
@@ -169,7 +178,7 @@ $sidebar-width: 25%;
         background-color: $message-light;
       }
     }
-    &:nth-child(2n) {
+    &_self {
       align-items: flex-end;
       & .chat__messages {
         display: flex;

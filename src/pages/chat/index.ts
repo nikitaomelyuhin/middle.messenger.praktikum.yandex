@@ -1,4 +1,6 @@
-const chat = document.querySelector(".chat__body");
-if (chat) {
-  chat.scrollTop = chat.scrollHeight;
-}
+import { ChatPage } from "./chat";
+import { withStore } from "../../utils/Store";
+
+const withChat = withStore((state) => ({ ...state.chat }));
+
+export default withChat(ChatPage);
