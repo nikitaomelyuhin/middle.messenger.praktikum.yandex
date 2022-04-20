@@ -56,7 +56,7 @@ export class ChatPage extends Block {
       },
     });
     this.children.link = new Link({
-      text: "Нет аккаунта?",
+      text: "Ваш профиль",
       events: {
         click: () => {
           Router.go("/user-card");

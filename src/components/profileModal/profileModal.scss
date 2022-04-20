@@ -10,8 +10,19 @@
   align-items: center;
   min-width: 500px;
   padding: 30px 20px;
+  &__title {
+    margin-bottom: 20px;
+  }
+  &__input {
+    margin-bottom: 15px;
+    display: flex;
+  }
   &__list {
     width: 100%;
     margin-bottom: 40px;
+  }
+  &__button {
+    display: flex;
+    justify-content: center;
   }
 }

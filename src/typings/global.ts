@@ -3,6 +3,7 @@ export type Events = {
   blur?: (e: any) => void;
   focus?: (e: any) => void;
   click?: (e: any) => void;
+  change?: (e: any) => void;
 }
 
 export type Field = {
