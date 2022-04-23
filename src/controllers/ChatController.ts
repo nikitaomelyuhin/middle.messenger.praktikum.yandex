@@ -30,7 +30,7 @@ class ChatController {
     try {
       await this.api.create(data);
       this.fetchChats();
-      Router.go("/chat");
+      Router.go("/messenger");
     } catch (err) {
       console.log(err);
     }

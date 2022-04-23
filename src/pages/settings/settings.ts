@@ -1,5 +1,5 @@
 import Block from "../../utils/Block";
-import template from "./userCard.hbs";
+import template from "./settings.hbs";
 import Button from "../../components/button/index";
 import CardRow from "../../components/cardRow/index";
 import AuthController from "../../controllers/AuthController";
@@ -12,7 +12,7 @@ import PasswordModal from "../../components/passwordModal/index";
 import AvatarModal from "../../components/avatarModal/index";
 import { isEqual } from "../../utils/helpers";
 
-export class UserCard extends Block {
+export class Settings extends Block {
   private profileModal: HTMLElement | null = null;
 
   private passwordModal: HTMLElement | null = null;
@@ -37,7 +37,7 @@ export class UserCard extends Block {
     this.children.avatarModal = new AvatarModal();
     this.children.backButton = new BackButton({
       events: {
-        click: () => Router.go("/chat"),
+        click: () => Router.go("/messenger"),
       },
     });
     this.children.title = new Text({

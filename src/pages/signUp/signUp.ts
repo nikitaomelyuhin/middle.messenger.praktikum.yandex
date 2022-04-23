@@ -1,5 +1,5 @@
 import Block from "../../utils/Block";
-import template from "./register.hbs";
+import template from "./signUp.hbs";
 import Button from "../../components/button/index";
 import Input from "../../components/input/index";
 import Link from "../../components/link/index";
@@ -16,7 +16,7 @@ type ValidationFields = {
   phone: boolean;
   password: boolean;
 };
-export class RegisterPage extends Block {
+export class SignUpPage extends Block {
   private _formFields: SignUpData = {
     email: "",
     login: "",

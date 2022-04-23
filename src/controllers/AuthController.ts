@@ -62,7 +62,7 @@ class AuthController {
       store.set("currentUser.data", user);
       store.set("currentUser.loading", false);
       if (window.location.pathname === "/") {
-        Router.go("/chat");
+        Router.go("/messenger");
       } else {
         Router.go(window.location.pathname);
       }

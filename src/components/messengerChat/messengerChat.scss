@@ -1,105 +1,12 @@
-@import "../../components/chatList/chatList.scss";
-
-$sidebar-width: 25%;
-
-.main-page {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-}
-
-.sidebar {
-  position: fixed;
-  height: 100vh;
-  width: $sidebar-width;
-  background-color: $bg-light;
-  &__header {
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid $border-light;
-    padding: 20px;
-  }
-  &__text {
-    align-self: flex-end;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    font-size: 13px;
-  }
-  &__icon {
-    margin-left: 5px;
-    font-size: 13px;
-    transform: rotate(-90deg);
-  }
-  &__search {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  &__add-btn {
-    display: flex;
-    justify-content: center;
-  }
-  &__input {
-    border: none;
-    background-color: $bg-input;
-    padding: 10px 15px;
-    outline: none;
-    width: 100%;
-    border-radius: $border-radius-small;
-    font-size: 16px;
-    &:focus {
-      & ~ .sidebar__search-placeholder {
-        opacity: 0;
-      }
-    }
-  }
-  &__search-placeholder {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 1;
-    transition: .3s;
-    user-select: none;
-    pointer-events: none;
-  }
-  &__input:valid {
-    & ~ .sidebar__search-placeholder {
-      opacity: 0;
-    }
-  }
-  &__search-icon {
-    color: $text;
-    margin-right: 5px;
-  }
-  &__body {
-    overflow: auto;
-    height: 100%;
-    padding-bottom: 122px;
-    height: 100%;
-    &::-webkit-scrollbar {
-      width: 3px;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: $bg-dark;
-      &:hover {
-        background-color: $bg-dark;
-      }
-    }
-  }
-}
-
-.chat {
-  margin-left: 25%;
+.messenger {
   font-size: 12px;
   color: $text-dark;
-  height: 100vh;
-  flex: 1;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  &__content {
+    flex: 1;
+    overflow: hidden;
+  }
   &__header {
     position: fixed;
     top: 0;
@@ -261,5 +168,26 @@ $sidebar-width: 25%;
     &:hover {
       color: $primary-hover;
     }
+  }
+}
+
+.empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  &__header {
+    justify-content: flex-end;
+  }
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 20px;
+  }
+  &__add-chat {
+    margin-bottom: 20px;
   }
 }

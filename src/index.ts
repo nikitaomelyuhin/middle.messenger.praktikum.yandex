@@ -1,8 +1,8 @@
 import Router from "./utils/Router";
 import LoginPage from "./pages/login/index";
-import { RegisterPage } from "./pages/register/register";
-import ChatPage from "./pages/chat/index";
-import UserCard from "./pages/userCard/index";
+import { SignUpPage } from "./pages/signUp/signUp";
+import MessengerPage from "./pages/messenger/index";
+import Settings from "./pages/settings/index";
 import AuthController from "./controllers/AuthController";
 import store, { StoreEvents } from "./utils/Store";
 import ChatController from "./controllers/ChatController";
@@ -10,9 +10,9 @@ import ChatController from "./controllers/ChatController";
 document.addEventListener("DOMContentLoaded", async () => {
   Router
     .use("/", LoginPage)
-    .use("/chat", ChatPage)
-    .use("/register", RegisterPage)
-    .use("/user-card", UserCard)
+    .use("/messenger", MessengerPage)
+    .use("/sign-up", SignUpPage)
+    .use("/settings", Settings)
     .start();
   await AuthController.fetchUser();
   await ChatController.fetchChats();
