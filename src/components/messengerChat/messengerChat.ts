@@ -99,7 +99,9 @@ export class MessengerChat extends Block {
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
     setTimeout(() => {
-      document.querySelector(".messenger__body")!.scrollTop = document.querySelector(".messenger__body")!.scrollHeight;
+      if (document.querySelector(".messenger__body")) {
+        document.querySelector(".messenger__body")!.scrollTop = document.querySelector(".messenger__body")?.scrollHeight || 0;
+      }
     });
     if (!isEqual(oldProps, newProps)) {
       if (!isEmptyObject(newProps)) {

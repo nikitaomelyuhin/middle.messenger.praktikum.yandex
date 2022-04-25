@@ -2,6 +2,7 @@
 import { isEqual, set } from "./helpers";
 import EventBus from "./EventBus";
 import Block from "./Block";
+import { Events } from "../typings/global";
 
 // eslint-disable-next-line no-shadow
 export enum StoreEvents {
@@ -31,6 +32,8 @@ export interface SidebarItem {
   last_message: LastMessage | null;
   time: string;
   content: string;
+  events: Events;
+  activeClass: null;
 }
 
 export interface SidebarListData {

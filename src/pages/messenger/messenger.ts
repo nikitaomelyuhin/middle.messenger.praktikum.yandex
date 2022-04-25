@@ -3,9 +3,10 @@ import template from "./messenger.hbs";
 import SidebarList from "../../components/chatList/index";
 import Button from "../../components/button/index";
 import AddChatModal from "../../components/addChatModal/index";
-import { isEmptyObject, isEqual } from "../../utils/helpers";
+import { getQueryParameterByName, isEmptyObject, isEqual } from "../../utils/helpers";
 import SmallCard from "../../components/smallCard/index";
 import MessengerChat from "../../components/messengerChat/index";
+import Router from "../../utils/Router";
 
 export class MessengerPage extends Block {
   private addChatModal: HTMLElement | null = null;
@@ -50,7 +51,24 @@ export class MessengerPage extends Block {
     }
   }
 
+  private _sidebarChatClickHandler() {
+    setTimeout(() => {
+      const elements = document.querySelectorAll(".chat-list__item");
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        element.addEventListener("click", (e: any) => {
+          const chatId = e.currentTarget.getAttribute("data-id");
+          const currentPageId = getQueryParameterByName("id");
+          if (!currentPageId || currentPageId !== chatId) {
+            Router.go(`/messenger?id=${chatId}`);
+          }
+        });
+      }
+    });
+  }
+
   componentDidUpdate(oldProps: any, newProps: any): boolean {
+    this._sidebarChatClickHandler();
     if (!isEqual(oldProps, newProps)) {
       if (!isEmptyObject(newProps)) {
         const updatedProps = (Object.values(newProps.sidebarData) as any);

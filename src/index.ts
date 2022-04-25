@@ -27,4 +27,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   store.on(StoreEvents.Updated, () => {
     // console.log(store.getState().lastMessages);
   });
+
+  function TEST(id) {
+    console.log(id);
+  }
 });

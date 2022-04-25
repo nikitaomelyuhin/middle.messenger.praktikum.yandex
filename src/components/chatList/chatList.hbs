@@ -1,7 +1,7 @@
 <ul class="chat-list">
   {{#each chatList}}
-  <li class="chat-list__item">
-    <button class="sidebar-item {{this.activeClass}}">
+  <li class="chat-list__item {{this.activeClass}}" data-id="{{this.id}}">
+    <button class="sidebar-item">
       <div class="sidebar-item__wrapper">
         <div class="sidebar-item__block">
           <div class="sidebar-item__avatar">

@@ -1,5 +1,6 @@
 import ChatApi from "../api/ChatApi";
 import socket from "../api/Socket";
+import { getQueryParameterByName } from "../utils/helpers";
 import Router from "../utils/Router";
 import store from "../utils/Store";
 

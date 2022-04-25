@@ -1,3 +1,14 @@
+.chat-list {
+  &__item {
+    &_active {
+      background-color: $primary-light;
+      & .sidebar-item__wrapper {
+        border-bottom: 1px solid $primary-light;
+      }
+    }
+  }
+}
+
 .sidebar-item {
   display: flex;
   transition: .3s;
@@ -20,12 +31,6 @@
     width: 100%;
     padding: 15px 0;
     border-bottom: 1px solid $border-light;
-  }
-  &_active {
-    background-color: $primary-light;
-    & .sidebar-item__wrapper {
-      border-bottom: 1px solid $primary-light;
-    }
   }
   &__block {
     display: flex;
