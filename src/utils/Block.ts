@@ -118,6 +118,7 @@ class Block {
   }
 
   _render() {
+    this._componentDidMount();
     const fragment = this.render();
 
     const newElement = fragment.firstElementChild as HTMLElement;
@@ -133,7 +134,6 @@ class Block {
     if (elementForEvent) {
       this._elementForEvents = elementForEvent as HTMLElement;
     }
-
     this._removeEvents();
 
     this._addEvents();

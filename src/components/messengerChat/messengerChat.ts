@@ -1,7 +1,7 @@
 import socket from "../../api/Socket";
 import { Events } from "../../typings/global";
 import Block from "../../utils/Block";
-import { isEmptyObject, isEqual } from "../../utils/helpers";
+import { getQueryParameterByName, isEmptyObject, isEqual } from "../../utils/helpers";
 import Router from "../../utils/Router";
 import AddChatModal from "../addChatModal/index";
 import AddUserModal from "../addUserModal/index";
@@ -94,21 +94,29 @@ export class MessengerChat extends Block {
   }
 
   private sendMessage() {
-    socket.sendMessage(this.message);
+    const currentPageId = getQueryParameterByName("id");
+    socket.sendMessage(this.message, parseFloat(currentPageId));
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
-    setTimeout(() => {
-      if (document.querySelector(".messenger__body")) {
-        document.querySelector(".messenger__body")!.scrollTop = document.querySelector(".messenger__body")?.scrollHeight || 0;
-      }
-    });
+    if (!newProps.chatId) {
+      newProps.isEmpty = true;
+    } else {
+      newProps.isEmpty = false;
+    }
+    // setTimeout(() => {
+    //   if (document.querySelector(".messenger__body")) {
+    //     document.querySelector(".messenger__body")!.scrollTop = document.querySelector(".messenger__body")?.scrollHeight || 0;
+    //   }
+    // });
     if (!isEqual(oldProps, newProps)) {
       if (!isEmptyObject(newProps)) {
-        this.children.messages = new Messages({
-          messages: newProps.lastMessages,
-        });
-        return true;
+        if (newProps.lastMessages) {
+          this.children.messages = new Messages({
+            messages: newProps.lastMessages[`${newProps.chatId}`],
+          });
+          return true;
+        }
       }
     }
     return false;

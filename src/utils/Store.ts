@@ -33,7 +33,7 @@ export interface SidebarItem {
   time: string;
   content: string;
   events: Events;
-  activeClass: null;
+  activeClass: null | string;
 }
 
 export interface SidebarListData {
@@ -63,12 +63,8 @@ interface StoreData {
     error: unknown;
   }
   chat?: {
-    sidebarData?: {
-      data: SidebarListData;
-      loading: boolean;
-      error: unknown;
-    }
-    lastMessages?: LastMessagesItem[]
+    sidebarData?: SidebarListData
+    lastMessages?: any
   }
 }
 

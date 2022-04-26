@@ -19,16 +19,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   const storeChats = store.getState().chat?.sidebarData;
   const storeUserId = store.getState().currentUser?.data.id;
   if (storeChats && storeChats.length) {
-    ChatController.connectSocket({
-      chatId: storeChats[0].id,
-      userId: storeUserId,
+    storeChats.forEach((chat) => {
+      ChatController.connectSocket({
+        chatId: chat.id,
+        userId: storeUserId,
+      });
     });
   }
   store.on(StoreEvents.Updated, () => {
     // console.log(store.getState().lastMessages);
   });
-
-  function TEST(id) {
-    console.log(id);
-  }
 });

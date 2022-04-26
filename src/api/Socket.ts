@@ -9,7 +9,7 @@ interface SocketConnectData {
 class Socket {
   private connectionProps: SocketConnectData;
 
-  private socket: any;
+  private socket: any = {};
 
   private userId: number;
 
@@ -19,49 +19,51 @@ class Socket {
   public identification(props: SocketConnectData) {
     this.connectionProps = props;
     this.socketConnect(props);
-    this.getMessage();
+    this.getMessage(props.chatId);
   }
 
   private socketConnect(props?: SocketConnectData) {
     if (props) {
       const { userId, chatId, token } = props;
       this.userId = userId;
-      if (!this.socket) {
-        this.socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
-      }
-      this.supportConnection();
+      this.socket[`${chatId}`] = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
+      this.supportConnection(chatId);
     }
   }
 
-  private supportConnection() {
-    this.socket.addEventListener("open", (event) => {
+  private supportConnection(chatId: number) {
+    this.socket[`${chatId}`].addEventListener("open", (event) => {
       setInterval(() => {
-        this.socket.send(JSON.stringify({
+        this.socket[`${chatId}`].send(JSON.stringify({
           type: "ping",
         }));
       }, 30000);
-      this.socket.send(JSON.stringify({
+      this.socket[`${chatId}`].send(JSON.stringify({
         content: "0",
         type: "get old",
       }));
     });
   }
 
-  public sendMessage(message: string) {
-    this.socket.send(JSON.stringify({
+  public sendMessage(message: string, chatId: number) {
+    this.socket[`${chatId}`].send(JSON.stringify({
       type: "message",
       content: message,
     }));
-    this.socket.send(JSON.stringify({
+    this.socket[`${chatId}`].send(JSON.stringify({
       content: "0",
       type: "get old",
     }));
   }
 
-  private getMessage() {
-    this.socket.addEventListener("message", (event: any) => {
+  public getMessage(chatId: number) {
+    this.socket[`${chatId}`].addEventListener("message", (event: any) => {
       const data = JSON.parse(event.data);
+      // console.log(event);
+      // console.log(data.type, chatId);
+      // debugger;
       if (Array.isArray(data)) {
+        console.log(data);
         data.forEach((message) => {
           if (message.user_id === this.userId) {
             message.isSelf = true;
@@ -69,16 +71,9 @@ class Socket {
           }
           message.isSelf = false;
         });
-        store.set("chat.lastMessages", data.reverse());
-        return;
+        store.set(`chat.lastMessages.${chatId}`, data.reverse());
       }
-
-      if (data.type === "message") {
-        this.socket.send(JSON.stringify({
-          content: "0",
-          type: "get old",
-        }));
-      }
+      // }
     });
   }
 }

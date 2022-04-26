@@ -1,5 +1,6 @@
 import ChatController from "../../controllers/ChatController";
 import Block from "../../utils/Block";
+import { getQueryParameterByName } from "../../utils/helpers";
 import Button from "../button/index";
 import Input from "../input/index";
 import template from "./addUserModal.hbs";
@@ -33,11 +34,13 @@ export class AddUserModal extends Block {
   }
 
   private addUser() {
+    const currentPageId = getQueryParameterByName("id");
+
     ChatController.addUser({
       users: [
         this.userId,
       ],
-      chatId: 2444,
+      chatId: parseFloat(currentPageId),
     });
   }
 
