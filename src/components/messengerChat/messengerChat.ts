@@ -109,14 +109,12 @@ export class MessengerChat extends Block {
     //     document.querySelector(".messenger__body")!.scrollTop = document.querySelector(".messenger__body")?.scrollHeight || 0;
     //   }
     // });
-    if (!isEqual(oldProps, newProps)) {
+    if (oldProps.lastMessages) {
       if (!isEmptyObject(newProps)) {
-        if (newProps.lastMessages) {
-          this.children.messages = new Messages({
-            messages: newProps.lastMessages[`${newProps.chatId}`],
-          });
-          return true;
-        }
+        this.children.messages = new Messages({
+          messages: newProps.lastMessages[`${newProps.chatId}`],
+        });
+        return true;
       }
     }
     return false;

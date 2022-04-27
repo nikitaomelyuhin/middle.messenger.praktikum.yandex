@@ -50,20 +50,18 @@ class Socket {
       type: "message",
       content: message,
     }));
-    this.socket[`${chatId}`].send(JSON.stringify({
-      content: "0",
-      type: "get old",
-    }));
+    setTimeout(() => {
+      this.socket[`${chatId}`].send(JSON.stringify({
+        content: "0",
+        type: "get old",
+      }));
+    });
   }
 
   public getMessage(chatId: number) {
     this.socket[`${chatId}`].addEventListener("message", (event: any) => {
       const data = JSON.parse(event.data);
-      // console.log(event);
-      // console.log(data.type, chatId);
-      // debugger;
       if (Array.isArray(data)) {
-        console.log(data);
         data.forEach((message) => {
           if (message.user_id === this.userId) {
             message.isSelf = true;
@@ -73,7 +71,12 @@ class Socket {
         });
         store.set(`chat.lastMessages.${chatId}`, data.reverse());
       }
-      // }
+      if (data.type === "message") {
+        this.socket[`${chatId}`].send(JSON.stringify({
+          content: "0",
+          type: "get old",
+        }));
+      }
     });
   }
 }

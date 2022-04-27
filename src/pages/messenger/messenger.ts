@@ -84,6 +84,10 @@ export class MessengerPage extends Block {
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
     this._sidebarChatClickHandler();
+    this.children.messengerChat.setProps({
+      chatId: this.currentChatId,
+      lastMessages: newProps.lastMessages,
+    });
     if (!isEqual(oldProps, newProps)) {
       // const currentPageId = getQueryParameterByName("id");
       // this.currentChatId = parseFloat(currentPageId);
