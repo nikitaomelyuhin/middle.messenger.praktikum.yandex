@@ -3,10 +3,12 @@ import { Events } from "../../typings/global";
 import Block from "../../utils/Block";
 import { getQueryParameterByName, isEmptyObject, isEqual } from "../../utils/helpers";
 import Router from "../../utils/Router";
+import store from "../../utils/Store";
 import AddChatModal from "../addChatModal/index";
 import AddUserModal from "../addUserModal/index";
 import Button from "../button/index";
 import Messages from "../chatMessages/index";
+import ChatName from "../chatName/index";
 import Input from "../input/index";
 import Link from "../link/index";
 import template from "./messengerChat.hbs";
@@ -61,6 +63,7 @@ export class MessengerChat extends Block {
     });
     this.children.sendMessageInput = new Input({
       type: "text",
+      value: "",
       placeholder: "Сообщение",
       events: {
         keyup: (e) => this.setMessageText(e),
@@ -91,11 +94,41 @@ export class MessengerChat extends Block {
 
   private setMessageText(e: any) {
     this.message = e.target.value;
+    if (e.key === "Enter") {
+      this.sendMessage();
+    }
   }
 
   private sendMessage() {
     const currentPageId = getQueryParameterByName("id");
-    socket.sendMessage(this.message, parseFloat(currentPageId));
+    if (this.message) {
+      socket.sendMessage(this.message, parseFloat(currentPageId));
+      this.message = "";
+      this.children.sendMessageInput.element.querySelector("input").value = "";
+    }
+  }
+
+  private _getChatAvatar(currentChat: any) {
+    if (!currentChat.avatar) {
+      if (!currentChat.last_message && store.getState().currentUser) {
+        return store.getState().currentUser?.data.avatar;
+      }
+      return currentChat.last_message.user.avatar;
+    }
+    return currentChat.avatar;
+  }
+
+  componentDidMount(): void {
+    const isAvailableChat = !!store.getState().chat && !!store.getState().chat?.sidebarData && this.props && this.props.chatId;
+    if (isAvailableChat) {
+      const currentChat = store.getState().chat!.sidebarData!.find((item) => item.id === this.props.chatId);
+
+      const avatar = this._getChatAvatar(currentChat);
+      this.children.chatName = new ChatName({
+        name: currentChat.title,
+        avatar,
+      });
+    }
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
@@ -104,13 +137,13 @@ export class MessengerChat extends Block {
     } else {
       newProps.isEmpty = false;
     }
-    // setTimeout(() => {
-    //   if (document.querySelector(".messenger__body")) {
-    //     document.querySelector(".messenger__body")!.scrollTop = document.querySelector(".messenger__body")?.scrollHeight || 0;
-    //   }
-    // });
     if (oldProps.lastMessages) {
       if (!isEmptyObject(newProps)) {
+        setTimeout(() => {
+          if (document.querySelector(".messenger__body")) {
+            document.querySelector(".messenger__body")!.scrollTop = document.querySelector(".messenger__body")?.scrollHeight || 0;
+          }
+        });
         this.children.messages = new Messages({
           messages: newProps.lastMessages[`${newProps.chatId}`],
         });

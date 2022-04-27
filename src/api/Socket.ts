@@ -1,3 +1,4 @@
+import { formatDate } from "../utils/helpers";
 import store from "../utils/Store";
 
 interface SocketConnectData {
@@ -50,12 +51,12 @@ class Socket {
       type: "message",
       content: message,
     }));
-    setTimeout(() => {
-      this.socket[`${chatId}`].send(JSON.stringify({
-        content: "0",
-        type: "get old",
-      }));
-    });
+    // setTimeout(() => {
+    //   this.socket[`${chatId}`].send(JSON.stringify({
+    //     content: "0",
+    //     type: "get old",
+    //   }));
+    // });
   }
 
   public getMessage(chatId: number) {
@@ -63,19 +64,31 @@ class Socket {
       const data = JSON.parse(event.data);
       if (Array.isArray(data)) {
         data.forEach((message) => {
+          message.time = formatDate(message.time);
           if (message.user_id === this.userId) {
             message.isSelf = true;
             return;
           }
           message.isSelf = false;
         });
+        // const currentState = store.getState().chat?.lastMessages;
+        // console.log(store.getState().chat?.lastMessages);
         store.set(`chat.lastMessages.${chatId}`, data.reverse());
       }
       if (data.type === "message") {
-        this.socket[`${chatId}`].send(JSON.stringify({
-          content: "0",
-          type: "get old",
-        }));
+        const currentState = [...store.getState().chat!.lastMessages[chatId]];
+        data.time = formatDate(data.time);
+        if (data.user_id === this.userId) {
+          data.isSelf = true;
+        } else {
+          data.isSelf = false;
+        }
+        currentState.push(data);
+        store.set(`chat.lastMessages.${chatId}`, currentState);
+        // this.socket[`${chatId}`].send(JSON.stringify({
+        //   content: "0",
+        //   type: "get old",
+        // }));
       }
     });
   }
