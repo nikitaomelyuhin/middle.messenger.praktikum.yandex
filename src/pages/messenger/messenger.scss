@@ -4,6 +4,8 @@ $sidebar-width: 25%;
 @import "../../components/messengerChat/messengerChat.scss";
 @import "../../components/chatList/chatList.scss";
 @import "../../components/chatName/chatName.scss";
+@import "../../components/chatMessages/chatMessages.scss";
+
 
 .main-page {
   min-height: 100vh;
@@ -116,6 +118,13 @@ $sidebar-width: 25%;
   &__list {
     display: block;
   }
+  &__avatar-user {
+    display: flex;
+    align-items: center;
+    & p {
+      font-weight: bold;
+    }
+  }
   &__item {
     width: 100%;
     display: flex;
@@ -163,5 +172,4 @@ $sidebar-width: 25%;
       color: $secondary;
     }
   }
-  
 }

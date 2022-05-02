@@ -12,15 +12,6 @@ type Options = {
   formData?: boolean;
 }
 
-// function queryStringify(data: Options) {
-//   if (typeof data !== "object") {
-//     throw new Error("Data must be object");
-//   }
-
-//   const keys = Object.keys(data);
-//   return keys.reduce((result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? "&" : ""}`, "?");
-// }
-
 export default class HTTPTransport {
   static API_URL = "https://ya-praktikum.tech/api/v2";
 

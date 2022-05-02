@@ -1,7 +1,6 @@
 import ProfileController from "../../controllers/ProfileController";
 import Block from "../../utils/Block";
 import { Button } from "../button/button";
-import { Input } from "../input/input";
 import template from "./avatarModal.hbs";
 import FileInput from "../fileInput/index";
 

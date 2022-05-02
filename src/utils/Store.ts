@@ -9,7 +9,7 @@ export enum StoreEvents {
   Updated = "updated"
 }
 
-export interface User {
+export type User = {
   id: number;
   first_name: string;
   second_name: string;
@@ -20,11 +20,11 @@ export interface User {
   avatar: string | null;
 }
 
-export interface LastMessage {
+export type LastMessage = {
   user: User;
 }
 
-export interface SidebarItem {
+export type SidebarItem = {
   id: number;
   title: string;
   avatar: string | null;
@@ -35,12 +35,7 @@ export interface SidebarItem {
   events: Events;
   activeClass: null | string;
 }
-
-export interface SidebarListData {
-  chatList: SidebarItem[]
-}
-
-export interface LastMessagesItem {
+export type LastMessagesItem = {
   chat_id: number;
   content: string;
   file: string | null;
@@ -51,7 +46,23 @@ export interface LastMessagesItem {
   user_id: number;
 }
 
-interface StoreData {
+export type ChatUser = {
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name: string;
+  login: string;
+  email: string;
+  phone: string;
+  avatar: string;
+  role: string;
+}
+
+export type ChatUsersObject = {
+  [key: string]: ChatUser[];
+}
+
+type StoreData = {
   currentUser?: {
     data: User;
     loading: boolean;
@@ -63,8 +74,13 @@ interface StoreData {
     error: unknown;
   }
   chat?: {
-    sidebarData?: SidebarListData
+    sidebarData?: SidebarItem[]
     lastMessages?: any
+  }
+  chatUsers?: {
+    data: ChatUsersObject;
+    loading: boolean;
+    error: unknown;
   }
 }
 

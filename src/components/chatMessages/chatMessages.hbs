@@ -1,20 +1,33 @@
 <ul class="chat__list">
   {{#each messages}}
-  <li class="chat__item {{#if this.isSelf }} chat__item_self {{/if}}">
-    <div class="chat__messages">
-      <div class="chat__message">
-        <p>{{this.content}}</p>
-        {{!-- {{#if this.check}}
-        <div class="chat__icon-block">
-          {{#if this.delivered}}
-          <i class="chat__check-icon fa-solid fa-check"></i>
-          {{/if}}
-          <i class="chat__check-icon fa-solid fa-check"></i>
-        </div>
-        {{/if}} --}}
-        <p>{{this.time}}</p>
+  <ul class="chat__user-list">
+    {{#each this}}
+    {{#if @first}}
+    <li class="chat__item avatar {{#if this.isSelf }}chat__item_self {{/if}}">
+      <div class="chat__avatar-user">
+        <img src="https://ya-praktikum.tech/api/v2/resources/{{this.avatar}}" class="avatar__pic">
+        <p>{{this.name}}</p>
       </div>
-    </div>
-  </li>
+    </li>
+    {{else}}
+    <li class="chat__item {{#if this.isSelf }} chat__item_self {{/if}}">
+      <div class="chat__messages">
+        <div class="chat__message">
+          <p>{{this.content}}</p>
+          {{!-- {{#if this.check}}
+          <div class="chat__icon-block">
+            {{#if this.delivered}}
+            <i class="chat__check-icon fa-solid fa-check"></i>
+            {{/if}}
+            <i class="chat__check-icon fa-solid fa-check"></i>
+          </div>
+          {{/if}} --}}
+          <p>{{this.time}}</p>
+        </div>
+      </div>
+    </li>
+    {{/if}}
+    {{/each}}
+  </ul>
   {{/each}}
 </ul>

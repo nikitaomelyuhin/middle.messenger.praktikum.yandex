@@ -1,9 +1,9 @@
 import socket from "../../api/Socket";
 import { Events } from "../../typings/global";
 import Block from "../../utils/Block";
-import { getQueryParameterByName, isEmptyObject, isEqual } from "../../utils/helpers";
+import { getQueryParameterByName, isEmptyObject } from "../../utils/helpers";
 import Router from "../../utils/Router";
-import store from "../../utils/Store";
+import store, { LastMessagesItem } from "../../utils/Store";
 import AddChatModal from "../addChatModal/index";
 import AddUserModal from "../addUserModal/index";
 import Button from "../button/index";
@@ -14,8 +14,10 @@ import Link from "../link/index";
 import template from "./messengerChat.hbs";
 
 interface MessengerChatProps {
-  events?: Events
-  chatId: number | undefined
+  events?: Events;
+  chatId: string | number | null;
+  lastMessages: LastMessagesItem[];
+
 }
 
 export class MessengerChat extends Block {
@@ -101,7 +103,7 @@ export class MessengerChat extends Block {
 
   private sendMessage() {
     const currentPageId = getQueryParameterByName("id");
-    if (this.message) {
+    if (this.message && currentPageId) {
       socket.sendMessage(this.message, parseFloat(currentPageId));
       this.message = "";
       this.children.sendMessageInput.element.querySelector("input").value = "";
@@ -119,19 +121,22 @@ export class MessengerChat extends Block {
   }
 
   componentDidMount(): void {
+
+  }
+
+  componentDidUpdate(oldProps: any, newProps: any): boolean {
     const isAvailableChat = !!store.getState().chat && !!store.getState().chat?.sidebarData && this.props && this.props.chatId;
     if (isAvailableChat) {
       const currentChat = store.getState().chat!.sidebarData!.find((item) => item.id === this.props.chatId);
 
       const avatar = this._getChatAvatar(currentChat);
-      this.children.chatName = new ChatName({
-        name: currentChat.title,
-        avatar,
-      });
+      if (currentChat) {
+        this.children.chatName = new ChatName({
+          name: currentChat.title,
+          avatar,
+        });
+      }
     }
-  }
-
-  componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (!newProps.chatId) {
       newProps.isEmpty = true;
     } else {
@@ -140,9 +145,7 @@ export class MessengerChat extends Block {
     if (oldProps.lastMessages) {
       if (!isEmptyObject(newProps)) {
         setTimeout(() => {
-          if (document.querySelector(".messenger__body")) {
-            document.querySelector(".messenger__body")!.scrollTop = document.querySelector(".messenger__body")?.scrollHeight || 0;
-          }
+          document.querySelector(".messenger__body")?.scroll({ top: document.querySelector(".messenger__body")!.scrollHeight });
         });
         this.children.messages = new Messages({
           messages: newProps.lastMessages[`${newProps.chatId}`],

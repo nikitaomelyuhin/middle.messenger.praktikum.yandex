@@ -27,19 +27,19 @@ class ProfileController {
   async changePassword(data: passwordsData) {
     try {
       await this.api.changePassword(data);
-      Router.go("/user-card");
+      Router.go("/settings");
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   }
 
   async changeAvatar(data: FormData) {
     try {
       await this.api.changeAvatar(data);
-      Router.go("/user-card");
+      Router.go("/settings");
       AuthController.fetchUser();
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   }
 }

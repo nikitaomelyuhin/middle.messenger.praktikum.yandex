@@ -1,3 +1,4 @@
+import ChatController from "../controllers/ChatController";
 import { formatDate } from "../utils/helpers";
 import store from "../utils/Store";
 
@@ -8,17 +9,13 @@ interface SocketConnectData {
 }
 
 class Socket {
-  private connectionProps: SocketConnectData;
-
   private socket: any = {};
 
   private userId: number;
 
-  constructor() {
-  }
+  constructor() { }
 
   public identification(props: SocketConnectData) {
-    this.connectionProps = props;
     this.socketConnect(props);
     this.getMessage(props.chatId);
   }
@@ -33,7 +30,7 @@ class Socket {
   }
 
   private supportConnection(chatId: number) {
-    this.socket[`${chatId}`].addEventListener("open", (event) => {
+    this.socket[`${chatId}`].addEventListener("open", () => {
       setInterval(() => {
         this.socket[`${chatId}`].send(JSON.stringify({
           type: "ping",
@@ -51,29 +48,35 @@ class Socket {
       type: "message",
       content: message,
     }));
-    // setTimeout(() => {
-    //   this.socket[`${chatId}`].send(JSON.stringify({
-    //     content: "0",
-    //     type: "get old",
-    //   }));
-    // });
   }
 
   public getMessage(chatId: number) {
     this.socket[`${chatId}`].addEventListener("message", (event: any) => {
-      const data = JSON.parse(event.data);
+      let data = JSON.parse(event.data);
       if (Array.isArray(data)) {
-        data.forEach((message) => {
-          message.time = formatDate(message.time);
-          if (message.user_id === this.userId) {
-            message.isSelf = true;
-            return;
+        ChatController.getChatUsers(chatId);
+        data = data.reverse();
+        const result = [];
+        let supportArray = [];
+        for (let i = 0; i < data.length; i++) {
+          const element = data[i];
+          const previousElement = data[i - 1];
+          element.time = formatDate(element.time);
+          if (element.user_id === this.userId) {
+            element.isSelf = true;
+          } else {
+            element.isSelf = false;
           }
-          message.isSelf = false;
-        });
-        // const currentState = store.getState().chat?.lastMessages;
-        // console.log(store.getState().chat?.lastMessages);
-        store.set(`chat.lastMessages.${chatId}`, data.reverse());
+          if (previousElement && element.user_id !== previousElement.user_id) {
+            result.push(supportArray);
+            supportArray = [];
+          }
+          supportArray.push(element);
+          if (i === data.length - 1) {
+            result.push(supportArray);
+          }
+        }
+        store.set(`chat.lastMessages.${chatId}`, result);
       }
       if (data.type === "message") {
         const currentState = [...store.getState().chat!.lastMessages[chatId]];
@@ -83,12 +86,22 @@ class Socket {
         } else {
           data.isSelf = false;
         }
-        currentState.push(data);
+        if (currentState[currentState.length - 1][1].user_id === data.user_id) {
+          currentState[currentState.length - 1].push(data);
+        } else {
+          const chatUsers = store.getState().chatUsers?.data[chatId];
+          const currentUser = chatUsers?.find((user) => user.id === data.user_id);
+          const supportArray = [
+            {
+              avatar: currentUser?.avatar,
+              isSelf: data.user_id === this.userId,
+              name: currentUser?.display_name ? currentUser.display_name : currentUser?.first_name,
+            },
+            data,
+          ];
+          currentState.push(supportArray);
+        }
         store.set(`chat.lastMessages.${chatId}`, currentState);
-        // this.socket[`${chatId}`].send(JSON.stringify({
-        //   content: "0",
-        //   type: "get old",
-        // }));
       }
     });
   }

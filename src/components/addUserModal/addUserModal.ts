@@ -35,13 +35,14 @@ export class AddUserModal extends Block {
 
   private addUser() {
     const currentPageId = getQueryParameterByName("id");
-
-    ChatController.addUser({
-      users: [
-        this.userId,
-      ],
-      chatId: parseFloat(currentPageId),
-    });
+    if (currentPageId) {
+      ChatController.addUser({
+        users: [
+          this.userId,
+        ],
+        chatId: parseFloat(currentPageId),
+      });
+    }
   }
 
   render() {

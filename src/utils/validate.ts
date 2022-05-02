@@ -1,21 +1,3 @@
-type FormFields = {
-  login?: string,
-  password?: string,
-  email?: string,
-  name?: string,
-  lastName?: string,
-  phone?: string,
-}
-
-type Field = {
-  error: boolean,
-  errorMessage: string,
-  value: string,
-  type: string
-}
-
-type Form = Array<Field>
-
 type ValidationResult = {
   isValid: boolean;
   message: string | null;

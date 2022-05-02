@@ -3,7 +3,7 @@ import template from "./messenger.hbs";
 import SidebarList from "../../components/chatList/index";
 import Button from "../../components/button/index";
 import AddChatModal from "../../components/addChatModal/index";
-import { getQueryParameterByName, isEmptyObject, isEqual } from "../../utils/helpers";
+import { getQueryParameterByName, isEmptyObject } from "../../utils/helpers";
 import SmallCard from "../../components/smallCard/index";
 import MessengerChat from "../../components/messengerChat/index";
 import Router from "../../utils/Router";
@@ -13,10 +13,21 @@ import store from "../../utils/Store";
 export class MessengerPage extends Block {
   private addChatModal: HTMLElement | null = null;
 
-  private currentChatId: number | undefined;
+  private currentChatId: string | null | number;
 
   constructor(props?: any) {
     super(props);
+    let pageId: string | null | number = getQueryParameterByName("id");
+    if (this.props.sidebarData && this.props.sidebarData.length && !pageId) {
+      Router.go(`/messenger?id=${this.props.sidebarData[0].id}`);
+      pageId = this.props.sidebarData[0].id;
+      store.set("chat", this.props);
+      this.currentChatId = pageId;
+      this.children.messengerChat.setProps({
+        chatId: this.currentChatId,
+        lastMessages: this.props.lastMessages,
+      });
+    }
     if (this.element) {
       this.addChatModal = this.element.querySelector(".add-chat-modal");
     }
@@ -39,7 +50,13 @@ export class MessengerPage extends Block {
     });
     this.children.messengerChat = new MessengerChat({
       chatId: this.currentChatId,
-      lastMessages: null,
+      lastMessages: this.props.lastMessages,
+    });
+    this.children.chatList = new SidebarList({
+      chatList: this.props.sidebarData,
+      events: {
+        click: (e: any) => this._sidebarChatClickHandler(e),
+      },
     });
   }
 
@@ -54,51 +71,37 @@ export class MessengerPage extends Block {
     }
   }
 
-  chatItemClick(e: any) {
-    const chatId = e.currentTarget.getAttribute("data-id");
-    const currentPageId = getQueryParameterByName("id");
-    if (!currentPageId || currentPageId !== chatId) {
-      Router.go(`/messenger?id=${chatId}`);
+  private _sidebarChatClickHandler(e: any) {
+    let currentElement = e.target;
+    let currentId: string | null | number = null;
+    while (!currentId) {
+      currentId = parseFloat(currentElement.getAttribute("data-id"));
+      currentElement = currentElement.parentNode;
     }
-    const updatedProps = (Object.values(this.props.sidebarData) as any);
-    this.children.chatList.setProps({
-      chatList: updatedProps,
-    });
-    ChatController.setActiveClass(parseFloat(chatId));
-    // ChatController.getChats(chatId);
-  }
-
-  private _sidebarChatClickHandler() {
-    const currentPageId = getQueryParameterByName("id");
-    this.currentChatId = parseFloat(currentPageId);
-    const elements = document.querySelectorAll(".chat-list__item");
-    for (let i = 0; i < elements.length; i++) {
-      const element = elements[i];
-      element.addEventListener("click", this.chatItemClick.bind(this));
+    let pageId: string | null | number = getQueryParameterByName("id");
+    if (pageId) {
+      pageId = parseFloat(pageId);
+      Router.go(`/messenger?id=${currentId}`);
+      this.currentChatId = currentId;
+      ChatController.setActiveClass(currentId);
     }
-    this.children.messengerChat.setProps({
-      chatId: this.currentChatId,
-      lastMessages: this.props.lastMessages,
-    });
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
-    this._sidebarChatClickHandler();
+    const pageId = getQueryParameterByName("id");
+    if (pageId) {
+      this.currentChatId = parseFloat(pageId);
+    }
     this.children.messengerChat.setProps({
       chatId: this.currentChatId,
       lastMessages: newProps.lastMessages,
     });
-    if (!isEqual(oldProps, newProps)) {
-      // const currentPageId = getQueryParameterByName("id");
-      // this.currentChatId = parseFloat(currentPageId);
-      if (!isEmptyObject(newProps)) {
-        const updatedProps = (Object.values(newProps.sidebarData) as any);
-        this.currentChatId = updatedProps[0]?.id;
-        this.children.chatList = new SidebarList({
-          chatList: updatedProps,
-        });
-        return true;
-      }
+    if (!isEmptyObject(newProps)) {
+      const updatedProps = (Object.values(newProps.sidebarData) as any);
+      this.children.chatList.setProps({
+        chatList: updatedProps,
+      });
+      return true;
     }
     return false;
   }

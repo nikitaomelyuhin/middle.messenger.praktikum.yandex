@@ -1,7 +1,7 @@
 import ChatApi from "../api/ChatApi";
 import socket from "../api/Socket";
 import Router from "../utils/Router";
-import store, { SidebarItem, SidebarListData } from "../utils/Store";
+import store, { SidebarItem } from "../utils/Store";
 
 export interface CreateChat {
   title: string;
@@ -30,9 +30,9 @@ class ChatController {
     try {
       await this.api.create(data);
       this.fetchChats();
-      Router.go("/messenger");
+      Router.back();
     } catch (err) {
-      console.log(err);
+      throw new Error(err);
     }
   }
 
@@ -44,7 +44,7 @@ class ChatController {
       });
       store.set("chat.sidebarData", response);
     } catch (err) {
-      console.log(err);
+      throw new Error(err);
     }
   }
 
@@ -52,7 +52,7 @@ class ChatController {
     try {
       await this.api.addUser(data);
     } catch (err) {
-      console.log(err);
+      throw new Error(err);
     }
   }
 
@@ -60,13 +60,14 @@ class ChatController {
     const { chatId, userId } = props;
     try {
       const response = await this.api.connectSocket(chatId);
+      const { token } = response;
       socket.identification({
         userId,
         chatId,
-        token: response.token,
+        token,
       });
     } catch (err) {
-      console.log(err);
+      throw new Error(err);
     }
   }
 
@@ -86,6 +87,15 @@ class ChatController {
         return [...acc, item];
       }, []);
       store.set("chat.sidebarData", supportArray);
+    }
+  }
+
+  async getChatUsers(chatId: number) {
+    try {
+      const response = await this.api.getChatUsers(chatId);
+      store.set(`chatUsers.data.${chatId}`, response);
+    } catch (err) {
+      throw new Error(err);
     }
   }
 }

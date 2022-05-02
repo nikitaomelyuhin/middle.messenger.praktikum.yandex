@@ -4,7 +4,7 @@ import { SignUpPage } from "./pages/signUp/signUp";
 import MessengerPage from "./pages/messenger/index";
 import Settings from "./pages/settings/index";
 import AuthController from "./controllers/AuthController";
-import store, { StoreEvents } from "./utils/Store";
+import store from "./utils/Store";
 import ChatController from "./controllers/ChatController";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await ChatController.fetchChats();
   const storeChats = store.getState().chat?.sidebarData;
   const storeUserId = store.getState().currentUser?.data.id;
-  if (storeChats && storeChats.length) {
+  if (storeChats && storeChats.length && storeUserId) {
     storeChats.forEach((chat) => {
       ChatController.connectSocket({
         chatId: chat.id,
@@ -26,7 +26,4 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     });
   }
-  store.on(StoreEvents.Updated, () => {
-    // console.log(store.getState().lastMessages);
-  });
 });

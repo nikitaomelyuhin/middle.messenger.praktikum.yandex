@@ -74,7 +74,7 @@ export class ProfileModal extends Block {
   }
 
   checkEqual(e: any, field: string) {
-    this.inputs[field] = e.target.value;
+    this.inputs[field as keyof SignUpData] = e.target.value;
 
     if (!isEqual(this.inputs, this.props.data)) {
       this.children.button.setProps({

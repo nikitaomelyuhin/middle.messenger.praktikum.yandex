@@ -16,8 +16,6 @@ class Block {
 
   private _elementForEvents: HTMLElement | null = null;
 
-  private _meta: { props: any };
-
   protected props: any;
 
   // eslint-disable-next-line no-use-before-define
@@ -37,15 +35,10 @@ class Block {
 
     this.children = children;
 
-    this._meta = {
-      props,
-    };
-
     this.props = this._makePropsProxy(props);
 
     this.initChildren();
     this.eventBus = () => eventBus;
-
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
   }
@@ -118,7 +111,6 @@ class Block {
   }
 
   _render() {
-    this._componentDidMount();
     const fragment = this.render();
 
     const newElement = fragment.firstElementChild as HTMLElement;
