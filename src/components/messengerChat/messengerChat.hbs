@@ -1,0 +1,53 @@
+<div class="messenger">
+  {{#if isEmpty}}
+  <div class="empty">
+    <div class="empty__header messenger__header">
+      <div class="messenger__link">
+        <i class="messenger__link-icon fa-solid fa-user"></i>
+        {{{ link }}}
+      </div>
+    </div>
+    <div class="empty__body">
+      <div class="empty__add-chat">
+        <p>Добавьте новый чат, чтобы начать переписку</p>
+      </div>
+      <div class="messenger__header-add-btn">
+        {{{ addChatButton }}}
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <div class="messenger__content">
+    <div class="messenger__header">
+      <div class="messenger__side">
+        {{{ chatName }}}
+      </div>
+      <div class="messenger__header-add-btn">
+        {{{ addUsersButton }}}
+      </div>
+      <div class="messenger__side">
+        <div class="messenger__link">
+          <i class="messenger__link-icon fa-solid fa-user"></i>
+          {{{ link }}}
+        </div>
+      </div>
+    </div>
+    <div class="messenger__body">
+      <div class="messenger__content">
+        {{{ messages }}}
+      </div>
+    </div>
+    <div class="messenger__footer">
+      <button class="messenger__smiles-button">
+        <i class="fa-solid fa-paperclip"></i>
+      </button>
+      {{{ sendMessageInput }}}
+      <button class="messenger__send-button">
+        {{{ sendMessageButton }}}
+      </button>
+    </div>
+    {{{ addUserModal }}}
+    {{{ addChatModal }}}
+  </div>
+  {{/if}}
+</div>

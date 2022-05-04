@@ -1,0 +1,1 @@
+export { ChatName as default } from "./chatName";

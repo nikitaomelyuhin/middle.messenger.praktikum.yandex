@@ -1,25 +1,20 @@
 # Web messenger
 ## Первый проект курса "Мидл фронтенд-разработчик" от Яндекс.Практикум
 
-Проект без использования фреймворков
-
 ## Некоторые особенности проекта
 
-Не работают ссылки например на чат или обратно на логин, так как все сделано кнопками, для перехода, можно воспользоваться прямыми ссылками:
-`/chat`
-`/login`
-
-Проект перенесен на компоненты, убраны `partials`
-
-Все файлы Javascript заменены на Typescript, за исключением `server.js`
+Добавлен роутер
+Подключен api
+Используются контроллеры
+Добавлены несты на роутер
 
 ## Pull Request
 
-[Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/1)
+[Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/2)
 
 ## Netlify
 
-[Netlify](https://6208cd47c1c1630be623e266--heuristic-kalam-85f874.netlify.app/)
+[Netlify](https://621e78bdb64cae00085e3214--heuristic-kalam-85f874.netlify.app/)
 
 ## Ui
 

@@ -1,22 +1,22 @@
 <ul class="chat-list">
   {{#each chatList}}
-  <li class="chat-list__item">
-    <button class="sidebar-item {{this.activeClass}}">
+  <li class="chat-list__item {{this.activeClass}}" data-id="{{this.id}}">
+    <button class="sidebar-item">
       <div class="sidebar-item__wrapper">
         <div class="sidebar-item__block">
           <div class="sidebar-item__avatar">
-            {{#if this.image}}
-            <img src="{{this.image}}" class="sidebar-item__image">
+            {{#if this.last_message.user.avatar}}
+            <img src="https://ya-praktikum.tech/api/v2/resources/{{this.last_message.user.avatar}}"
+              class="sidebar-item__image">
             {{/if}}
           </div>
           <div class="sidebar-item__text-block">
-            <h3 class="sidebar-item__chat-name">{{this.chatName}}</h3>
+            <h3 class="sidebar-item__chat-name">{{this.title}}</h3>
             <div class="sidebar-item__user-text">
-              {{#if this.sender}}
-              <p class="sidebar-item__sender">{{this.sender}}:</p>
-              {{/if}}
+              <p class="sidebar-item__sender">{{this.last_message.user.first_name}}
+                {{this.last_message.user.second_name}}:</p>
               <span>
-                {{this.message}}
+                {{this.last_message.content}}
               </span>
             </div>
           </div>
@@ -28,8 +28,8 @@
           <div class="sidebar-item__time">
             <p>{{this.time}}</p>
           </div>
-          {{#if this.notificationCount}}
-          <div class="sidebar-item__notification">{{this.notificationCount}}</div>
+          {{#if this.unread_count}}
+          <div class="sidebar-item__notification">{{this.unread_count}}</div>
           {{/if}}
         </div>
       </div>

@@ -7,12 +7,17 @@
   border-radius: 50%;
   overflow: hidden;
   position: relative;
+  background-color: $bg-input;
+  
   &:hover {
     & .avatar-user__text {
       opacity: 1;
     }
     & .avatar-user__icon {
       opacity: 0;
+    }
+    & .avatar-user__image {
+      opacity: .2;
     }
   }
   &__text {
@@ -42,6 +47,7 @@
     height: 100%;
     flex-shrink: 0;
     background-color: $bg-input;
+    transition: .3s;
   }
   &__pic {
     width: 100%;

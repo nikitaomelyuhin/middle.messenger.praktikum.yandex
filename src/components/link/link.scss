@@ -1,0 +1,10 @@
+.link {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: $primary;
+  transition: .3s;
+  &:hover {
+    color: $text-dark;
+  }
+}

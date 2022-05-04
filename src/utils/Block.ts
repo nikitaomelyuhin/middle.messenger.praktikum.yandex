@@ -1,5 +1,6 @@
-import { nanoid } from "nanoid";
+import { v4 as uuidv4 } from "uuid";
 import EventBus from "./EventBus";
+import { isEqual } from "./helpers";
 
 class Block {
   static EVENTS = {
@@ -9,18 +10,16 @@ class Block {
     FLOW_RENDER: "flow:render",
   };
 
-  public id = nanoid(6);
+  public id = uuidv4();
 
   private _element: HTMLElement | null = null;
 
   private _elementForEvents: HTMLElement | null = null;
 
-  private _meta: { props: any };
-
   protected props: any;
 
   // eslint-disable-next-line no-use-before-define
-  protected children: Record<string, Block>;
+  protected children: Record<string, any>;
 
   private eventBus: () => EventBus;
 
@@ -36,15 +35,10 @@ class Block {
 
     this.children = children;
 
-    this._meta = {
-      props,
-    };
-
     this.props = this._makePropsProxy(props);
 
     this.initChildren();
     this.eventBus = () => eventBus;
-
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
   }
@@ -98,6 +92,9 @@ class Block {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidUpdate(oldProps: any, newProps: any) {
+    if (isEqual(oldProps, newProps)) {
+      return false;
+    }
     return true;
   }
 
@@ -129,7 +126,6 @@ class Block {
     if (elementForEvent) {
       this._elementForEvents = elementForEvent as HTMLElement;
     }
-
     this._removeEvents();
 
     this._addEvents();
@@ -140,7 +136,7 @@ class Block {
   }
 
   getContent(): HTMLElement | null {
-    return this._element;
+    return this._element || null;
   }
 
   _makePropsProxy(props: any) {
@@ -237,6 +233,12 @@ class Block {
 
     return fragment.content;
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  hide() { }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  show() { }
 }
 
 export default Block;

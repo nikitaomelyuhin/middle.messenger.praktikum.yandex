@@ -1,0 +1,151 @@
+$headerHeight: 70px;
+.messenger {
+  font-size: 12px;
+  color: $text-dark;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  &__content {
+    flex: 1;
+  }
+  &__header {
+    position: absolute;
+    top: 0;
+    width: calc(100% - $sidebar-width);
+    height: $headerHeight;
+    background-color: $light;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid $border-light;
+  }
+  &__side {
+    display: flex;
+    align-items: center;
+  }
+  &__link {
+    display: flex;
+    align-items: center;
+  }
+  &__link-icon {
+    margin-right: 5px;
+    color: $primary;
+  }
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    border-radius: 50%;
+    background-color: $bg-input;
+    margin-right: 10px;
+  }
+  &__name {
+    font-size: 13px;
+    font-weight: bold;
+  }
+  &__body {
+    position: absolute;
+    top: 70px;
+    width: calc(100% - $sidebar-width);
+    height: calc(100% - $headerHeight * 2);
+    overflow-y: auto;
+    padding: 20px;
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: $bg-dark;
+      &:hover {
+        background-color: $bg-dark;
+      }
+    }
+  }
+  &__date {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  &__icon-block {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    & .chat__check-icon:first-child {
+      bottom: 2.5px;
+      left: 45%;
+    }
+    & .chat__check-icon:last-child {
+      bottom: 0;
+    }
+  }
+  &__check-icon {
+    position: absolute;
+    font-size: 9px;
+    margin-right: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &__footer {
+    position: fixed;
+    bottom: 0;
+    height: $headerHeight;
+    width: calc(100% - $sidebar-width);
+    background-color: $light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-top: 1px solid $border-light;
+  }
+  &__smiles-button {
+    font-size: 24px;
+    margin-right: 10px;
+    color: $text;
+    transition: .3s;
+    &:hover {
+      color: $primary;
+    }
+  }
+  &__message-input {
+    flex: 1;
+    margin-right: 10px;
+    border: none;
+    border-radius: $border-radius-big;
+    background-color: $bg-input;
+    outline: none;
+    padding: 10px 15px;
+  }
+  &__send-button {
+    font-size: 26px;
+    color: $primary;
+    transition: .3s;
+    &:hover {
+      color: $primary-hover;
+    }
+  }
+}
+
+.empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  &__header {
+    justify-content: flex-end;
+  }
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 20px;
+  }
+  &__add-chat {
+    margin-bottom: 20px;
+  }
+}

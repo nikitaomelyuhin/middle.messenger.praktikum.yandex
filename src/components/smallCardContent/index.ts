@@ -1,0 +1,1 @@
+export { SmallCardContent as default } from "./smallCardContent";

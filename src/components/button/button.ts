@@ -1,14 +1,14 @@
 import Block from "../../utils/Block";
 import template from "./button.hbs";
+import { Events } from "../../typings/global";
 
 interface ButtonProps {
-  type?: string,
-  text: string,
-  link?: string,
-  additionalType?: string,
-  events?: {
-    click?: (e: any) => void
-  }
+  type?: string;
+  text?: string;
+  isIconed?: boolean;
+  iconClass?: string;
+  additionalType?: string;
+  events?: Events
 }
 
 export class Button extends Block {

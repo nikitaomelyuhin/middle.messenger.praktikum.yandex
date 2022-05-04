@@ -18,7 +18,7 @@ export default class EventBus {
   }
 
   public emit(event: string, ...args: unknown[]): void {
-    this.listeners[event].forEach((listener) => {
+    this.listeners[event]?.forEach((listener) => {
       listener(...args);
     });
   }

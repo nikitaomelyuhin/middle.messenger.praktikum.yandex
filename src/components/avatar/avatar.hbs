@@ -1,0 +1,14 @@
+<div class="avatar-user">
+  <div class="avatar-user__text">
+    <p>{{ text }}</p>
+  </div>
+  {{#if noAvatar}}
+  <div class="avatar-user__icon">
+    <i class="fa-solid fa-image"></i>
+  </div>
+  {{else}}
+  <div class="avatar-user__image">
+    <img src="https://ya-praktikum.tech/api/v2/resources/{{image}}" class="avatar-user__pic">
+  </div>
+  {{/if}}
+</div>

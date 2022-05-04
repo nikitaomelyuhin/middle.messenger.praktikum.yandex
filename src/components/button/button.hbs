@@ -1,3 +1,6 @@
-<button class="app-button {{type}} {{additionalType}}">
+<button type="button" class="app-button {{type}} {{additionalType}}">
+  {{#if isIconed}}
+  <i class="app-button__icon {{iconClass}}"></i>
+  {{/if}}
   <p class="app-button__text">{{text}}</p>
 </button>
