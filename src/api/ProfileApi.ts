@@ -1,6 +1,6 @@
 import { passwordsData } from "../controllers/ProfileController";
 import { SignUpData } from "./AuthApi";
-import BaseAPI from "./baseApi";
+import BaseAPI from "./BaseApi";
 
 export default class ProfileApi extends BaseAPI {
   constructor() {
@@ -16,7 +16,7 @@ export default class ProfileApi extends BaseAPI {
   }
 
   changeAvatar(data: FormData) {
-    return this.http.put("/profile/avatar", data, true);
+    return this.http.put("/profile/avatar", data);
   }
 
   create = undefined;
