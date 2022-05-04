@@ -15,11 +15,11 @@
 
 ## Pull Request
 
-[Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/2)
+[Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/3)
 
 ## Netlify
 
-[Netlify](https://621e78bdb64cae00085e3214--heuristic-kalam-85f874.netlify.app/)
+[Netlify](https://heuristic-kalam-85f874.netlify.app/)
 
 ## Ui
 
