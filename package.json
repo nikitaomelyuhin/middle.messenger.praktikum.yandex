@@ -12,9 +12,6 @@
     "compile": "babel src -d dist --extensions '.ts,.tsx'",
     "test": "mocha --require ts-node/register src/**/*.spec.ts"
   },
-  "engines": {
-    "node": ">=10.0.0"
-  },
   "keywords": [],
   "author": "Nikita Omelyukhin",
   "license": "ISC",
