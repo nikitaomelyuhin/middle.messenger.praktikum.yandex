@@ -59,7 +59,8 @@ export class MessengerChat extends Block {
       text: "Ваш профиль",
       events: {
         click: () => {
-          Router.go("/settings");
+          const router = new Router("#app");
+          router.go("/settings");
         },
       },
     });

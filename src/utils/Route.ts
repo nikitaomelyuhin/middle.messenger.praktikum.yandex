@@ -1,10 +1,9 @@
-import { isEqual } from "./helpers";
 import { renderDOM } from "./renderDOM";
 
 import Block from "./Block";
 
 class Route {
-  private _pathname: string;
+  public _pathname: string;
 
   private _blockClass: any;
 
@@ -24,6 +23,10 @@ class Route {
       this._pathname = pathname;
       this.render();
     }
+  }
+
+  get pathname() {
+    return this._pathname;
   }
 
   leave() {

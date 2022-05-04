@@ -37,7 +37,10 @@ export class Settings extends Block {
     this.children.avatarModal = new AvatarModal();
     this.children.backButton = new BackButton({
       events: {
-        click: () => Router.go("/messenger"),
+        click: () => {
+          const router = new Router("#app");
+          router.go("/messenger");
+        },
       },
     });
     this.children.title = new Text({

@@ -27,10 +27,11 @@ class ChatController {
   }
 
   async createChat(data: CreateChat) {
+    const router = new Router("#app");
     try {
       await this.api.create(data);
       this.fetchChats();
-      Router.back();
+      router.back();
     } catch (err) {
       throw new Error(err);
     }

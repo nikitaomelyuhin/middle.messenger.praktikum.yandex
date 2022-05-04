@@ -17,9 +17,10 @@ export class MessengerPage extends Block {
 
   constructor(props?: any) {
     super(props);
+    const router = new Router("#app");
     let pageId: string | null | number = getQueryParameterByName("id");
     if (this.props.sidebarData && this.props.sidebarData.length && !pageId) {
-      Router.go(`/messenger?id=${this.props.sidebarData[0].id}`);
+      router.go(`/messenger?id=${this.props.sidebarData[0].id}`);
       pageId = this.props.sidebarData[0].id;
       store.set("chat", this.props);
       this.currentChatId = pageId;
@@ -79,9 +80,10 @@ export class MessengerPage extends Block {
       currentElement = currentElement.parentNode;
     }
     let pageId: string | null | number = getQueryParameterByName("id");
+    const router = new Router("#app");
     if (pageId) {
       pageId = parseFloat(pageId);
-      Router.go(`/messenger?id=${currentId}`);
+      router.go(`/messenger?id=${currentId}`);
       this.currentChatId = currentId;
       ChatController.setActiveClass(currentId);
     }

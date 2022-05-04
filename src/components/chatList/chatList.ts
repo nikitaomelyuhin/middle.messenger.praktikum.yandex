@@ -29,7 +29,8 @@ export class SidebarList extends Block {
         if (queryId && queryId !== defaultChatId) {
           return true;
         }
-        Router.go(`/messenger?id=${defaultChatId}`);
+        const router = new Router("#app");
+        router.go(`/messenger?id=${defaultChatId}`);
         let pageChatId: string | number | null = getQueryParameterByName("id");
         if (pageChatId) {
           pageChatId = parseFloat(pageChatId);

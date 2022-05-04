@@ -25,18 +25,20 @@ class ProfileController {
   }
 
   async changePassword(data: passwordsData) {
+    const router = new Router("#app");
     try {
       await this.api.changePassword(data);
-      Router.go("/settings");
+      router.go("/settings");
     } catch (err) {
       throw new Error(err);
     }
   }
 
   async changeAvatar(data: FormData) {
+    const router = new Router("#app");
     try {
       await this.api.changeAvatar(data);
-      Router.go("/settings");
+      router.go("/settings");
       AuthController.fetchUser();
     } catch (err) {
       throw new Error(err);

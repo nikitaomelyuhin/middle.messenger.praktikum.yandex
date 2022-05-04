@@ -3,9 +3,9 @@ import Route from "./Route";
 import Block from "./Block";
 
 class Router {
-  protected routes: Route[] = [];
+  public routes: Route[] = [];
 
-  protected history: History;
+  public history: History;
 
   private _currentRoute: Route | null = null;
 
@@ -65,6 +65,7 @@ class Router {
 
   back() {
     this.history.back();
+    this._onRoute(window.location.pathname);
   }
 
   forward() {
@@ -74,9 +75,13 @@ class Router {
   getRoute(pathname: string) {
     return this.routes.find((route: Route) => route.match(pathname));
   }
+
+  get currentRoute() {
+    return this._currentRoute;
+  }
 }
 
-export default new Router("#app");
+export default Router;
 
 export interface WithRouterProps {
   router: Router

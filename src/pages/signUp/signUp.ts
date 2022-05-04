@@ -98,7 +98,8 @@ export class SignUpPage extends Block {
       text: "Войти",
       events: {
         click: () => {
-          Router.go("/");
+          const router = new Router("#app");
+          router.go("/");
         },
       },
     });

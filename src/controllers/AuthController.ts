@@ -48,13 +48,15 @@ class AuthController {
       store.set("currentUser.loading", true);
       await this.api.logout();
       store.set("currentUser.loading", false);
-      Router.go("/");
+      const router = new Router("#app");
+      router.go("/");
     } catch (err) {
       store.set("currentUser.error", err);
     }
   }
 
   async fetchUser() {
+    const router = new Router("#app");
     try {
       store.set("currentUser.loading", true);
       const user = await this.api.fetchUser();
@@ -62,12 +64,12 @@ class AuthController {
       store.set("currentUser.data", user);
       store.set("currentUser.loading", false);
       if (window.location.pathname === "/") {
-        Router.go("/messenger");
+        router.go("/messenger");
       } else {
-        Router.go(window.location.pathname);
+        router.go(window.location.pathname);
       }
     } catch (err) {
-      Router.go("/");
+      router.go("/");
       store.set("currentUser.loading", false);
       store.set("currentUser.error", err.reason);
     }

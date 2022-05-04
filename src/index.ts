@@ -8,7 +8,8 @@ import store from "./utils/Store";
 import ChatController from "./controllers/ChatController";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  Router
+  const router = new Router("#app");
+  router
     .use("/", LoginPage)
     .use("/messenger", MessengerPage)
     .use("/sign-up", SignUpPage)

@@ -55,7 +55,8 @@ export class LoginPage extends Block {
       text: "Нет аккаунта?",
       events: {
         click: () => {
-          Router.go("/sign-up");
+          const router = new Router("#app");
+          router.go("/sign-up");
         },
       },
     });
