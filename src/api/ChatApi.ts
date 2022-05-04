@@ -1,5 +1,5 @@
 import { AddUserData, CreateChat } from "../controllers/ChatController";
-import BaseAPI from "./baseApi";
+import BaseAPI from "./BaseApi";
 
 export default class ChatApi extends BaseAPI {
   constructor() {
