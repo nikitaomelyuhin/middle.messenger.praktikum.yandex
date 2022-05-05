@@ -62,7 +62,7 @@ class Socket {
           const element = data[i];
           const previousElement = data[i - 1];
           element.time = formatDate(element.time);
-          element.isSelf = data.user_id === this.userId;
+          element.isSelf = element.user_id === this.userId;
           if (previousElement && element.user_id !== previousElement.user_id) {
             result.push(supportArray);
             supportArray = [];
