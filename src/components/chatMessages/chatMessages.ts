@@ -27,7 +27,7 @@ export class Messages extends Block {
   }
 
   private setAvatarToProps(props: any) {
-    if (props.messages && props.messages[0] && props.messages[0][0]) {
+    if (props.messages?.[0]?.[0]) {
       const chatUsers = store.getState().chatUsers?.data[props.messages[0][0].chat_id];
       props.messages?.forEach((userMessages: message[]) => {
         chatUsers?.forEach((chatUser) => {
