@@ -144,6 +144,7 @@ $headerHeight: 70px;
     justify-content: center;
     align-items: center;
     padding: 70px 20px;
+    width: calc(100% - $sidebar-width);
   }
   &__add-chat {
     margin-bottom: 20px;

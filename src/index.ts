@@ -1,6 +1,6 @@
 import Router from "./utils/Router";
 import LoginPage from "./pages/login/index";
-import { SignUpPage } from "./pages/signUp/signUp";
+import SignUpPage from "./pages/signUp/index";
 import MessengerPage from "./pages/messenger/index";
 import Settings from "./pages/settings/index";
 import AuthController from "./controllers/AuthController";

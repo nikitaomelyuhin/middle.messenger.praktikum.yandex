@@ -7,10 +7,6 @@ import template from "./addChatModal.hbs";
 export class AddChatModal extends Block {
   private chatName = "";
 
-  constructor() {
-    super();
-  }
-
   protected initChildren() {
     this.children.addChatInput = new Input({
       type: "text",

@@ -62,11 +62,7 @@ class Socket {
           const element = data[i];
           const previousElement = data[i - 1];
           element.time = formatDate(element.time);
-          if (element.user_id === this.userId) {
-            element.isSelf = true;
-          } else {
-            element.isSelf = false;
-          }
+          element.isSelf = element.user_id === this.userId;
           if (previousElement && element.user_id !== previousElement.user_id) {
             result.push(supportArray);
             supportArray = [];
@@ -81,11 +77,7 @@ class Socket {
       if (data.type === "message") {
         const currentState = [...store.getState().chat!.lastMessages[chatId]];
         data.time = formatDate(data.time);
-        if (data.user_id === this.userId) {
-          data.isSelf = true;
-        } else {
-          data.isSelf = false;
-        }
+        data.isSelf = data.user_id === this.userId;
         if (currentState[currentState.length - 1][1].user_id === data.user_id) {
           currentState[currentState.length - 1].push(data);
         } else {
@@ -95,7 +87,7 @@ class Socket {
             {
               avatar: currentUser?.avatar,
               isSelf: data.user_id === this.userId,
-              name: currentUser?.display_name ? currentUser.display_name : currentUser?.first_name,
+              name: currentUser?.display_name ?? currentUser?.first_name,
             },
             data,
           ];

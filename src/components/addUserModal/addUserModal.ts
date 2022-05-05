@@ -8,10 +8,6 @@ import template from "./addUserModal.hbs";
 export class AddUserModal extends Block {
   private userId: number;
 
-  constructor() {
-    super();
-  }
-
   protected initChildren() {
     this.children.addUserInput = new Input({
       type: "number",

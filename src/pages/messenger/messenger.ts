@@ -10,23 +10,24 @@ import Router from "../../utils/Router";
 import ChatController from "../../controllers/ChatController";
 import store from "../../utils/Store";
 
+type Id = string | null | number
 export class MessengerPage extends Block {
   private addChatModal: HTMLElement | null = null;
 
-  private currentChatId: string | null | number;
+  private currentChatId: Id;
 
   constructor(props?: any) {
     super(props);
     const router = new Router("#app");
-    let pageId: string | null | number = getQueryParameterByName("id");
+    let pageId: Id = getQueryParameterByName("id");
     if (this.props.sidebarData && this.props.sidebarData.length && !pageId) {
       router.go(`/messenger?id=${this.props.sidebarData[0].id}`);
       pageId = this.props.sidebarData[0].id;
       store.set("chat", this.props);
-      this.currentChatId = pageId;
       this.children.messengerChat.setProps({
         chatId: this.currentChatId,
         lastMessages: this.props.lastMessages,
+        isEmpty: !this.currentChatId,
       });
     }
     if (this.element) {
@@ -52,6 +53,7 @@ export class MessengerPage extends Block {
     this.children.messengerChat = new MessengerChat({
       chatId: this.currentChatId,
       lastMessages: this.props.lastMessages,
+      isEmpty: !(this.currentChatId),
     });
     this.children.chatList = new SidebarList({
       chatList: this.props.sidebarData,
@@ -74,12 +76,12 @@ export class MessengerPage extends Block {
 
   private _sidebarChatClickHandler(e: any) {
     let currentElement = e.target;
-    let currentId: string | null | number = null;
+    let currentId: Id = null;
     while (!currentId) {
       currentId = parseFloat(currentElement.getAttribute("data-id"));
       currentElement = currentElement.parentNode;
     }
-    let pageId: string | null | number = getQueryParameterByName("id");
+    let pageId: Id = getQueryParameterByName("id");
     const router = new Router("#app");
     if (pageId) {
       pageId = parseFloat(pageId);
@@ -97,6 +99,7 @@ export class MessengerPage extends Block {
     this.children.messengerChat.setProps({
       chatId: this.currentChatId,
       lastMessages: newProps.lastMessages,
+      isEmpty: !this.currentChatId,
     });
     if (!isEmptyObject(newProps)) {
       const updatedProps = (Object.values(newProps.sidebarData) as any);

@@ -1,6 +1,10 @@
 <div class="sc-content">
   <div class="sc-content__avatar">
+    {{#if image}}
     <img src="https://ya-praktikum.tech/api/v2/resources/{{image}}" class="sc-content__avatar-image">
+    {{else}}
+    <div class="sc-content__avatar-empty"></div>
+    {{/if}}
   </div>
   <div class="sc-content__body">
     <div class="sc-content__name">{{name}}</div>

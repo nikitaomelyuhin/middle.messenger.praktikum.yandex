@@ -5,36 +5,28 @@ import Route from "./Route";
 
 class TestRouteComponent {
   render() {
-    // comment to prevent ts warning
   }
 
   dispatchComponentDidMount() {
-    // comment to prevent ts warning
   }
 
   getContent() {
-    // comment to prevent ts warning
   }
 
   hide() {
-    // comment to prevent ts warning
   }
 }
 class TestRouteComponent2 {
   render() {
-    // comment to prevent ts warning
   }
 
   dispatchComponentDidMount() {
-    // comment to prevent ts warning
   }
 
   getContent() {
-    // comment to prevent ts warning
   }
 
   hide() {
-    // comment to prevent ts warning
   }
 }
 

@@ -103,7 +103,7 @@ export function formatDate(date: string) {
     timeZoneName?: "long" | "short";
     formatMatcher?: "basic" | "best fit";
     hour12?: boolean;
-    timeZone?: string; // this is more complicated than the others, not sure what I expect here
+    timeZone?: string;
   }
   const options: DateTimeFormatOptions = {
     month: "short", day: "numeric", hour: "numeric", minute: "numeric", timeZone: "Europe/Moscow",
