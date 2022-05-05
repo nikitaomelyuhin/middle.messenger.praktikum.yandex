@@ -35,10 +35,6 @@ export class SignUpPage extends Block {
     password: false,
   };
 
-  constructor() {
-    super();
-  }
-
   protected initChildren() {
     this.children.button = new Button({
       text: "Зарегистрироваться",

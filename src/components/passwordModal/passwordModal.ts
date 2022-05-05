@@ -11,10 +11,6 @@ export class PasswordModal extends Block {
 
   private confirmPassword = "";
 
-  constructor() {
-    super();
-  }
-
   protected initChildren() {
     this.children.cardRowInputOldPassword = new Input({
       type: "password",

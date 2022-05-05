@@ -7,10 +7,6 @@ import FileInput from "../fileInput/index";
 export class AvatarModal extends Block {
   private _choosenFile = null;
 
-  constructor() {
-    super();
-  }
-
   protected initChildren() {
     this.children.button = new Button({
       text: "Применить",
