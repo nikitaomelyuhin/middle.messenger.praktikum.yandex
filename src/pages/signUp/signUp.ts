@@ -123,6 +123,8 @@ export class SignUpPage extends Block {
     });
     if (isValidationSuccess) {
       await AuthController.signUp(this._formFields);
+      const router = new Router("#app");
+      router.go("/messenger");
     }
   }
 
