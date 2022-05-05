@@ -3,10 +3,13 @@ import template from "./signUp.hbs";
 import Button from "../../components/button/index";
 import Input from "../../components/input/index";
 import Link from "../../components/link/index";
+import ValidationError from "../../components/validationError/index";
 import Validation from "../../utils/validate";
 import AuthController from "../../controllers/AuthController";
 import { SignUpData } from "../../api/AuthApi";
 import Router from "../../utils/Router";
+import store, { DefaultState, SignUpDataTypes } from "../../utils/Store";
+import ChatController from "../../controllers/ChatController";
 
 type ValidationFields = {
   email: boolean;
@@ -34,6 +37,10 @@ export class SignUpPage extends Block {
     phone: false,
     password: false,
   };
+
+  constructor(props: DefaultState<SignUpDataTypes>) {
+    super(props);
+  }
 
   protected initChildren() {
     this.children.button = new Button({
@@ -99,6 +106,9 @@ export class SignUpPage extends Block {
         },
       },
     });
+    this.children.validationError = new ValidationError({
+      hasError: false,
+    });
   }
 
   private _updateFields(type: keyof SignUpData, newValue: string) {
@@ -123,8 +133,20 @@ export class SignUpPage extends Block {
     });
     if (isValidationSuccess) {
       await AuthController.signUp(this._formFields);
+      const signUpStore = store.getState().signUp;
+      if (signUpStore?.error) {
+        this.children.validationError.setProps({
+          hasError: true,
+          text: signUpStore.error,
+        });
+        return;
+      }
       const router = new Router("#app");
-      router.go("/messenger");
+      if (!signUpStore?.error) {
+        await AuthController.fetchUser();
+        await ChatController.fetchChats();
+        router.go("/messenger");
+      }
     }
   }
 

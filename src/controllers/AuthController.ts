@@ -17,7 +17,7 @@ class AuthController {
     try {
       store.set("signUp.error", null);
       store.set("signUp.loading", true);
-      const response = this.api.signUp(data);
+      const response = await this.api.signUp(data);
       store.set("signUp.data", response);
       store.set("signUp.loading", false);
     } catch (err) {

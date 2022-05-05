@@ -24,10 +24,10 @@ export class MessengerPage extends Block {
       router.go(`/messenger?id=${this.props.sidebarData[0].id}`);
       pageId = this.props.sidebarData[0].id;
       store.set("chat", this.props);
-      this.currentChatId = pageId;
       this.children.messengerChat.setProps({
         chatId: this.currentChatId,
         lastMessages: this.props.lastMessages,
+        isEmpty: !this.currentChatId,
       });
     }
     if (this.element) {
@@ -53,6 +53,7 @@ export class MessengerPage extends Block {
     this.children.messengerChat = new MessengerChat({
       chatId: this.currentChatId,
       lastMessages: this.props.lastMessages,
+      isEmpty: !(this.currentChatId),
     });
     this.children.chatList = new SidebarList({
       chatList: this.props.sidebarData,
@@ -98,6 +99,7 @@ export class MessengerPage extends Block {
     this.children.messengerChat.setProps({
       chatId: this.currentChatId,
       lastMessages: newProps.lastMessages,
+      isEmpty: !this.currentChatId,
     });
     if (!isEmptyObject(newProps)) {
       const updatedProps = (Object.values(newProps.sidebarData) as any);

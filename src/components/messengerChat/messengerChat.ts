@@ -13,9 +13,10 @@ import Input from "../input/index";
 import Link from "../link/index";
 import template from "./messengerChat.hbs";
 
-interface MessengerChatProps {
+type MessengerChatProps = {
   events?: Events;
   chatId: string | number | null;
+  isEmpty?: boolean;
   lastMessages: LastMessagesItem[];
 
 }

@@ -9,6 +9,15 @@ export enum StoreEvents {
   Updated = "updated"
 }
 
+export type SignUpDataTypes = {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+} | Record<string, unknown>
+
 export type User = {
   id: number;
   first_name: string;
@@ -62,26 +71,21 @@ export type ChatUsersObject = {
   [key: string]: ChatUser[];
 }
 
+export type DefaultState<T> = {
+  data: T;
+  loading: boolean;
+  error: unknown;
+}
+
 type StoreData = {
-  currentUser?: {
-    data: User;
-    loading: boolean;
-    error: unknown;
-  }
-  signIn?: {
-    data: number;
-    loading: boolean;
-    error: unknown;
-  }
+  currentUser?: DefaultState<User>
+  signIn?: DefaultState<number>
+  signUp?: DefaultState<SignUpDataTypes>
   chat?: {
     sidebarData?: SidebarItem[]
     lastMessages?: any
   }
-  chatUsers?: {
-    data: ChatUsersObject;
-    loading: boolean;
-    error: unknown;
-  }
+  chatUsers?: DefaultState<ChatUsersObject>
 }
 
 class Store extends EventBus {
