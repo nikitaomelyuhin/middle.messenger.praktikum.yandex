@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await ChatController.fetchChats();
   const storeChats = store.getState().chat?.sidebarData;
   const storeUserId = store.getState().currentUser?.data.id;
-  if (storeChats && storeChats.length && storeUserId) {
+  if (storeChats?.length && storeUserId) {
     storeChats.forEach((chat) => {
       ChatController.connectSocket({
         chatId: chat.id,
