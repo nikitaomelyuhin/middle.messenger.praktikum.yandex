@@ -24,11 +24,6 @@ export class MessengerPage extends Block {
       router.go(`/messenger?id=${this.props.sidebarData[0].id}`);
       pageId = this.props.sidebarData[0].id;
       store.set("chat", this.props);
-      this.children.messengerChat.setProps({
-        chatId: this.currentChatId,
-        lastMessages: this.props.lastMessages,
-        isEmpty: !this.currentChatId,
-      });
     }
     if (this.element) {
       this.addChatModal = this.element.querySelector(".add-chat-modal");
@@ -71,6 +66,18 @@ export class MessengerPage extends Block {
   closeModal(e: any): void {
     if (e.target.classList.contains("modal__backdrop")) {
       e.currentTarget.classList.remove("modal_active");
+    }
+  }
+
+  componentDidMount(): void {
+    const pageId: Id = getQueryParameterByName("id");
+    if (pageId) {
+      this.currentChatId = parseFloat(pageId);
+      this.children.messengerChat.setProps({
+        chatId: this.currentChatId,
+        lastMessages: this.props.lastMessages,
+        isEmpty: !this.currentChatId,
+      });
     }
   }
 

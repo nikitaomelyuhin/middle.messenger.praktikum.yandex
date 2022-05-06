@@ -79,7 +79,7 @@ class ChatController {
   setActiveClass(pageChatId: number) {
     const sidebarList = store.getState().chat?.sidebarData as SidebarItem[] | undefined;
     if (sidebarList) {
-      const supportArray = sidebarList.reduce((acc, item) => {
+      const supportArray = [...sidebarList].reduce((acc, item) => {
         if (item.id === pageChatId) {
           item.activeClass = "chat-list__item_active";
         } else {
@@ -87,7 +87,7 @@ class ChatController {
         }
         return [...acc, item];
       }, []);
-      store.set("chat.sidebarData", supportArray);
+      store.set("chat.sidebarData", [...supportArray]);
     }
   }
 

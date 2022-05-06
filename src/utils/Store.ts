@@ -110,16 +110,13 @@ export const withStore = (mapStateToProps: (state: StoreData) => Record<string, 
   return class extends Component {
     constructor(props: any) {
       state = mapStateToProps(store.getState());
-
       super({ ...props, ...state });
 
       store.on(StoreEvents.Updated, () => {
         const newState = mapStateToProps(store.getState());
-        if (!isEqual(state, newState)) {
-          this.setProps({
-            ...newState,
-          });
-        }
+        this.setProps({
+          ...newState,
+        });
       });
     }
   };

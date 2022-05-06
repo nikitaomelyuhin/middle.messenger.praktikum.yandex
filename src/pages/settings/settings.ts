@@ -39,7 +39,7 @@ export class Settings extends Block {
       events: {
         click: () => {
           const router = new Router("#app");
-          router.go("/messenger");
+          router.back();
         },
       },
     });

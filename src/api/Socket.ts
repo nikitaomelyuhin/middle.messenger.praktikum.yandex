@@ -78,7 +78,7 @@ class Socket {
         const currentState = [...store.getState().chat!.lastMessages[chatId]];
         data.time = formatDate(data.time);
         data.isSelf = data.user_id === this.userId;
-        if (currentState[currentState.length - 1][1].user_id === data.user_id) {
+        if (currentState[currentState.length - 1]?.[1].user_id === data.user_id) {
           currentState[currentState.length - 1].push(data);
         } else {
           const chatUsers = store.getState().chatUsers?.data[chatId];
