@@ -1,5 +1,5 @@
-import { SignUpData } from "../api/AuthApi";
 import ProfileApi from "../api/ProfileApi";
+import { ProfileData } from "../components/profileModal/profileModal";
 import Router from "../utils/Router";
 import AuthController from "./AuthController";
 import ChatController from "./ChatController";
@@ -16,10 +16,11 @@ class ProfileController {
     this.api = new ProfileApi();
   }
 
-  async changeProfile(data: SignUpData) {
+  async changeProfile(data: ProfileData) {
     try {
       await this.api.update(data);
       AuthController.fetchUser();
+      ChatController.fetchChats();
     } catch (err) {
       throw new Error(err);
     }

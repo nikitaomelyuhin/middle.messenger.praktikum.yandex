@@ -20,8 +20,13 @@
             <h3 class="sidebar-item__chat-name">{{this.title}}</h3>
             <div class="sidebar-item__user-text">
               {{#if this.last_message}}
-              <p class="sidebar-item__sender">{{this.last_message.user.first_name}}
-                {{this.last_message.user.second_name}}:</p>
+              <p class="sidebar-item__sender">
+                {{#if this.last_message.user.display_name}}
+                {{this.last_message.user.display_name}}:
+                {{else}}
+                {{this.last_message.user.first_name}} {{this.last_message.user.second_name}}:
+                {{/if}}
+              </p>
               <span>
                 {{this.last_message.content}}
               </span>
