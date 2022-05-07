@@ -56,10 +56,11 @@ export class AddUserModal extends Block {
       this.children.error.setProps({
         error: addUserData.error,
       });
-      this._closeModal();
+      this.element?.addEventListener("click", () => this._closeModal());
       return;
     }
     this.props.active = "";
+    this._closeModal();
   }
 
   private _closeModal(): void {

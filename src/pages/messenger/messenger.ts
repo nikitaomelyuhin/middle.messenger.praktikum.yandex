@@ -16,6 +16,7 @@ export class MessengerPage extends Block {
 
   constructor(props?: any) {
     super(props);
+    this.currentChatId = store.getState()?.activeChatId;
   }
 
   public getChatId() {
@@ -35,9 +36,9 @@ export class MessengerPage extends Block {
       },
     });
     this.children.messengerChat = new MessengerChat({
-      chatId: this.currentChatId,
-      lastMessages: this.props.lastMessages,
-      isEmpty: !(this.currentChatId),
+      chatId: store.getState()?.activeChatId,
+      lastMessages: store.getState().chat?.lastMessages[`${store.getState()?.activeChatId}`],
+      isEmpty: !(store.getState()?.activeChatId),
     });
     this.children.chatList = new SidebarList({
       chatList: this.props.sidebarData,
@@ -60,18 +61,6 @@ export class MessengerPage extends Block {
         active: "",
       });
     }
-  }
-
-  componentDidMount(): void {
-    // const pageId: Id = getQueryParameterByName("id");
-    // if (pageId) {
-    //   this.currentChatId = parseFloat(pageId);
-    //   this.children.messengerChat.setProps({
-    //     chatId: this.currentChatId,
-    //     lastMessages: this.props.lastMessages,
-    //     isEmpty: !this.currentChatId,
-    //   });
-    // }
   }
 
   private _sidebarChatClickHandler(e: any) {

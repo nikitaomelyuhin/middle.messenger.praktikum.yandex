@@ -72,6 +72,13 @@ export class MessengerChat extends Block {
     this.children.addChatModal = new AddChatModal({
       active: "",
     });
+    this.children.messages = new Messages({
+      messages: this.props.lastMessages,
+    });
+    this.children.chatName = new ChatName({
+      name: this._getCurrentChat()?.title || "",
+      avatar: this._getChatAvatar(this._getCurrentChat()),
+    });
   }
 
   private openModal(type: string) {
@@ -124,19 +131,23 @@ export class MessengerChat extends Block {
       if (!currentChat?.last_message && store.getState().currentUser) {
         return store.getState().currentUser?.data?.avatar;
       }
-      return currentChat.last_message.user.avatar;
+      return currentChat?.last_message.user.avatar;
     }
     return currentChat?.avatar;
+  }
+
+  private _getCurrentChat() {
+    return store.getState().chat?.sidebarData!.find((item) => item.id === this.props.chatId);
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
     const isAvailableChat = !!store.getState()?.chat?.sidebarData && this.props && this.props.chatId;
     if (isAvailableChat) {
-      const currentChat = store.getState().chat!.sidebarData!.find((item) => item.id === this.props.chatId);
+      const currentChat = this._getCurrentChat();
 
       const avatar = this._getChatAvatar(currentChat);
       if (currentChat) {
-        this.children.chatName = new ChatName({
+        this.children.chatName.setProps({
           name: currentChat.title,
           avatar,
         });
@@ -147,7 +158,7 @@ export class MessengerChat extends Block {
         document.querySelector(".messenger__body")?.scroll({ top: document.querySelector(".messenger__body")!.scrollHeight });
       });
       if (newProps.lastMessages) {
-        this.children.messages = new Messages({
+        this.children.messages.setProps({
           messages: newProps.lastMessages[`${newProps.chatId}`],
         });
       }

@@ -4,7 +4,6 @@ import SignUpPage from "./pages/signUp/index";
 import MessengerPage from "./pages/messenger/index";
 import Settings from "./pages/settings/index";
 import AuthController from "./controllers/AuthController";
-import store from "./utils/Store";
 import ChatController from "./controllers/ChatController";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -17,14 +16,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     .start();
   await AuthController.fetchUser();
   await ChatController.fetchChats();
-  const storeChats = store.getState().chat?.sidebarData;
-  const storeUserId = store.getState().currentUser?.data.id;
-  if (storeChats?.length && storeUserId) {
-    storeChats.forEach((chat) => {
-      ChatController.connectSocket({
-        chatId: chat.id,
-        userId: storeUserId,
-      });
-    });
-  }
+  // не придумал как по другому получить чат, когда тебя добавляет другой пользователь в чат
+  setInterval(() => {
+    ChatController.fetchChats();
+  }, 30000);
 });

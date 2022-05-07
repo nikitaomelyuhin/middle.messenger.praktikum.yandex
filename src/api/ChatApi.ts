@@ -1,6 +1,11 @@
 import { AddUserData, CreateChat } from "../controllers/ChatController";
 import BaseAPI from "./BaseApi";
 
+type RemoveChat = {
+  users: number[];
+  chatId: number
+}
+
 export default class ChatApi extends BaseAPI {
   constructor() {
     super("/chats");
@@ -26,8 +31,8 @@ export default class ChatApi extends BaseAPI {
     return this.http.get(`/${id}/users`);
   }
 
-  delete(id: number) {
-    return this.http.delete("", { chatId: id });
+  delete(data: RemoveChat) {
+    return this.http.delete("/users", data);
   }
 
   update = undefined;

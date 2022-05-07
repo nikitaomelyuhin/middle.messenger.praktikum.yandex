@@ -57,9 +57,24 @@ class ChatController {
     try {
       const response = await this.api.read() as SidebarItem[];
       response.forEach((item) => {
-        item.activeClass = null;
+        if (store.getState().activeChatId !== item.id) {
+          item.activeClass = null;
+        } else {
+          item.activeClass = "chat-list__item_active";
+        }
       });
       store.set("chat.sidebarData", response);
+      if (response.length) {
+        const socketKeys = socket.getSocketsKeys();
+        response.forEach((item) => {
+          if (!socketKeys.includes(item.id)) {
+            this.connectSocket({
+              chatId: item.id,
+              userId: store.getState()!.currentUser!.data!.id,
+            });
+          }
+        });
+      }
     } catch (err) {
       throw new Error(err);
     }
@@ -69,6 +84,7 @@ class ChatController {
     try {
       store.set("addUser.loading", true);
       await this.api.addUser(data);
+      await socket.sendMessage("Добавил нового пользователя", data.chatId);
       store.set("addUser.error", null);
     } catch (error) {
       if (error?.response?.data?.description) {
@@ -130,7 +146,12 @@ class ChatController {
 
   async removeChat(chatId: number) {
     try {
-      await this.api.delete(chatId);
+      await this.api.delete({
+        users: [
+          store.getState().currentUser!.data.id,
+        ],
+        chatId,
+      });
       const storeData = store.getState();
       const router = new Router("#app");
       if (storeData?.chat?.sidebarData?.length) {
