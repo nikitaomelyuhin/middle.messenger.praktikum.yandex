@@ -38,6 +38,17 @@
             </div>
           </div>
         </div>
+        <div class="sidebar-item__block">
+          <div class="sidebar-item__remove" data-id="{{this.id}}">
+            <i class="sidebar-item__icon fa-solid fa-xmark"></i>
+          </div>
+          <div class="sidebar-item__time">
+            <p>{{this.time}}</p>
+          </div>
+          {{#if this.unread_count}}
+          <div class="sidebar-item__notification">{{this.unread_count}}</div>
+          {{/if}}
+        </div>
       </div>
     </button>
   </li>
