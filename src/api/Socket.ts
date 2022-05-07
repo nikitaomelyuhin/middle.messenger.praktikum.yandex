@@ -44,6 +44,9 @@ class Socket {
   }
 
   public sendMessage(message: string, chatId: number) {
+    if (!this.socket[`${chatId}`]) {
+      this.supportConnection(chatId);
+    }
     this.socket[`${chatId}`].send(JSON.stringify({
       type: "message",
       content: message,

@@ -38,6 +38,16 @@ class ChatController {
       store.set("chat", newData);
       store.set("activeChatId", newId);
       router.go(`/messenger?id=${newId}`);
+      const storeChats = store.getState().chat?.sidebarData;
+      const storeUserId = store.getState().currentUser?.data.id;
+      if (storeChats?.length && storeUserId) {
+        storeChats.forEach((chat) => {
+          this.connectSocket({
+            chatId: chat.id,
+            userId: storeUserId,
+          });
+        });
+      }
     } catch (err) {
       throw new Error(err);
     }
@@ -91,9 +101,7 @@ class ChatController {
   }
 
   setActiveClass(pageChatId: number) {
-    console.log(pageChatId);
     const sidebarList = store.getState().chat?.sidebarData as SidebarItem[] | undefined;
-    console.log(sidebarList, "start");
     if (sidebarList) {
       const supportArray = [...sidebarList].reduce((acc, item) => {
         if (item.id === pageChatId) {
@@ -103,7 +111,6 @@ class ChatController {
         }
         return [...acc, item];
       }, []);
-      console.log(supportArray, "end");
       store.set("chat.sidebarData", [...supportArray]);
     }
   }
@@ -127,14 +134,15 @@ class ChatController {
       const storeData = store.getState();
       const router = new Router("#app");
       if (storeData?.chat?.sidebarData?.length) {
-        const nextChatId = storeData.chat.sidebarData[1]?.id;
+        await this.fetchChats();
+        const nextChatId = storeData.chat.sidebarData[0]?.id;
         if (nextChatId) {
           router.go(`/messenger?id=${nextChatId}`);
-          await this.fetchChats();
           store.set("activeChatId", nextChatId);
           this.setActiveClass(nextChatId);
         } else {
           router.go("/messenger?id=0");
+          store.set("activeChatId", 0);
         }
       }
     } catch (error) {

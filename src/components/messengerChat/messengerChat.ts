@@ -26,11 +26,6 @@ export class MessengerChat extends Block {
 
   constructor(props: MessengerChatProps) {
     super(props);
-    if (!this.props.chatId) {
-      this.props.isEmpty = true;
-    } else {
-      this.props.isEmpty = false;
-    }
   }
 
   protected initChildren(): void {
@@ -135,7 +130,7 @@ export class MessengerChat extends Block {
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
-    const isAvailableChat = !!store.getState().chat && !!store.getState().chat?.sidebarData && this.props && this.props.chatId;
+    const isAvailableChat = !!store.getState()?.chat?.sidebarData && this.props && this.props.chatId;
     if (isAvailableChat) {
       const currentChat = store.getState().chat!.sidebarData!.find((item) => item.id === this.props.chatId);
 
@@ -147,22 +142,18 @@ export class MessengerChat extends Block {
         });
       }
     }
-    if (!newProps.chatId) {
-      newProps.isEmpty = true;
-    } else {
-      newProps.isEmpty = false;
-    }
-    if (oldProps.lastMessages) {
-      if (!isEmptyObject(newProps)) {
-        setTimeout(() => {
-          document.querySelector(".messenger__body")?.scroll({ top: document.querySelector(".messenger__body")!.scrollHeight });
-        });
+    if (!isEmptyObject(newProps)) {
+      setTimeout(() => {
+        document.querySelector(".messenger__body")?.scroll({ top: document.querySelector(".messenger__body")!.scrollHeight });
+      });
+      if (newProps.lastMessages) {
         this.children.messages = new Messages({
           messages: newProps.lastMessages[`${newProps.chatId}`],
         });
-        return true;
       }
+      return true;
     }
+
     return false;
   }
 

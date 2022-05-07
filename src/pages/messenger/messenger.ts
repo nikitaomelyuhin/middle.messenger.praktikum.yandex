@@ -16,13 +16,6 @@ export class MessengerPage extends Block {
 
   constructor(props?: any) {
     super(props);
-    const router = new Router("#app");
-    let pageId: Id = getQueryParameterByName("id");
-    if (this.props.sidebarData && this.props.sidebarData.length && !pageId) {
-      router.go(`/messenger?id=${this.props.sidebarData[0].id}`);
-      pageId = this.props.sidebarData[0].id;
-      store.set("chat", this.props);
-    }
   }
 
   public getChatId() {
@@ -70,15 +63,15 @@ export class MessengerPage extends Block {
   }
 
   componentDidMount(): void {
-    const pageId: Id = getQueryParameterByName("id");
-    if (pageId) {
-      this.currentChatId = parseFloat(pageId);
-      this.children.messengerChat.setProps({
-        chatId: this.currentChatId,
-        lastMessages: this.props.lastMessages,
-        isEmpty: !this.currentChatId,
-      });
-    }
+    // const pageId: Id = getQueryParameterByName("id");
+    // if (pageId) {
+    //   this.currentChatId = parseFloat(pageId);
+    //   this.children.messengerChat.setProps({
+    //     chatId: this.currentChatId,
+    //     lastMessages: this.props.lastMessages,
+    //     isEmpty: !this.currentChatId,
+    //   });
+    // }
   }
 
   private _sidebarChatClickHandler(e: any) {
