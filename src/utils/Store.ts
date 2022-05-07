@@ -92,10 +92,13 @@ type StoreData = {
   };
   addUser?: AddUser;
   chatUsers?: DefaultState<ChatUsersObject>;
+  activeChatId: number;
 }
 
 class Store extends EventBus {
-  private state: StoreData = {};
+  private state: StoreData = {
+    activeChatId: 0,
+  };
 
   public getState() {
     return this.state;

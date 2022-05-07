@@ -1,4 +1,5 @@
 import ChatController from "../../controllers/ChatController";
+import { Modal } from "../../typings/global";
 import Block from "../../utils/Block";
 import { getQueryParameterByName } from "../../utils/helpers";
 import store from "../../utils/Store";
@@ -7,14 +8,10 @@ import Error from "../error/index";
 import Input from "../input/index";
 import template from "./addUserModal.hbs";
 
-type AddUserModalProps = {
-  active: string;
-  hasError?: false;
-}
 export class AddUserModal extends Block {
   private userId: number;
 
-  constructor(props: AddUserModalProps) {
+  constructor(props: Modal) {
     super(props);
   }
 
@@ -59,17 +56,14 @@ export class AddUserModal extends Block {
       this.children.error.setProps({
         error: addUserData.error,
       });
-      const addUserModal = document.querySelector(".add-user-modal");
-      addUserModal?.addEventListener("click", (e) => this.closeModal(e));
+      this._closeModal();
       return;
     }
     this.props.active = "";
   }
 
-  private closeModal(e: any): void {
-    if (e.target.classList.contains("modal__backdrop")) {
-      this.props.active = "";
-    }
+  private _closeModal(): void {
+    this.props.active = "";
   }
 
   render() {

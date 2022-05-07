@@ -22,10 +22,6 @@ type MessengerChatProps = {
 }
 
 export class MessengerChat extends Block {
-  private addUserModal: HTMLElement | null = null;
-
-  private addChatModal: HTMLElement | null = null;
-
   private message: string;
 
   constructor(props: MessengerChatProps) {
@@ -41,13 +37,13 @@ export class MessengerChat extends Block {
     this.children.addUsersButton = new Button({
       text: "Добавить нового пользователя",
       events: {
-        click: () => this.openModal(".add-user-modal"),
+        click: () => this.openModal("user"),
       },
     });
     this.children.addChatButton = new Button({
       text: "Добавить новый чат",
       events: {
-        click: () => this.openModal(".add-chat-modal"),
+        click: () => this.openModal("chat"),
       },
     });
     this.children.link = new Link({
@@ -78,21 +74,35 @@ export class MessengerChat extends Block {
     this.children.addUserModal = new AddUserModal({
       active: "",
     });
-    this.children.addChatModal = new AddChatModal();
+    this.children.addChatModal = new AddChatModal({
+      active: "",
+    });
   }
 
-  private openModal() {
-    this.children.addUserModal.setProps({
-      active: "modal_active",
-      hasError: false,
-    });
-    this.addUserModal = document.querySelector(".add-user-modal");
-    this.addUserModal?.addEventListener("click", (e) => this.closeModal(e));
+  private openModal(type: string) {
+    if (type === "user") {
+      this.children.addUserModal.setProps({
+        active: "modal_active",
+        hasError: false,
+      });
+      this.children.addUserModal.element?.addEventListener("click", (e: any) => this.closeModal(e));
+    }
+
+    if (type === "chat") {
+      this.children.addChatModal.setProps({
+        active: "modal_active",
+        hasError: false,
+      });
+      this.children.addChatModal.element?.addEventListener("click", (e: any) => this.closeModal(e));
+    }
   }
 
   private closeModal(e: any): void {
     if (e.target.classList.contains("modal__backdrop")) {
       this.children.addUserModal.setProps({
+        active: "",
+      });
+      this.children.addChatModal.setProps({
         active: "",
       });
     }
@@ -115,20 +125,16 @@ export class MessengerChat extends Block {
   }
 
   private _getChatAvatar(currentChat: any) {
-    if (!currentChat.avatar) {
-      if (!currentChat.last_message && store.getState().currentUser) {
-        return store.getState().currentUser?.data.avatar;
+    if (!currentChat?.avatar) {
+      if (!currentChat?.last_message && store.getState().currentUser) {
+        return store.getState().currentUser?.data?.avatar;
       }
       return currentChat.last_message.user.avatar;
     }
-    return currentChat.avatar;
+    return currentChat?.avatar;
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
-    // if (this.element) {
-    //   this.addUserModal = document.querySelector(".add-user-modal");
-    //   this.addChatModal = document.querySelector(".add-chat-modal");
-    // }
     const isAvailableChat = !!store.getState().chat && !!store.getState().chat?.sidebarData && this.props && this.props.chatId;
     if (isAvailableChat) {
       const currentChat = store.getState().chat!.sidebarData!.find((item) => item.id === this.props.chatId);

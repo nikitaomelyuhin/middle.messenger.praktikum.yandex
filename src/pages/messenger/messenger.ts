@@ -12,9 +12,7 @@ import store from "../../utils/Store";
 
 type Id = string | null | number
 export class MessengerPage extends Block {
-  private addChatModal: HTMLElement | null = null;
-
-  private currentChatId: Id;
+  private currentChatId: Id = store.getState()?.activeChatId;
 
   constructor(props?: any) {
     super(props);
@@ -25,10 +23,6 @@ export class MessengerPage extends Block {
       pageId = this.props.sidebarData[0].id;
       store.set("chat", this.props);
     }
-    if (this.element) {
-      this.addChatModal = this.element.querySelector(".add-chat-modal");
-    }
-    this.addChatModal?.addEventListener("click", (e) => this.closeModal(e));
   }
 
   public getChatId() {
@@ -37,12 +31,14 @@ export class MessengerPage extends Block {
 
   protected initChildren() {
     this.children.smallCard = new SmallCard({});
-    this.children.addChatModal = new AddChatModal();
+    this.children.addChatModal = new AddChatModal({
+      active: "",
+    });
     this.children.addChat = new Button({
       text: "Добавить новый чат",
       type: "simple",
       events: {
-        click: () => this.openModal(".add-chat-modal"),
+        click: () => this.openModal(),
       },
     });
     this.children.messengerChat = new MessengerChat({
@@ -58,14 +54,18 @@ export class MessengerPage extends Block {
     });
   }
 
-  private openModal(selector: string) {
-    const modal = document.querySelector(selector);
-    modal?.classList.add("modal_active");
+  private openModal() {
+    this.children.addChatModal.setProps({
+      active: "modal_active",
+    });
+    this.children.addChatModal.element.addEventListener("click", (e: any) => this.closeModal(e));
   }
 
   closeModal(e: any): void {
     if (e.target.classList.contains("modal__backdrop")) {
-      e.currentTarget.classList.remove("modal_active");
+      this.children.addChatModal.setProps({
+        active: "",
+      });
     }
   }
 
@@ -90,19 +90,24 @@ export class MessengerPage extends Block {
     }
     let pageId: Id = getQueryParameterByName("id");
     const router = new Router("#app");
-    if (pageId) {
+    if (pageId && !currentElement.classList.contains("sidebar-item__block")) {
       pageId = parseFloat(pageId);
       router.go(`/messenger?id=${currentId}`);
       this.currentChatId = currentId;
       ChatController.setActiveClass(currentId);
+      ChatController.setActiveId(currentId);
+    }
+    if (currentElement.classList.contains("sidebar-item__block")) {
+      this._removeChat(currentId);
     }
   }
 
+  private async _removeChat(id: number) {
+    await ChatController.removeChat(id);
+  }
+
   componentDidUpdate(oldProps: any, newProps: any): boolean {
-    const pageId = getQueryParameterByName("id");
-    if (pageId) {
-      this.currentChatId = parseFloat(pageId);
-    }
+    this.currentChatId = store.getState().activeChatId;
     this.children.messengerChat.setProps({
       chatId: this.currentChatId,
       lastMessages: newProps.lastMessages,

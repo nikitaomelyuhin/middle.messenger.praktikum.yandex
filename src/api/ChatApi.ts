@@ -26,7 +26,9 @@ export default class ChatApi extends BaseAPI {
     return this.http.get(`/${id}/users`);
   }
 
-  update = undefined;
+  delete(id: number) {
+    return this.http.delete("", { chatId: id });
+  }
 
-  delete = undefined;
+  update = undefined;
 }

@@ -29,7 +29,15 @@ class ChatController {
   async createChat(data: CreateChat) {
     try {
       await this.api.create(data);
-      this.fetchChats();
+      await this.fetchChats();
+      const storeData = store.getState();
+      const newId = storeData.chat!.sidebarData![0].id;
+      this.setActiveClass(newId);
+      const router = new Router("#app");
+      const newData = { ...storeData.chat };
+      store.set("chat", newData);
+      store.set("activeChatId", newId);
+      router.go(`/messenger?id=${newId}`);
     } catch (err) {
       throw new Error(err);
     }
@@ -83,7 +91,9 @@ class ChatController {
   }
 
   setActiveClass(pageChatId: number) {
+    console.log(pageChatId);
     const sidebarList = store.getState().chat?.sidebarData as SidebarItem[] | undefined;
+    console.log(sidebarList, "start");
     if (sidebarList) {
       const supportArray = [...sidebarList].reduce((acc, item) => {
         if (item.id === pageChatId) {
@@ -93,8 +103,13 @@ class ChatController {
         }
         return [...acc, item];
       }, []);
+      console.log(supportArray, "end");
       store.set("chat.sidebarData", [...supportArray]);
     }
+  }
+
+  setActiveId(id: number) {
+    store.set("activeChatId", id);
   }
 
   async getChatUsers(chatId: number) {
@@ -103,6 +118,27 @@ class ChatController {
       store.set(`chatUsers.data.${chatId}`, response);
     } catch (err) {
       throw new Error(err);
+    }
+  }
+
+  async removeChat(chatId: number) {
+    try {
+      await this.api.delete(chatId);
+      const storeData = store.getState();
+      const router = new Router("#app");
+      if (storeData?.chat?.sidebarData?.length) {
+        const nextChatId = storeData.chat.sidebarData[1]?.id;
+        if (nextChatId) {
+          router.go(`/messenger?id=${nextChatId}`);
+          await this.fetchChats();
+          store.set("activeChatId", nextChatId);
+          this.setActiveClass(nextChatId);
+        } else {
+          router.go("/messenger?id=0");
+        }
+      }
+    } catch (error) {
+      throw new Error(error);
     }
   }
 }
