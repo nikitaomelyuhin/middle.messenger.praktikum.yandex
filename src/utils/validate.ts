@@ -41,6 +41,14 @@ class Validation {
     }
   }
 
+  public validateDisplayName(name: string | null) {
+    if (!name) {
+      this._updateResult(false, "Поле не может быть пустым");
+    } else {
+      this._validateLength(name, 3, 20);
+    }
+  }
+
   public validateName(name: string) {
     this._generalValidate(name);
     if (this._result.isValid) {
@@ -61,9 +69,9 @@ class Validation {
       const isValid = /^([+]|\d)([0-9])+$/.test(phone);
       if (!isValid) {
         this._updateResult(false, "Должны быть только цифры");
-        if (this._result.isValid) {
-          this._validateLength(phone, 10, 15);
-        }
+      }
+      if (this._result.isValid) {
+        this._validateLength(phone, 10, 15);
       }
     }
   }

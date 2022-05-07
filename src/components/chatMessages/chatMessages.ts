@@ -31,7 +31,7 @@ export class Messages extends Block {
       const chatUsers = store.getState().chatUsers?.data[props.messages[0][0].chat_id];
       props.messages?.forEach((userMessages: message[]) => {
         chatUsers?.forEach((chatUser) => {
-          if (chatUser.id === userMessages[0].user_id) {
+          if (chatUser?.id === userMessages[0].user_id) {
             userMessages.unshift({
               avatar: chatUser.avatar,
               isSelf: userMessages[0].isSelf,

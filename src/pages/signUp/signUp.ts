@@ -11,13 +11,14 @@ import Router from "../../utils/Router";
 import store, { DefaultState, SignUpDataTypes } from "../../utils/Store";
 import ChatController from "../../controllers/ChatController";
 
-type ValidationFields = {
+export type ValidationFields = {
   email: boolean;
   login: boolean;
   first_name: boolean;
   second_name: boolean;
   phone: boolean;
-  password: boolean;
+  password?: boolean;
+  display_name?: boolean;
 };
 export class SignUpPage extends Block {
   private _formFields: SignUpData = {

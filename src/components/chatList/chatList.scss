@@ -64,8 +64,12 @@
   }
   &__chat-name {
     margin-bottom: 5px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
+  }
+  &__plug {
+    font-style: italic;
+    color: $secondary;
   }
   &__user-text {
     display: flex;
@@ -81,6 +85,8 @@
   }
   &__sender {
     margin-right: 5px;
+    white-space: nowrap;
+    color: $text;
     font-weight: bold;
   }
   &__remove {

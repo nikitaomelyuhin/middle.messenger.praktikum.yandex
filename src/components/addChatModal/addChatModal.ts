@@ -1,4 +1,5 @@
 import ChatController from "../../controllers/ChatController";
+import { Modal } from "../../typings/global";
 import Block from "../../utils/Block";
 import Button from "../button/index";
 import Input from "../input/index";
@@ -6,6 +7,10 @@ import template from "./addChatModal.hbs";
 
 export class AddChatModal extends Block {
   private chatName = "";
+
+  constructor(props: Modal) {
+    super(props);
+  }
 
   protected initChildren() {
     this.children.addChatInput = new Input({
@@ -28,10 +33,15 @@ export class AddChatModal extends Block {
     this.chatName = e.target.value;
   }
 
-  private addChat() {
-    ChatController.createChat({
+  private async addChat() {
+    await ChatController.createChat({
       title: this.chatName,
     });
+    this._closeModal();
+  }
+
+  private _closeModal(): void {
+    this.props.active = "";
   }
 
   render() {

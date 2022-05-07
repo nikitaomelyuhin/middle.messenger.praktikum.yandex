@@ -5,7 +5,15 @@
     {{#if @first}}
     <li class="chat__item avatar {{#if this.isSelf }}chat__item_self {{/if}}">
       <div class="chat__avatar-user">
-        <img src="https://ya-praktikum.tech/api/v2/resources/{{this.avatar}}" class="avatar__pic">
+        <div class="avatar__image">
+          {{#if this.avatar}}
+          <img src="https://ya-praktikum.tech/api/v2/resources/{{this.avatar}}" class="avatar__pic">
+          {{else}}
+          <div class="avatar__unknown">
+            <p>?</p>
+          </div>
+          {{/if}}
+        </div>
         <p>{{this.name}}</p>
       </div>
     </li>

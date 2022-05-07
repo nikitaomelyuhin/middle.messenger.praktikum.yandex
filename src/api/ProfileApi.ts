@@ -1,5 +1,5 @@
+import { ProfileData } from "../components/profileModal/profileModal";
 import { passwordsData } from "../controllers/ProfileController";
-import { SignUpData } from "./AuthApi";
 import BaseAPI from "./BaseApi";
 
 export default class ProfileApi extends BaseAPI {
@@ -7,7 +7,7 @@ export default class ProfileApi extends BaseAPI {
     super("/user");
   }
 
-  update(data: SignUpData) {
+  update(data: ProfileData) {
     return this.http.put("/profile", data);
   }
 
@@ -16,7 +16,7 @@ export default class ProfileApi extends BaseAPI {
   }
 
   changeAvatar(data: FormData) {
-    return this.http.put("/profile/avatar", data);
+    return this.http.put("/profile/avatar", data, true);
   }
 
   create = undefined;

@@ -20,6 +20,13 @@ class Socket {
     this.getMessage(props.chatId);
   }
 
+  public getSocketsKeys() {
+    return Object.keys(this.socket).map((key: string | number) => {
+      key = parseFloat(key as string);
+      return key;
+    });
+  }
+
   private socketConnect(props?: SocketConnectData) {
     if (props) {
       const { userId, chatId, token } = props;
@@ -44,6 +51,9 @@ class Socket {
   }
 
   public sendMessage(message: string, chatId: number) {
+    if (!this.socket[`${chatId}`]) {
+      this.supportConnection(chatId);
+    }
     this.socket[`${chatId}`].send(JSON.stringify({
       type: "message",
       content: message,
@@ -51,7 +61,7 @@ class Socket {
   }
 
   public getMessage(chatId: number) {
-    this.socket[`${chatId}`].addEventListener("message", (event: any) => {
+    this.socket[`${chatId}`].addEventListener("message", async (event: any) => {
       let data = JSON.parse(event.data);
       if (Array.isArray(data)) {
         ChatController.getChatUsers(chatId);
@@ -78,7 +88,7 @@ class Socket {
         const currentState = [...store.getState().chat!.lastMessages[chatId]];
         data.time = formatDate(data.time);
         data.isSelf = data.user_id === this.userId;
-        if (currentState[currentState.length - 1][1].user_id === data.user_id) {
+        if (currentState[currentState.length - 1]?.[1]?.user_id === data.user_id) {
           currentState[currentState.length - 1].push(data);
         } else {
           const chatUsers = store.getState().chatUsers?.data[chatId];
@@ -93,6 +103,7 @@ class Socket {
           ];
           currentState.push(supportArray);
         }
+        ChatController.fetchChats();
         store.set(`chat.lastMessages.${chatId}`, currentState);
       }
     });

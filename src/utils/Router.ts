@@ -65,7 +65,6 @@ class Router {
 
   back() {
     this.history.back();
-    this._onRoute(window.location.pathname);
   }
 
   forward() {

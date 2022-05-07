@@ -1,5 +1,4 @@
 <div class="messenger">
-  {{isEmpty}}
   {{#if isEmpty}}
   <div class="empty">
     <div class="empty__header messenger__header">
@@ -16,6 +15,7 @@
         {{{ addChatButton }}}
       </div>
     </div>
+    {{{ addChatModal }}}
   </div>
   {{else}}
   <div class="messenger__content">
@@ -48,7 +48,6 @@
       </button>
     </div>
     {{{ addUserModal }}}
-    {{{ addChatModal }}}
   </div>
   {{/if}}
 </div>

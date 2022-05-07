@@ -11,6 +11,7 @@ import ProfileModal from "../../components/profileModal/index";
 import PasswordModal from "../../components/passwordModal/index";
 import AvatarModal from "../../components/avatarModal/index";
 import { isEqual } from "../../utils/helpers";
+import store from "../../utils/Store";
 
 export class Settings extends Block {
   private profileModal: HTMLElement | null = null;
@@ -37,10 +38,7 @@ export class Settings extends Block {
     this.children.avatarModal = new AvatarModal();
     this.children.backButton = new BackButton({
       events: {
-        click: () => {
-          const router = new Router("#app");
-          router.go("/messenger");
-        },
+        click: () => this.goToChats(),
       },
     });
     this.children.title = new Text({
@@ -111,6 +109,11 @@ export class Settings extends Block {
     if (e.target.classList.contains("modal__backdrop")) {
       e.currentTarget.classList.remove("modal_active");
     }
+  }
+
+  goToChats() {
+    const router = new Router("#app");
+    router.go("/messenger");
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {

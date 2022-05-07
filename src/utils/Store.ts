@@ -77,19 +77,30 @@ export type DefaultState<T> = {
   error: unknown;
 }
 
+type AddUser = {
+  error: null | string;
+  loading: false;
+}
+
 type StoreData = {
-  currentUser?: DefaultState<User>
-  signIn?: DefaultState<number>
-  signUp?: DefaultState<SignUpDataTypes>
+  currentUser?: DefaultState<User>;
+  signIn?: DefaultState<number>;
+  signUp?: DefaultState<SignUpDataTypes>;
   chat?: {
     sidebarData?: SidebarItem[]
     lastMessages?: any
-  }
-  chatUsers?: DefaultState<ChatUsersObject>
+  };
+  addUser?: AddUser;
+  chatUsers?: DefaultState<ChatUsersObject>;
+  activeChatId: number;
+  changePasswordError: string | null;
 }
 
 class Store extends EventBus {
-  private state: StoreData = {};
+  private state: StoreData = {
+    activeChatId: 0,
+    changePasswordError: null,
+  };
 
   public getState() {
     return this.state;
@@ -110,16 +121,13 @@ export const withStore = (mapStateToProps: (state: StoreData) => Record<string, 
   return class extends Component {
     constructor(props: any) {
       state = mapStateToProps(store.getState());
-
       super({ ...props, ...state });
 
       store.on(StoreEvents.Updated, () => {
         const newState = mapStateToProps(store.getState());
-        if (!isEqual(state, newState)) {
-          this.setProps({
-            ...newState,
-          });
-        }
+        this.setProps({
+          ...newState,
+        });
       });
     }
   };

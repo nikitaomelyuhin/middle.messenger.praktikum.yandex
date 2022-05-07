@@ -12,3 +12,8 @@ export type Field = {
   value: string;
   type: string;
 }
+
+export type Modal = {
+  active: string;
+  hasError?: boolean;
+}

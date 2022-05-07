@@ -1,6 +1,7 @@
 import AuthApi, { SignInData, SignUpData } from "../api/AuthApi";
 import Router from "../utils/Router";
 import store from "../utils/Store";
+import ChatController from "./ChatController";
 
 class AuthController {
   private api: AuthApi;
@@ -35,7 +36,8 @@ class AuthController {
       store.set("signIn.loading", true);
       await this.api.signIn(data);
       store.set("signIn.error", null);
-      this.fetchUser();
+      await this.fetchUser();
+      await ChatController.fetchChats();
       store.set("signIn.loading", false);
     } catch (err) {
       store.set("signIn.loading", false);

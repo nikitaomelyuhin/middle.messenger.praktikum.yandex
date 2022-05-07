@@ -34,10 +34,9 @@ export class AvatarModal extends Block {
   private saveAvatar(e: any) {
     e.preventDefault();
     if (this._choosenFile) {
-      const form = new FormData();
-      form.append("avatar", this._choosenFile);
-
-      ProfileController.changeAvatar(form);
+      const formData = new FormData();
+      formData.append("avatar", this._choosenFile);
+      ProfileController.changeAvatar(formData);
     }
   }
 

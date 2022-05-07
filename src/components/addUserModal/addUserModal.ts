@@ -1,21 +1,21 @@
 import ChatController from "../../controllers/ChatController";
+import { Modal } from "../../typings/global";
 import Block from "../../utils/Block";
 import { getQueryParameterByName } from "../../utils/helpers";
+import store from "../../utils/Store";
 import Button from "../button/index";
+import Error from "../error/index";
 import Input from "../input/index";
 import template from "./addUserModal.hbs";
 
 export class AddUserModal extends Block {
   private userId: number;
 
+  constructor(props: Modal) {
+    super(props);
+  }
+
   protected initChildren() {
-    this.children.addUserInput = new Input({
-      type: "number",
-      placeholder: "Введите id пользвателя",
-      events: {
-        keyup: (e) => this.setUserToChat(e),
-      },
-    });
     this.children.button = new Button({
       type: "simple",
       text: "Добавить пользователя",
@@ -23,22 +23,48 @@ export class AddUserModal extends Block {
         click: () => this.addUser(),
       },
     });
+    this.children.addUserInput = new Input({
+      type: "number",
+      placeholder: "Введите id пользвателя",
+      value: "",
+      events: {
+        keyup: (e) => this.setUserToChat(e),
+      },
+    });
+    this.children.error = new Error({
+      error: null,
+    });
   }
 
   private setUserToChat(e: any) {
     this.userId = e.target.value;
   }
 
-  private addUser() {
+  private async addUser() {
     const currentPageId = getQueryParameterByName("id");
     if (currentPageId) {
-      ChatController.addUser({
+      await ChatController.addUser({
         users: [
           this.userId,
         ],
         chatId: parseFloat(currentPageId),
       });
     }
+    const addUserData = store.getState().addUser;
+    if (addUserData?.error) {
+      this.props.hasError = true;
+      this.children.error.setProps({
+        error: addUserData.error,
+      });
+      this.element?.addEventListener("click", () => this._closeModal());
+      return;
+    }
+    this.props.active = "";
+    this._closeModal();
+  }
+
+  private _closeModal(): void {
+    this.props.active = "";
   }
 
   render() {

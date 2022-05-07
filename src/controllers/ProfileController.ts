@@ -1,7 +1,9 @@
-import { SignUpData } from "../api/AuthApi";
 import ProfileApi from "../api/ProfileApi";
+import { ProfileData } from "../components/profileModal/profileModal";
 import Router from "../utils/Router";
+import store from "../utils/Store";
 import AuthController from "./AuthController";
+import ChatController from "./ChatController";
 
 export interface passwordsData {
   oldPassword: string,
@@ -15,22 +17,22 @@ class ProfileController {
     this.api = new ProfileApi();
   }
 
-  async changeProfile(data: SignUpData) {
+  async changeProfile(data: ProfileData) {
     try {
       await this.api.update(data);
       AuthController.fetchUser();
+      ChatController.fetchChats();
     } catch (err) {
       throw new Error(err);
     }
   }
 
   async changePassword(data: passwordsData) {
-    const router = new Router("#app");
     try {
       await this.api.changePassword(data);
-      router.go("/settings");
+      store.set("changePasswordError", null);
     } catch (err) {
-      throw new Error(err);
+      store.set("changePasswordError", "Старый пароль неверен");
     }
   }
 
@@ -39,7 +41,8 @@ class ProfileController {
     try {
       await this.api.changeAvatar(data);
       router.go("/settings");
-      AuthController.fetchUser();
+      await AuthController.fetchUser();
+      await ChatController.fetchChats();
     } catch (err) {
       throw new Error(err);
     }

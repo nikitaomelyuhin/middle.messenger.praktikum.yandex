@@ -3,7 +3,7 @@ import { Events } from "../../typings/global";
 import Block from "../../utils/Block";
 import { getQueryParameterByName } from "../../utils/helpers";
 import Router from "../../utils/Router";
-import { SidebarItem } from "../../utils/Store";
+import store, { SidebarItem } from "../../utils/Store";
 import template from "./chatList.hbs";
 
 type SidebarProps = {
@@ -31,6 +31,10 @@ export class SidebarList extends Block {
         }
         const router = new Router("#app");
         router.go(`/messenger?id=${defaultChatId}`);
+        const activeChatId = store.getState()?.activeChatId;
+        if (defaultChatId && activeChatId !== parseFloat(defaultChatId)) {
+          ChatController.setActiveId(parseFloat(defaultChatId));
+        }
         let pageChatId: string | number | null = getQueryParameterByName("id");
         if (pageChatId) {
           pageChatId = parseFloat(pageChatId);
