@@ -1,6 +1,12 @@
-<div class="chat-name">
-  <div class="chat-name__avatar">
-    <img src="https://ya-praktikum.tech/api/v2/resources/{{avatar}}" class="chat-name__avatar-image">
+<div class="chat-name avatar">
+  <div class="avatar__image">
+    {{#if avatar}}
+    <img src="https://ya-praktikum.tech/api/v2/resources/{{avatar}}" class="avatar__pic">
+    {{else}}
+    <div class="avatar__unknown">
+      <p>?</p>
+    </div>
+    {{/if}}
   </div>
   <div class="chat-name__title">
     {{name}}

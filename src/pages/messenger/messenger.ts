@@ -70,10 +70,9 @@ export class MessengerPage extends Block {
       currentId = parseFloat(currentElement.getAttribute("data-id"));
       currentElement = currentElement.parentNode;
     }
-    let pageId: Id = getQueryParameterByName("id");
+    const pageId = store.getState().activeChatId;
     const router = new Router("#app");
     if (pageId && !currentElement.classList.contains("sidebar-item__block")) {
-      pageId = parseFloat(pageId);
       router.go(`/messenger?id=${currentId}`);
       this.currentChatId = currentId;
       ChatController.setActiveClass(currentId);

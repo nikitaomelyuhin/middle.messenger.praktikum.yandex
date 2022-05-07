@@ -102,6 +102,7 @@ class Socket {
             data,
           ];
           currentState.push(supportArray);
+          ChatController.fetchChats();
         }
         store.set(`chat.lastMessages.${chatId}`, currentState);
       }

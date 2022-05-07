@@ -1,13 +1,34 @@
 .avatar {
-  width: 100%;
   display: flex;
-  flex-direction: column;
   margin-bottom: 20px;
-  &__pic {
+  &__image {
     overflow: hidden;
     border-radius: 50%;
     height: 40px;
     width: 40px;
     margin-right: 10px;
   }
+  &__pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &__unknown {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: $bg-dark;
+    p {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: $text;
+      line-height: 1;
+    }
+  }
+}
+
+.chat__user-list {
+  margin-bottom: 15px;
 }

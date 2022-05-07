@@ -2,6 +2,7 @@ import { SignUpData } from "../api/AuthApi";
 import ProfileApi from "../api/ProfileApi";
 import Router from "../utils/Router";
 import AuthController from "./AuthController";
+import ChatController from "./ChatController";
 
 export interface passwordsData {
   oldPassword: string,
@@ -39,7 +40,8 @@ class ProfileController {
     try {
       await this.api.changeAvatar(data);
       router.go("/settings");
-      AuthController.fetchUser();
+      await AuthController.fetchUser();
+      await ChatController.fetchChats();
     } catch (err) {
       throw new Error(err);
     }

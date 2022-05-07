@@ -16,7 +16,7 @@ export default class ProfileApi extends BaseAPI {
   }
 
   changeAvatar(data: FormData) {
-    return this.http.put("/profile/avatar", data);
+    return this.http.put("/profile/avatar", data, true);
   }
 
   create = undefined;

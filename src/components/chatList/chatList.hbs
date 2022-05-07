@@ -4,11 +4,17 @@
     <button class="sidebar-item">
       <div class="sidebar-item__wrapper">
         <div class="sidebar-item__block">
-          <div class="sidebar-item__avatar">
-            {{#if this.last_message.user.avatar}}
-            <img src="https://ya-praktikum.tech/api/v2/resources/{{this.last_message.user.avatar}}"
-              class="sidebar-item__image">
-            {{/if}}
+          <div class="avatar">
+            <div class="avatar__image">
+              {{#if this.last_message.user.avatar}}
+              <img src="https://ya-praktikum.tech/api/v2/resources/{{this.last_message.user.avatar}}"
+                class="avatar__pic">
+              {{else}}
+              <div class="avatar__unknown">
+                <p>?</p>
+              </div>
+              {{/if}}
+            </div>
           </div>
           <div class="sidebar-item__text-block">
             <h3 class="sidebar-item__chat-name">{{this.title}}</h3>
@@ -20,21 +26,12 @@
                 {{this.last_message.content}}
               </span>
               {{else}}
-              <p>Напишите что-нибудь</p>
+              <div class="sidebar-item__plug">
+                <p>Напишите что-нибудь</p>
+              </div>
               {{/if}}
             </div>
           </div>
-        </div>
-        <div class="sidebar-item__block">
-          <div class="sidebar-item__remove" data-id="{{this.id}}">
-            <i class="sidebar-item__icon fa-solid fa-xmark"></i>
-          </div>
-          <div class="sidebar-item__time">
-            <p>{{this.time}}</p>
-          </div>
-          {{#if this.unread_count}}
-          <div class="sidebar-item__notification">{{this.unread_count}}</div>
-          {{/if}}
         </div>
       </div>
     </button>

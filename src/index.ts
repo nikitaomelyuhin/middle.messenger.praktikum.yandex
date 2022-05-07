@@ -5,6 +5,7 @@ import MessengerPage from "./pages/messenger/index";
 import Settings from "./pages/settings/index";
 import AuthController from "./controllers/AuthController";
 import ChatController from "./controllers/ChatController";
+import store from "./utils/Store";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const router = new Router("#app");
@@ -15,9 +16,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     .use("/settings", Settings)
     .start();
   await AuthController.fetchUser();
-  await ChatController.fetchChats();
-  // не придумал как по другому получить чат, когда тебя добавляет другой пользователь в чат
-  setInterval(() => {
-    ChatController.fetchChats();
-  }, 30000);
+  if (store.getState().currentUser?.data) {
+    await ChatController.fetchChats();
+    // пока не придумал как по другому получить чат, когда тебя добавляет другой пользователь в чат
+    setInterval(() => {
+      ChatController.fetchChats();
+    }, 30000);
+  }
 });

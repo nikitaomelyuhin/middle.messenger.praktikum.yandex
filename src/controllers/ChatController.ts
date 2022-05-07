@@ -20,8 +20,6 @@ export interface socketPayload {
 class ChatController {
   private api: ChatApi;
 
-  private token: string;
-
   constructor() {
     this.api = new ChatApi();
   }
