@@ -1,6 +1,7 @@
 import ProfileApi from "../api/ProfileApi";
 import { ProfileData } from "../components/profileModal/profileModal";
 import Router from "../utils/Router";
+import store from "../utils/Store";
 import AuthController from "./AuthController";
 import ChatController from "./ChatController";
 
@@ -27,12 +28,11 @@ class ProfileController {
   }
 
   async changePassword(data: passwordsData) {
-    const router = new Router("#app");
     try {
       await this.api.changePassword(data);
-      router.go("/settings");
+      store.set("changePasswordError", null);
     } catch (err) {
-      throw new Error(err);
+      store.set("changePasswordError", "Старый пароль неверен");
     }
   }
 
