@@ -77,15 +77,21 @@ export type DefaultState<T> = {
   error: unknown;
 }
 
+type AddUser = {
+  error: null | string;
+  loading: false;
+}
+
 type StoreData = {
-  currentUser?: DefaultState<User>
-  signIn?: DefaultState<number>
-  signUp?: DefaultState<SignUpDataTypes>
+  currentUser?: DefaultState<User>;
+  signIn?: DefaultState<number>;
+  signUp?: DefaultState<SignUpDataTypes>;
   chat?: {
     sidebarData?: SidebarItem[]
     lastMessages?: any
-  }
-  chatUsers?: DefaultState<ChatUsersObject>
+  };
+  addUser?: AddUser;
+  chatUsers?: DefaultState<ChatUsersObject>;
 }
 
 class Store extends EventBus {

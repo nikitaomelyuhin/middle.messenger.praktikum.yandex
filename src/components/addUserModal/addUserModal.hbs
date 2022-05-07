@@ -1,4 +1,4 @@
-<div class="modal add-user-modal">
+<div class="modal add-user-modal {{active}}">
   <div class="modal__backdrop"></div>
   <div class="modal-content">
     <h3 class="modal-content__title">Добавить пользователя в чат</h3>
@@ -6,6 +6,11 @@
       <div class="modal-content__input">
         {{{ addUserInput }}}
       </div>
+      {{#if hasError}}
+      <div class="modal-content__error">
+        {{{ error }}}
+      </div>
+      {{/if}}
       <div class="modal-content__button">
         {{{ button }}}
       </div>

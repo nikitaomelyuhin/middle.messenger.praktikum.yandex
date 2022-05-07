@@ -27,11 +27,9 @@ class ChatController {
   }
 
   async createChat(data: CreateChat) {
-    const router = new Router("#app");
     try {
       await this.api.create(data);
       this.fetchChats();
-      router.back();
     } catch (err) {
       throw new Error(err);
     }
@@ -51,9 +49,17 @@ class ChatController {
 
   async addUser(data: AddUserData) {
     try {
+      store.set("addUser.loading", true);
       await this.api.addUser(data);
-    } catch (err) {
-      throw new Error(err);
+      store.set("addUser.error", null);
+    } catch (error) {
+      if (error?.response?.data?.description) {
+        store.set("addUser.error", error.response.data.description);
+      } else {
+        store.set("addUser.error", "Что-то пошло не так, попробуйте еще раз");
+      }
+    } finally {
+      store.set("addUser.loading", false);
     }
   }
 

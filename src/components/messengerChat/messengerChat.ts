@@ -35,12 +35,6 @@ export class MessengerChat extends Block {
     } else {
       this.props.isEmpty = false;
     }
-    if (this.element) {
-      this.addUserModal = this.element.querySelector(".add-user-modal");
-      this.addChatModal = this.element.querySelector(".add-chat-modal");
-    }
-    this.addUserModal?.addEventListener("click", (e) => this.closeModal(e));
-    this.addChatModal?.addEventListener("click", (e) => this.closeModal(e));
   }
 
   protected initChildren(): void {
@@ -81,18 +75,26 @@ export class MessengerChat extends Block {
         click: () => this.sendMessage(),
       },
     });
-    this.children.addUserModal = new AddUserModal();
+    this.children.addUserModal = new AddUserModal({
+      active: "",
+    });
     this.children.addChatModal = new AddChatModal();
   }
 
-  private openModal(selector: string) {
-    const modal = document.querySelector(selector);
-    modal?.classList.add("modal_active");
+  private openModal() {
+    this.children.addUserModal.setProps({
+      active: "modal_active",
+      hasError: false,
+    });
+    this.addUserModal = document.querySelector(".add-user-modal");
+    this.addUserModal?.addEventListener("click", (e) => this.closeModal(e));
   }
 
-  closeModal(e: any): void {
+  private closeModal(e: any): void {
     if (e.target.classList.contains("modal__backdrop")) {
-      e.currentTarget.classList.remove("modal_active");
+      this.children.addUserModal.setProps({
+        active: "",
+      });
     }
   }
 
@@ -122,11 +124,11 @@ export class MessengerChat extends Block {
     return currentChat.avatar;
   }
 
-  componentDidMount(): void {
-
-  }
-
   componentDidUpdate(oldProps: any, newProps: any): boolean {
+    // if (this.element) {
+    //   this.addUserModal = document.querySelector(".add-user-modal");
+    //   this.addChatModal = document.querySelector(".add-chat-modal");
+    // }
     const isAvailableChat = !!store.getState().chat && !!store.getState().chat?.sidebarData && this.props && this.props.chatId;
     if (isAvailableChat) {
       const currentChat = store.getState().chat!.sidebarData!.find((item) => item.id === this.props.chatId);
