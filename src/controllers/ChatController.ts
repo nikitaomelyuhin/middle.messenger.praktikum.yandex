@@ -36,16 +36,6 @@ class ChatController {
       store.set("chat", newData);
       store.set("activeChatId", newId);
       router.go(`/messenger?id=${newId}`);
-      const storeChats = store.getState().chat?.sidebarData;
-      const storeUserId = store.getState().currentUser?.data.id;
-      if (storeChats?.length && storeUserId) {
-        storeChats.forEach((chat) => {
-          this.connectSocket({
-            chatId: chat.id,
-            userId: storeUserId,
-          });
-        });
-      }
     } catch (err) {
       throw new Error(err);
     }
