@@ -2,11 +2,20 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "sourceMap": true,
     "strictNullChecks": true,
     "outDir": "dist",
     "target": "es2017",
     "declaration": false,
-  }
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": false,
+    "types": ["@types/mocha", "@types/chai", "@types/jsdom", "@types/dom4", "@types/jsdom-global"],
+    "rootDir": "../",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

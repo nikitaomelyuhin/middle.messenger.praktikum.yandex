@@ -1,6 +1,7 @@
 .app-input {
   position: relative;
   display: flex;
+  flex: 1;
   &__textfield {
     width: 100%;
     padding: 25px 10px 10px 10px;
@@ -12,37 +13,14 @@
     &::placeholder {
       display: none;
     }
-    &_error.app-input__textfield_empty {
-      border-bottom-color: $danger;
-      & ~ .app-input__placeholder {
-        bottom: 17px;
-        font-size: 16px;
-        left: 16px;
-      }
-    }
     &_error {
       border-bottom-color: $danger;
-      & ~ .app-input__placeholder {
-        bottom: 30px;
-        font-size: 12px;
-        left: 10px;
-      }
     }
     &_valid {
       border-color: $secondary;
-      & ~ .app-input__placeholder {
-        bottom: 30px;
-        font-size: 12px;
-        left: 10px;
-      }
     }
     &:focus {
       border-color: $secondary;
-      & ~ .app-input__placeholder {
-        bottom: 30px;
-        left: 10px;
-        font-size: 12px;
-      }
       & ~ .app-input__error {
         display: none;
       }
@@ -50,10 +28,10 @@
   }
   &__placeholder {
     position: absolute;
-    bottom: 17px;
-    left: 16px;
+    bottom: 30px;
+    font-size: 12px;
+    left: 10px;
     width: 100%;
-    font-size: 16px;
     display: flex;
     transition: 0.3s;
     cursor: text;

@@ -2,28 +2,30 @@ import Block from "../../utils/Block";
 import template from "./login.hbs";
 import Button from "../../components/button/index";
 import Input from "../../components/input/index";
+import Link from "../../components/link/index";
 import Validation from "../../utils/validate";
+import AuthController from "../../controllers/AuthController";
+import { SignInData } from "../../api/AuthApi";
+import Router from "../../utils/Router";
 
-interface FormFields {
-  [key: string]: string
+type ValidationFields = {
+  login: boolean;
+  password: boolean;
 }
 
-type Field = {
-  error: boolean,
-  errorMessage: string,
-  value: string,
-  type: string
-}
 export class LoginPage extends Block {
-  private _formFields: FormFields = {
+  private _formFields: SignInData = {
     login: "",
     password: "",
   };
 
-  private _form = new Validation(this._formFields);
+  private _validationResult: ValidationFields = {
+    login: false,
+    password: false,
+  };
 
-  constructor() {
-    super();
+  constructor(props: any) {
+    super(props);
   }
 
   protected initChildren() {
@@ -37,7 +39,7 @@ export class LoginPage extends Block {
       type: "text",
       placeholder: "Логин",
       events: {
-        keyup: (e) => { this._form.updateFields("login", e.target.value); },
+        keyup: (e) => { this._updateFields("login", e.target.value); },
         blur: () => this._updateProp("login"),
       },
     });
@@ -45,59 +47,63 @@ export class LoginPage extends Block {
       type: "password",
       placeholder: "Пароль",
       events: {
-        keyup: (e) => { this._form.updateFields("password", e.target.value); },
+        keyup: (e) => { this._updateFields("password", e.target.value); },
         blur: () => this._updateProp("password"),
+      },
+    });
+    this.children.link = new Link({
+      text: "Нет аккаунта?",
+      events: {
+        click: () => {
+          const router = new Router("#app");
+          router.go("/sign-up");
+        },
       },
     });
   }
 
-  private _formHandler(e: any) {
+  private _updateFields(type: keyof SignInData, newValue: string) {
+    this._formFields[type] = newValue;
+  }
+
+  private async _formHandler(e: any) {
     e.preventDefault();
     this._updateProp("login");
     this._updateProp("password");
 
-    for (let i = 0; i < this._form.getForm.length; i++) {
-      const field = this._form.getForm[i];
-      if (field.error) {
-        Object.keys(this._formFields).forEach((key) => {
-          this._formFields[key] = "";
-        });
-        break;
+    let isValidationSuccess = true;
+
+    Object.values(this._validationResult).forEach((key) => {
+      if (!key) {
+        isValidationSuccess = false;
       }
-      this._formFields[field.type] = field.value;
-    }
-    const promise = new Promise((resolve: any, reject: any) => {
-      Object.values(this._formFields).forEach((value) => {
-        if (!value) {
-          reject(new Error("Validation failed"));
-        }
-      });
-      resolve(this._formFields);
     });
-
-    promise.then((res) => {
-      console.log(res);
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
-
-  private _updateProp(propType: string) {
-    const prop = this._form.form.find((el) => el.type === propType);
-    if (prop) {
-      const stateClass = this._getStateClass(prop);
-      this.children[`${propType}Input`].setProps({
-        error: prop.errorMessage,
-        stateClass,
-      });
-      this.children[`${propType}Input`].element!.querySelector("input")!.value = prop.value;
+    if (isValidationSuccess) {
+      await AuthController.signIn(this._formFields);
     }
   }
 
-  private _getStateClass(field: Field): string {
-    if (field.error && !field.value) {
-      return "app-input__textfield_error app-input__textfield_empty";
-    } if (field.error) {
+  private _updateProp(propType: keyof SignInData) {
+    const prop = this._formFields[propType];
+    const validateProp = new Validation();
+    if (propType === "login") {
+      validateProp.validateLogin(prop);
+    }
+    if (propType === "password") {
+      validateProp.validatePassword(prop);
+    }
+    const validationResult = validateProp.result;
+    this._validationResult[propType] = validationResult.isValid;
+    const stateClass = this._getStateClass(validationResult.isValid);
+    this.children[`${propType}Input`].setProps({
+      error: validationResult.message,
+      value: prop,
+      stateClass,
+    });
+  }
+
+  private _getStateClass(isValid: boolean): string {
+    if (!isValid) {
       return "app-input__textfield_error";
     }
     return "app-input__textfield_valid";

@@ -1,3 +1,14 @@
+.chat-list {
+  &__item {
+    &_active {
+      background-color: $primary-light;
+      & .sidebar-item__wrapper {
+        border-bottom: 1px solid $primary-light;
+      }
+    }
+  }
+}
+
 .sidebar-item {
   display: flex;
   transition: .3s;
@@ -21,12 +32,6 @@
     padding: 15px 0;
     border-bottom: 1px solid $border-light;
   }
-  &_active {
-    background-color: $primary-light;
-    & .sidebar-item__wrapper {
-      border-bottom: 1px solid $primary-light;
-    }
-  }
   &__block {
     display: flex;
     align-items: flex-start;
@@ -44,6 +49,7 @@
     width: 50px;
     height: 50px;
     background-color: $bg-input;
+    overflow: hidden;
     margin-right: 10px;
     flex-shrink: 0;
   }
@@ -58,8 +64,12 @@
   }
   &__chat-name {
     margin-bottom: 5px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
+  }
+  &__plug {
+    font-style: italic;
+    color: $secondary;
   }
   &__user-text {
     display: flex;
@@ -75,6 +85,8 @@
   }
   &__sender {
     margin-right: 5px;
+    white-space: nowrap;
+    color: $text;
     font-weight: bold;
   }
   &__remove {

@@ -19,6 +19,10 @@
   &__text {
     color: $light;
   }
+  &__icon {
+    font-size: 16px;
+    color: $bg-light;
+  }
 }
 
 .simple {
@@ -48,4 +52,21 @@
       color: $danger-hover;
     }
   }
+}
+
+.inactive {
+  pointer-events: none;
+  & .app-button__text {
+    color: rgba(0,0,0, .3);
+  }
+}
+
+.round {
+  border-radius: 50%;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

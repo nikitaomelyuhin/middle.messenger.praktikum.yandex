@@ -1,0 +1,13 @@
+.file-input {
+  text-decoration: underline 1px rgba(0, 113, 158, 1);
+  display: flex;
+  color: $secondary;
+  cursor: pointer;
+  transition: text-decoration-color 300ms;
+  &:hover {
+    text-decoration-color: transparent;
+  }
+  &__hidden {
+    display: none;
+  }
+}

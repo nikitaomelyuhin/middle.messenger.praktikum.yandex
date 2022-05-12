@@ -1,0 +1,7 @@
+.chat-name {
+  display: flex;
+  align-items: center;
+  &__title {
+    font-weight: bold;
+  }
+}

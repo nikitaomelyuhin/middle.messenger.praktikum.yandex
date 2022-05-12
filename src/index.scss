@@ -3,6 +3,11 @@
 @import "./layout/auth.scss";
 @import "./components/button/button.scss";
 @import "./components/input/input.scss";
+@import "./components/link/link.scss";
+@import "./components/profileModal/profileModal.scss";
+@import "./pages/messenger/messenger.scss";
+@import "./pages/settings/settings.scss";
+@import "./components/validationError/validationError.scss";
 
 #app {
   height: 100%;

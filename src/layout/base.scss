@@ -4,12 +4,12 @@
 
 @import "./mixins.scss";
 
-//normalize
-
 @import "./normalize.css";
 
 
 @import "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap";
+
+@import "./modal.scss";
 
 html {
   font-size: $baseFontSize;
@@ -29,6 +29,7 @@ body {
 
 * {
   box-sizing: border-box;
+  padding: 0;
 }
 
 body {

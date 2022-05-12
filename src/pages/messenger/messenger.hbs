@@ -1,0 +1,30 @@
+<main class="main-page">
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <p class="sidebar__text">
+        Профиль
+        <i class="sidebar__icon fa-solid fa-angle-down"></i>
+      </p>
+      <div class="sidebar__search">
+        <input type="text" required class="sidebar__input">
+        <div class="sidebar__search-placeholder">
+          <i class="sidebar__search-icon fa-solid fa-magnifying-glass"></i>
+          <p>Поиск</p>
+        </div>
+      </div>
+      <div class="sidebar__add-btn">
+        {{{ addChat }}}
+      </div>
+    </div>
+    <div class="sidebar__body">
+      {{{ chatList }}}
+    </div>
+    <div class="sidebar__user-card">
+      {{{ smallCard }}}
+    </div>
+  </aside>
+  <div class="chat">
+    {{{ messengerChat }}}
+  </div>
+  {{{ addChatModal }}}
+</main>
