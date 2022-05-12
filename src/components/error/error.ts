@@ -2,7 +2,7 @@ import Block from "../../utils/Block";
 import template from "./error.hbs";
 
 interface ErrorProps {
-  error: null | string
+  errorField: null | string
 }
 
 export class Error extends Block {

@@ -1,3 +1,5 @@
+import "./index.scss";
+import "./layout/base.scss";
 import Router from "./utils/Router";
 import LoginPage from "./pages/login/index";
 import SignUpPage from "./pages/signUp/index";
@@ -18,7 +20,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   await AuthController.fetchUser();
   if (store.getState().currentUser?.data) {
     await ChatController.fetchChats();
-    // пока не придумал как по другому получить чат, когда тебя добавляет другой пользователь в чат
     setInterval(() => {
       ChatController.fetchChats();
     }, 30000);

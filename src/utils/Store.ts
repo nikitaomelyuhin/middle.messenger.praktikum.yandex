@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style */
-import { isEqual, set } from "./helpers";
+import { set } from "./helpers";
 import EventBus from "./EventBus";
 import Block from "./Block";
 import { Events } from "../typings/global";

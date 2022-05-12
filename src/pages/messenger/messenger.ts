@@ -3,7 +3,7 @@ import template from "./messenger.hbs";
 import SidebarList from "../../components/chatList/index";
 import Button from "../../components/button/index";
 import AddChatModal from "../../components/addChatModal/index";
-import { getQueryParameterByName, isEmptyObject } from "../../utils/helpers";
+import { isEmptyObject } from "../../utils/helpers";
 import SmallCard from "../../components/smallCard/index";
 import MessengerChat from "../../components/messengerChat/index";
 import Router from "../../utils/Router";

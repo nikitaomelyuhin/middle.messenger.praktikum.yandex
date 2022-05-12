@@ -3,12 +3,12 @@ import Block from "../../utils/Block";
 import template from "./input.hbs";
 
 interface inputProps {
-  type: string
-  placeholder: string,
-  value?: string,
-  error?: string,
-  stateClass?: string,
-  events?: Events
+  type: string;
+  placeholder: string;
+  value?: string;
+  error?: string;
+  stateClass?: string;
+  events?: Events;
 }
 
 export class Input extends Block {

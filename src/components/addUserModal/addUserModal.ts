@@ -32,7 +32,7 @@ export class AddUserModal extends Block {
       },
     });
     this.children.error = new Error({
-      error: null,
+      errorField: null,
     });
   }
 

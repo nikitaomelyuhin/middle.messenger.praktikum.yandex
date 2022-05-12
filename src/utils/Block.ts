@@ -208,7 +208,6 @@ class Block {
     });
 
     const htmlString = template(context);
-
     fragment.innerHTML = htmlString;
 
     Object.entries(this.children).forEach(([key, child]) => {

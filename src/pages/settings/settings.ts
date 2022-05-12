@@ -11,7 +11,6 @@ import ProfileModal from "../../components/profileModal/index";
 import PasswordModal from "../../components/passwordModal/index";
 import AvatarModal from "../../components/avatarModal/index";
 import { isEqual } from "../../utils/helpers";
-import store from "../../utils/Store";
 
 export class Settings extends Block {
   private profileModal: HTMLElement | null = null;
@@ -42,7 +41,7 @@ export class Settings extends Block {
       },
     });
     this.children.title = new Text({
-      text: this.props.data?.first_name,
+      textField: this.props.data?.first_name,
     });
     this.children.avatar = new Avatar({
       text: "Поменять аватар",
@@ -120,7 +119,7 @@ export class Settings extends Block {
     if (!isEqual(oldProps, newProps)) {
       this.children.profileModal.setProps(newProps);
       this.children.title.setProps({
-        text: newProps.data?.first_name,
+        textField: newProps.data?.first_name,
       });
       this.children.cardRowMail.setProps({
         value: newProps.data?.email,

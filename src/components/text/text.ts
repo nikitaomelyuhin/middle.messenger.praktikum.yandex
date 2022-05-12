@@ -1,12 +1,12 @@
 import Block from "../../utils/Block";
 import template from "./text.hbs";
 
-interface text {
-  text: string
+type TextProps = {
+  textField: string | undefined
 }
 
 export class Text extends Block {
-  constructor(props: text) {
+  constructor(props: TextProps) {
     super(props);
   }
 

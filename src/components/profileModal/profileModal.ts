@@ -161,7 +161,6 @@ export class ProfileModal extends Block {
         isValidationSuccess = false;
       }
     });
-    console.log(this._validationResult);
     if (isValidationSuccess) {
       await ProfileController.changeProfile(this.inputs);
     }
