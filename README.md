@@ -1,16 +1,17 @@
 # Web messenger
 ## Первый проект курса "Мидл фронтенд-разработчик" от Яндекс.Практикум
 
-## Некоторые особенности проекта
-
-Добавлен роутер
-Подключен api
-Используются контроллеры
-Добавлены несты на роутер
-
 ## Pull Request
 
 [Pull request](https://github.com/nikitaomelyuhin/middle.messenger.praktikum.yandex/pull/3)
+
+## Docker
+Сборка `docker build -t ${имя} .` 
+
+Запуск контейнера `docker run -p 3000:3000 ${имя}`
+
+Откройте `http://localhost:3000/`
+
 
 ## Netlify
 

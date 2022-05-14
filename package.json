@@ -12,6 +12,11 @@
     "compile": "babel src -d dist --extensions '.ts,.tsx'",
     "test": "mocha --require ts-node/register src/**/*.spec.ts"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all test lint:all"
+    }
+  },
   "keywords": [],
   "author": "Nikita Omelyukhin",
   "license": "ISC",
@@ -40,13 +45,13 @@
     "eslint-config-prettier": "8.4.0",
     "eslint-plugin-import": "2.25.4",
     "handlebars": "4.7.7",
-    "handlebars-loader": "^1.7.1",
-    "html-webpack-plugin": "5.5.0",
+    "handlebars-loader": "1.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "8.0.1",
     "jsdom": "19.0.0",
     "jsdom-global": "3.0.2",
     "mini-css-extract-plugin": "2.6.0",
     "mocha": "10.0.0",
-    "parcel-plugin-handlebars": "0.4.4",
     "sass": "1.51.0",
     "sass-loader": "12.6.0",
     "style-loader": "3.3.1",
