@@ -29,7 +29,7 @@ module.exports = {
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         use: [
           {
             loader: "ts-loader",
