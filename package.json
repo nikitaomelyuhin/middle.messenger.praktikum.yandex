@@ -11,14 +11,7 @@
     "check-types": "tsc",
     "compile": "babel src -d dist --extensions '.ts,.tsx'",
     "test": "mocha --require ts-node/register src/**/*.spec.ts",
-    "validate": "npm-run-all test lint",
-    "precommit": "npm run validate"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm-run-all test lint:all",
-      "pre-push": "npm run other command"
-    }
+    "pre-commit": "npm-run-all test lint:all"
   },
   "keywords": [],
   "author": "Nikita Omelyukhin",
