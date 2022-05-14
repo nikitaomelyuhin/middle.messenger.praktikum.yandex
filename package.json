@@ -10,12 +10,9 @@
     "lint:fix": "eslint . --fix",
     "check-types": "tsc",
     "compile": "babel src -d dist --extensions '.ts,.tsx'",
-    "test": "mocha --require ts-node/register src/**/*.spec.ts"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm-run-all test lint"
-    }
+    "test": "mocha --require ts-node/register src/**/*.spec.ts",
+    "validate": "npm-run-all --parallel test lint",
+    "precommit": "npm run validate"
   },
   "keywords": [],
   "author": "Nikita Omelyukhin",
