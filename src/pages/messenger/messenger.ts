@@ -102,7 +102,7 @@ export class MessengerPage extends Block {
       return true;
     }
     return false;
-    aa; sd;
+    aa;
   }
 
   render() {
