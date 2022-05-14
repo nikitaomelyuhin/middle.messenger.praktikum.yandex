@@ -18,6 +18,7 @@ export class SidebarList extends Block {
     super(props);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (!this.isEnabledActiveClass) {
       const chats = document.querySelectorAll(".chat-list__item");
