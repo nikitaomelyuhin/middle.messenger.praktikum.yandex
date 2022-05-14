@@ -42,7 +42,7 @@
     "eslint-config-prettier": "8.4.0",
     "eslint-plugin-import": "2.25.4",
     "handlebars": "4.7.7",
-    "handlebars-loader": "1.7.1",
+    "handlebars-loader": "^0.0.4",
     "html-webpack-plugin": "^5.5.0",
     "husky": "8.0.1",
     "jsdom": "19.0.0",
