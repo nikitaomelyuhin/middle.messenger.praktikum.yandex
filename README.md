@@ -17,6 +17,10 @@
 
 [Netlify](https://heuristic-kalam-85f874.netlify.app/)
 
+## Heroku
+
+[Heroku](https://messenger-nikita-omelyukhin.herokuapp.com/)
+
 ## Ui
 
 Лежит в папке `static/ui`

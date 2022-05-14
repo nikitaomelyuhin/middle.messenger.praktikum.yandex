@@ -14,7 +14,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all test lint:all"
+      "pre-commit": "npm-run-all test lint"
     }
   },
   "keywords": [],
